@@ -205,6 +205,12 @@ function RegisterPropeties() {
           </div>
         </fieldset>
       </div>
+      <br />
+      <div>
+        <h4>Fotos de la Propiedad</h4>
+        <p>Sube hasta 15 imagenes de la propiedad</p>
+        <input type="file" multiple accept="image/*" />
+      </div>
 
       <Footer></Footer>
     </>
