@@ -5,12 +5,14 @@ function RegisterPropeties() {
   return (
     <>
       <Navbar></Navbar>
-
+      
+      {/* formulario de registro de propiedades */}
       <h1>Publicar Propriedades</h1>
       <h3>Datos Principales de la Propiedad</h3>
 
       <br />
       <div>
+        {/*Aqui va la informacion basica de la propiedad*/}
         <h4>Informacion Basica</h4>
         <p>Titulo del anuncio</p>
         <input
@@ -59,90 +61,74 @@ function RegisterPropeties() {
       </div>
       <br />
       <div>
-         <h4>Ubicación</h4>
-      <p>Dirección</p>
-      <input
-        type="text"
-        placeholder="Calle 00 #00-00"
-      />  
+        {/*Aqui va la ubicacion de la propiedad*/}
+        <h4>Ubicación</h4>
+        <p>Dirección</p>
+        <input type="text" placeholder="Calle 00 #00-00" />
         <div>
-           <p>Ciudad</p>
-        <input
-          type="text"
-          placeholder="Tunja"
-        />
-        <p>Departamento</p>
-        <input
-          type="text"
-          placeholder="Boyaca"
-        />
+          <p>Ciudad</p>
+          <input type="text" placeholder="Tunja" />
+          <p>Departamento</p>
+          <input type="text" placeholder="Boyaca" />
         </div>
         <br />
         <div>
-           <p>Barrio</p>
-        <input
-          type="text"
-          placeholder="Centro"
-        />
-        <p>Codigo postal</p>
-        <input
-          type="text"
-          placeholder="1500001"
-        />
+          <p>Barrio</p>
+          <input type="text" placeholder="Centro" />
+          <p>Codigo postal</p>
+          <input type="text" placeholder="1500001" />
         </div>
       </div>
       <br />
       <div>
+        {/*Aqui van las caracteristicas de la propiedad*/}
         <h4>Caracteristicas</h4>
         <div>
-           <p>Habitaciones</p>
-        <input
-        type="text"
-        placeholder="1 principal, 2 auxiliares"
-        />  
-        <p>Baños</p>
-        <input
-          type="text"
-          placeholder="3 baños"
-        />
-        <br />
-        {/*faltaria agregar la logica para que si es lote no aparezca esta opcion de amoblado*/}
-        <label htmlFor="furnished">Amoblado <span aria-hidden="true">*</span></label>
-        <br />
-        <select id="furnished" name="furnished" defaultValue="">
-          <option value="" disabled>Selecciona</option>
-          <option value="yes">si</option>
-          <option value="no">no</option>
-        </select>
+          <p>Habitaciones</p>
+          <input type="text" placeholder="1 principal, 2 auxiliares" />
+          <p>Baños</p>
+          <input type="text" placeholder="3 baños" />
+          <br />
+          {/*faltaria agregar la logica para que si es lote no aparezca esta opcion de amoblado*/}
+          <label htmlFor="furnished">
+            Amoblado <span aria-hidden="true">*</span>
+          </label>
+          <br />
+          <select id="furnished" name="furnished" defaultValue="">
+            <option value="" disabled>
+              Selecciona
+            </option>
+            <option value="yes">si</option>
+            <option value="no">no</option>
+          </select>
         </div>
         <br />
         <div>
-          <label htmlFor="parkingLot">Estacionamiento <span aria-hidden="true">*</span></label>
-        <br />
-        <select id="parkingLot" name="parkingLot" defaultValue="">
-          <option value="" disabled>Selecciona</option>
-          <option value="yes">si</option>
-          <option value="no">no</option>
-        </select>
-        <br />
-        <p>Antiguedad (años)</p>
-        <input
-          type="text"
-          placeholder="0"
-        />
+          <label htmlFor="parkingLot">
+            Estacionamiento <span aria-hidden="true">*</span>
+          </label>
+          <br />
+          <select id="parkingLot" name="parkingLot" defaultValue="">
+            <option value="" disabled>
+              Selecciona
+            </option>
+            <option value="yes">si</option>
+            <option value="no">no</option>
+          </select>
+          <br />
+          <p>Antiguedad (años)</p>
+          <input type="text" placeholder="0" />
         </div>
         <br />
         <div>
+          {/*estos dos campos son para propiedades tipo casa o edificio*/}
           <p>Pisos</p>
-          <input type="text" 
-          placeholder="2 pisos"
-          />
+          <input type="text" placeholder="2 pisos" />
           <p>Total Pisos</p>
-          <input type="text" 
-          placeholder="5 pisos"
-          />
+          <input type="text" placeholder="5 pisos" />
         </div>
         <br />
+        {/*aqui van las caracteristicas adicionales de la propiedad*/}
         <fieldset>
           <legend>Caracteristicas adicionales</legend>
           <div className="amenities-grid">
@@ -207,18 +193,17 @@ function RegisterPropeties() {
       </div>
       <br />
       <div>
+        {/*Aqui van las fotos de la propiedad*/}
         <h4>Fotos de la Propiedad</h4>
         <p>Sube hasta 15 imagenes de la propiedad</p>
-        <input type="file"
-         multiple accept="image/*" 
-         />
+        <input type="file" multiple accept="image/*" />
       </div>
       <br />
       <div>
         <button>cancelar</button>
         <button>Publicar Propiedad</button>
       </div>
-    {/* FALTAN DESCARGAR Y PONER LOS ICONOS CORRESPONDIENTES */}
+      {/* FALTAN DESCARGAR Y PONER LOS ICONOS CORRESPONDIENTES */}
       <Footer></Footer>
     </>
   );
