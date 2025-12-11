@@ -4,6 +4,7 @@ import Footer from "../components/footer/Footer";
 function Properties() {
     return (
         <>
+
         <Navbar>
         </Navbar>
         

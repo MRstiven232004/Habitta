@@ -1,13 +1,12 @@
 import "./App.css";
-import "./pages/Properties"
-import Properties from "./pages/Properties";
+import RegisterPropeties from "./pages/registerpropeties/RegisterPropeties.tsx";
 
 function App() {
   return (
     <>
-    <Properties>
+    <RegisterPropeties>
       
-    </Properties>
+    </RegisterPropeties>
     
       
     </>
