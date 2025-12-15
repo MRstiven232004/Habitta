@@ -1,6 +1,6 @@
 import "./App.css";
 import RegisterPropeties from "./pages/registerpropeties/RegisterPropeties";
-import "./pages/registerpropeties/StyleRegisterP.css";
+import "./pages/registerpropeties/styleRegisterP.css";
 
 function App() {
   return (
