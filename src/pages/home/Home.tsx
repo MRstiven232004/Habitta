@@ -29,7 +29,7 @@ function Home() {
           <label htmlFor="" id="labelBusquedasP">
             Búsquedas populares:
           </label>
-          <button>Aaprtamentos en Bogotá</button>
+          <button>Apartamentos en Bogotá</button>
           <button>Casas en Medellín</button>
         </div>
         <div></div>
