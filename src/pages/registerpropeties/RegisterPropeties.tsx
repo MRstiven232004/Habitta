@@ -230,7 +230,6 @@ function RegisterPropeties() {
       </div>
     </div>
       {/* FALTAN DESCARGAR Y PONER LOS ICONOS CORRESPONDIENTES */}
-      <Footer></Footer>
     </>
   );
 }
