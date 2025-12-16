@@ -1,5 +1,12 @@
 import "./promotion.css";
+<<<<<<< Updated upstream
+=======
+import { useNavigate } from "react-router-dom";
+
+>>>>>>> Stashed changes
 function Promotion() {
+  const navigate = useNavigate();
+
   return (
     <div className="promotion-container">
       <h1 className="promotion-title">Planes de Publicación</h1>
@@ -9,11 +16,12 @@ function Promotion() {
         {/* Publicación Básica */}
         <div className="promotion-card basic">
           <h2>Publicación Básica</h2>
+          <p className="card-description">Publicación estándar de tu propiedad</p>
           <p className="price">$0 por 30 días</p>
           <ul className="feature-list">
-            <li><span className="check basic">✔</span> Publicación por 30 días</li>
-            <li><span className="check basic">✔</span> Hasta 7 fotos</li>
-            <li><span className="check basic">✔</span> Aparece en búsquedas</li>
+            <li><span className="check">✔</span> Publicación por 30 días</li>
+            <li><span className="check">✔</span> Hasta 7 fotos</li>
+            <li><span className="check">✔</span> Aparece en búsquedas</li>
           </ul>
           <button className="select-button orange">Seleccionar Plan</button>
         </div>
@@ -21,15 +29,22 @@ function Promotion() {
         {/* Publicación Destacada */}
         <div className="promotion-card featured">
           <h2>Publicación Destacada</h2>
+          <p className="card-description">Publicación destacada con mayor visibilidad</p>
           <p className="price">$199 por 30 días</p>
           <ul className="feature-list">
-            <li><span className="check featured">✔</span> Publicación por 30 días</li>
-            <li><span className="check featured">✔</span> Hasta 15 fotos</li>
-            <li><span className="check featured">✔</span> Aparece como destacada</li>
-            <li><span className="check featured">✔</span> Mayor visibilidad</li>
-            <li><span className="check featured">✔</span> Etiqueta de destacado</li>
+            <li><span className="check">✔</span> Publicación por 30 días</li>
+            <li><span className="check">✔</span> Hasta 15 fotos</li>
+            <li><span className="check">✔</span> Aparece como destacada</li>
+            <li><span className="check">✔</span> Mayor visibilidad</li>
+            <li><span className="check">✔</span> Etiqueta de destacado</li>
           </ul>
-          <button className="select-button teal">Seleccionar Plan</button>
+          {/* 🔹 Este botón conecta con la página de confirmación */}
+          <button
+            className="select-button teal"
+            onClick={() => navigate("/confirmacion")}
+          >
+            Seleccionar Plan
+          </button>
         </div>
       </div>
     </div>

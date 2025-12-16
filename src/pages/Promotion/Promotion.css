@@ -1,0 +1,92 @@
+<<<<<<< Updated upstream
+=======
+.promotion-container {
+  text-align: center;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.promotion-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.promotion-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.promotion-cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.promotion-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  width: 300px;
+  text-align: center; /* 🔹 centramos todo el texto dentro de la tarjeta */
+}
+
+.promotion-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 0.6rem;
+}
+
+.price {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Lista sin puntos */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.feature-list li {
+  display: flex;
+  justify-content: center; /* 🔹 centramos cada línea */
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Chulos en azul cielo */
+.check {
+  font-weight: bold;
+  color: #87CEEB;
+}
+
+/* Botones */
+.select-button {
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.select-button.orange {
+  background-color: #f57c00;
+  color: white;
+}
+
+.select-button.teal {
+  background-color: #009688;
+  color: white;
+}
+>>>>>>> Stashed changes
