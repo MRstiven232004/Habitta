@@ -419,7 +419,7 @@
    GRID DE PAGINACIÓN
    ============================================================ */
 
-.button-page {|
+.button-page {
   display: flex;
   justify-content: center;
   gap: 15px;
