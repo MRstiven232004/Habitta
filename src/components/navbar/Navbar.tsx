@@ -8,28 +8,32 @@ function Navbar() {
       <div className="navbar__inner">
         {/* Logo */}
         <div className="navbar__logo">
-          <img src={logoSF} alt="Habitta logo" className="navbar__logo-img" />
+          <Link to="/" ><img src={logoSF} alt="Habitta logo" className="navbar__logo" /></Link>
         </div>
+
         {/* Navigation Links */}
         <nav className="navbar__links">
           <ul>
-            <li>
-              <Link to="/" className="navbar__link" id="initButton">Inicio</Link>
+            <li className="navbar__link"><img className="navbar_icon" src="/src/assets/icons/home-1393-svgrepo-com.svg" alt="" />
+              <Link to="/" >Inicio</Link>
             </li>
-            <li>
-              <Link to="/properties" className="navbar__link">Propiedades</Link>
+            <li className="navbar__link"> <img className="navbar_icon" src="/src/assets/icons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg" alt="" />
+              <Link to="/properties" >Propiedades</Link>
             </li>
-            <li>
-              <Link to="/favorites" className="navbar__link">Favoritos</Link>
+            <li className="navbar__link"><img className="navbar_icon" src="/src/assets/icons/hearth-svgrepo-com.svg" alt="" />
+              <Link to="/favorites" >Favoritos</Link>
             </li>
-            <li>
-              <Link to="/tools" className="navbar__link">Herramientas</Link>
+            <li className="navbar__link"> <img className="navbar_icon" src="/src/assets/icons/calculator-svgrepo-com.svg" alt="" />
+              <Link to="/tools" >Herramientas</Link>
             </li>
-            <li>
-              <Link to="/promotion" className="navbar__link">Promociones</Link>
+            <li className="navbar__link"> <img className="navbar_icon" src="/src/assets/icons/star-alt-4-svgrepo-com.svg" alt="" />
+              <Link to="/promotion" >Promociones</Link>
             </li>
           </ul>
         </nav>
+        
+        {/* Publish and User Icons */}
+        <img id="notificationIcon" src="/src/assets/icons/notification-9-svgrepo-com.svg" alt="" />
 
         {/* Publish and User Icons */}
         <div className="navbar__actions">
