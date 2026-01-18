@@ -14,31 +14,31 @@ function Navbar() {
         {/* Navigation Links */}
         <nav className="navbar__links">
           <ul>
-            <li className="navbar__link"><img className="navbar_icon" src="/src/assets/icons/home-1393-svgrepo-com.svg" alt="" />
-              <Link to="/" >Inicio</Link>
+            <li >
+              <Link className="navbar_link" to="/" ><img className="navbar_icon" src="/src/assets/icons/home-1393-svgrepo-com.svg" alt="" />Inicio</Link>
             </li>
-            <li className="navbar__link"> <img className="navbar_icon" src="/src/assets/icons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg" alt="" />
-              <Link to="/properties" >Propiedades</Link>
+            <li > 
+              <Link className="navbar_link" to="/properties" ><img className="navbar_icon" src="/src/assets/icons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg" alt="" />Propiedades</Link>
             </li>
-            <li className="navbar__link"><img className="navbar_icon" src="/src/assets/icons/hearth-svgrepo-com.svg" alt="" />
-              <Link to="/favorites" >Favoritos</Link>
+            <li >
+              <Link className="navbar_link" to="/favorites" ><img className="navbar_icon" src="/src/assets/icons/hearth-svgrepo-com.svg" alt="" />Favoritos</Link>
             </li>
-            <li className="navbar__link"> <img className="navbar_icon" src="/src/assets/icons/calculator-svgrepo-com.svg" alt="" />
-              <Link to="/tools" >Herramientas</Link>
+            <li > 
+              <Link className="navbar_link" to="/tools" ><img className="navbar_icon" src="/src/assets/icons/calculator-svgrepo-com.svg" alt="" />Herramientas</Link>
             </li>
-            <li className="navbar__link"> <img className="navbar_icon" src="/src/assets/icons/star-alt-4-svgrepo-com.svg" alt="" />
-              <Link to="/promotion" >Promociones</Link>
+            <li > 
+              <Link className="navbar_link" to="/promotion" ><img className="navbar_icon" src="/src/assets/icons/star-alt-4-svgrepo-com.svg" alt="" />Promociones</Link>
             </li>
           </ul>
         </nav>
-        
-        {/* Publish and User Icons */}
-        <img id="notificationIcon" src="/src/assets/icons/notification-9-svgrepo-com.svg" alt="" />
+
+        {/* Notification Icon */}
+        <button id="notificationButton"><img id="notificationIcon" src="/src/assets/icons/notification-9-svgrepo-com.svg" alt="" /></button>
 
         {/* Publish and User Icons */}
         <div className="navbar__actions">
           <Link to="/registerpropeties" className="navbar__publish-btn">
-            +Publicar
+            + Publicar
           </Link>
           <button className="navbar__user-btn">
             <span>👤</span>

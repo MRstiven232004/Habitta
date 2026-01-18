@@ -58,18 +58,27 @@
   margin: 0;
   padding: 0;
 }
-/*estilo de los iconos de los navegadores */
-.navbar_icon{
-  width: 20px;
-  margin-right: 10px;
+
+.navbar_link {
+  color: #000000;
 }
 
-#notificationIcon{
+/*estilo de los iconos de los navegadores */
+.navbar_icon {
+  width: 15px;
+  margin-right: 5px;
+}
+
+.navbar_icon:hover{
+  color: #ffffff;
+}
+
+#notificationIcon {
   width: 45px;
 }
 
 /* Estilo para los links individuales */
-.navbar__link {
+.navbar_link {
   font-family: "Inter", sans-serif;
   font-size: clamp(14px, 1.5vw, 18px);
   font-weight: 500;
@@ -79,11 +88,9 @@
   padding: 6px 12px;
   border-radius: 8px;
   transition: all 0.3s ease;
-  
 }
 
-.navbar__link:hover {
-  padding: 8px 14px;
+.navbar_link:hover {
   border-radius: 15px;
   border: none;
   background: linear-gradient(
@@ -102,12 +109,10 @@
   box-shadow: -5px 3px 6px rgba(0, 0, 0, 0.12);
 }
 
-.navbar__link-text {
-  font-family: "Inter", sans-serif;
-  font-size: clamp(14px, 1.5vw, 18px);
-  font-weight: 500;
-  color: #000000;
-  white-space: nowrap;
+/*notification button*/
+#notificationButton{
+  width: 10px;
+  background-color: #ffffff;
 }
 
 /* Actions (Publish Button + User Icon) */
