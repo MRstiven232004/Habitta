@@ -1,0 +1,32 @@
+.floating-auth-button {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.floating-auth-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
+}
+
+.floating-auth-button:active {
+  transform: translateY(-2px);
+}
+
+.floating-auth-button svg {
+  width: 28px;
+  height: 28px;
+}

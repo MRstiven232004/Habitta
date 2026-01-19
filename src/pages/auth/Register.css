@@ -1,0 +1,89 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.form-group input {
+  padding: 14px 16px;
+  font-size: 15px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: #f7fafc;
+}
+
+.form-group input:focus {
+  border-color: #35c8be;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(53, 200, 190, 0.1);
+}
+
+.password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input input {
+  flex: 1;
+  padding-right: 48px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.toggle-password:hover {
+  opacity: 1;
+}
+
+.password-hint {
+  font-size: 12px;
+  color: #718096;
+  margin-top: -4px;
+}
+
+.submit-button {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: #00d4d4;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-button:hover {
+  background: #00b8b8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 212, 0.3);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}

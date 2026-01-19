@@ -8,32 +8,75 @@ function Navbar() {
       <div className="navbar__inner">
         {/* Logo */}
         <div className="navbar__logo">
-          <Link to="/" ><img src={logoSF} alt="Habitta logo" className="navbar__logo" /></Link>
+          <Link to="/">
+            <img src={logoSF} alt="Habitta logo" className="navbar__logo" />
+          </Link>
         </div>
 
         {/* Navigation Links */}
         <nav className="navbar__links">
           <ul>
-            <li >
-              <Link className="navbar_link" to="/" ><img className="navbar_icon" src="/src/assets/icons/home-1393-svgrepo-com.svg" alt="" />Inicio</Link>
+            <li>
+              <Link className="navbar_link" to="/">
+                <img
+                  className="navbar_icon"
+                  src="/src/assets/icons/home-1393-svgrepo-com.svg"
+                  alt=""
+                />
+                Inicio
+              </Link>
             </li>
-            <li > 
-              <Link className="navbar_link" to="/properties" ><img className="navbar_icon" src="/src/assets/icons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg" alt="" />Propiedades</Link>
+            <li>
+              <Link className="navbar_link" to="/properties">
+                <img
+                  className="navbar_icon"
+                  src="/src/assets/icons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg"
+                  alt=""
+                />
+                Propiedades
+              </Link>
             </li>
-            <li >
-              <Link className="navbar_link" to="/favorites" ><img className="navbar_icon" src="/src/assets/icons/hearth-svgrepo-com.svg" alt="" />Favoritos</Link>
+            <li>
+              <Link className="navbar_link" to="/favorites">
+                <img
+                  className="navbar_icon"
+                  src="/src/assets/icons/hearth-svgrepo-com.svg"
+                  alt=""
+                />
+                Favoritos
+              </Link>
             </li>
-            <li > 
-              <Link className="navbar_link" to="/tools" ><img className="navbar_icon" src="/src/assets/icons/calculator-svgrepo-com.svg" alt="" />Herramientas</Link>
+            <li>
+              <Link className="navbar_link" to="/tools">
+                <img
+                  className="navbar_icon"
+                  src="/src/assets/icons/calculator-svgrepo-com.svg"
+                  alt=""
+                />
+                Herramientas
+              </Link>
             </li>
-            <li > 
-              <Link className="navbar_link" to="/promotion" ><img className="navbar_icon" src="/src/assets/icons/star-alt-4-svgrepo-com.svg" alt="" />Promociones</Link>
+            <li>
+              <Link className="navbar_link" to="/promotion">
+                <img
+                  className="navbar_icon"
+                  src="/src/assets/icons/star-alt-4-svgrepo-com.svg"
+                  alt=""
+                />
+                Promociones
+              </Link>
             </li>
           </ul>
         </nav>
 
         {/* Notification Icon */}
-        <button id="notificationButton"><img id="notificationIcon" src="/src/assets/icons/notification-9-svgrepo-com.svg" alt="" /></button>
+        <li id="notificationButton">
+          <img
+            id="notificationIcon"
+            src="/src/assets/icons/notification-9-svgrepo-com.svg"
+            alt=""
+          />
+        </li>
 
         {/* Publish and User Icons */}
         <div className="navbar__actions">

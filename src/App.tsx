@@ -5,6 +5,7 @@ import Home from "./pages/home/Home";
 import Properties from "./pages/properties/Properties";
 import RegisterPropeties from "./pages/registerpropeties/RegisterPropeties";
 import Promotion from "./pages/promotion_tmp/Promotion";
+import Auth from "./pages/auth/Auth";
 function App() {
   return (
     <>
@@ -14,8 +15,10 @@ function App() {
           <Route path="properties" element={<Properties />} />
           <Route path="registerpropeties" element={<RegisterPropeties />} />
           <Route path="promotion" element={<Promotion />} />
+          <Route path="auth" element={<Auth />} />
         </Route>
-      </Routes></>
+      </Routes>
+    </>
   );
 }
 
