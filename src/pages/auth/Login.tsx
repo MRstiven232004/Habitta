@@ -21,7 +21,7 @@ function Login() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="stiven20042316@gmail.com"
+          placeholder="correo@gmail.com"
           required
         />
       </div>
