@@ -1,6 +1,7 @@
 import "./navbar.css";
 import logoSF from "../../assets/images/logoSF.png";
 import { Link, useLocation } from "react-router-dom";
+import notificationIcon from "/public/notification-9-svgrepo-com.svg";
 
 function Navbar() {
   const location = useLocation();
@@ -90,7 +91,7 @@ function Navbar() {
         <div id="notificationButton">
           <img
             id="notificationIcon"
-            src="/public/notification-9-svgrepo-com.svg"
+            src={notificationIcon}
             alt="Notificaciones"
           />
         </div>
