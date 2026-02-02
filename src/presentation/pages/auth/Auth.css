@@ -1,67 +1,82 @@
+/* ==========================================================================
+   ESTILOS DE LA PÁGINA DE AUTENTICACIÓN
+   ========================================================================== */
+
+/* Contenedor principal: Ocupa toda la pantalla y centra la tarjeta */
 .auth-container {
-  min-height: 100vh;
+  min-height: 100vh; /* Altura mínima: 100% de la ventana */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Evita scrolls indeseados */
   padding: 20px;
 }
 
-/* Carousel Background */
+/* ==========================================================================
+   CARRUSEL DE FONDO (Slideshow)
+   ========================================================================== */
 .auth-carousel {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 0; /* Detrás de todo */
 }
 
+/* Diapositiva individual */
 .carousel-slide {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  background-size: cover; /* Cubre toda el área sin deformarse */
+  background-position: center; /* Centra la imagen */
+  opacity: 0; /* Oculta por defecto */
+  transition: opacity 1.5s ease-in-out; /* Transición suave de 1.5 segundos */
 }
 
+/* Mostrar diapositiva activa */
 .carousel-slide.active {
   opacity: 1;
 }
 
+/* Capa oscura superpuesta (Overlay) para mejorar lectura */
 .carousel-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.4); /* Negro al 40% de opacidad */
+  z-index: 1; /* Sobre las imágenes */
 }
 
+/* ==========================================================================
+   TARJETA DE AUTENTICACIÓN (Login/Registro)
+   ========================================================================== */
 .auth-card {
   position: relative;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-width: 480px;
+  z-index: 10; /* Encima del fondo */
+  background: rgba(255, 255, 255, 0.95); /* Blanco casi opaco */
+  backdrop-filter: blur(10px); /* Efecto de vidrio esmerilado detrás */
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); /* Sombra flotante intensa */
+  max-width: 480px; /* Ancho máximo */
   width: 100%;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil */
 }
 
+/* Cabecera de la tarjeta (Logo/Título) */
 .auth-header {
   text-align: center;
   padding: 40px 30px 20px;
 }
 
+/* Enlace "Volver al inicio" */
 .home-link {
   display: flex;
   align-items: center;
@@ -72,14 +87,14 @@
 }
 
 .home-link a {
-  color: #35c8be;
+  color: #35c8be; /* Color turquesa */
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .home-link a:hover {
-  color: #33bb9d;
+  color: #33bb9d; /* Color un poco más oscuro al pasar el mouse */
   text-decoration: underline;
 }
 
@@ -87,11 +102,13 @@
   font-size: 18px;
 }
 
+/* Título principal H1 */
 .auth-header h1 {
   font-size: 32px;
   font-weight: 800;
   color: #1a202c;
   margin-bottom: 8px;
+  /* Texto con gradiente */
   background: linear-gradient(90deg, #35d2db, #33bb9d);
   -webkit-background-clip: text;
   background-clip: text;
@@ -104,6 +121,7 @@
   margin: 0;
 }
 
+/* Pestañas (Tabs) */
 .auth-tabs {
   display: flex;
   border-bottom: 2px solid #edf2f7;
@@ -111,7 +129,7 @@
 }
 
 .tab-button {
-  flex: 1;
+  flex: 1; /* Ocupan espacio igual */
   padding: 16px;
   background: none;
   border: none;
@@ -128,13 +146,14 @@
 }
 
 .tab-button.active {
-  color: #1a202c;
+  color: #1a202c; /* Color oscuro para la pestaña activa */
 }
 
+/* Indicador de pestaña activa (línea inferior) */
 .tab-button.active::after {
   content: "";
   position: absolute;
-  bottom: -2px;
+  bottom: -2px; /* Alineado con el borde inferior */
   left: 20%;
   right: 20%;
   height: 3px;
@@ -142,6 +161,7 @@
   border-radius: 3px 3px 0 0;
 }
 
+/* Área de contenido del formulario */
 .auth-content {
   padding: 30px 40px 40px;
 }

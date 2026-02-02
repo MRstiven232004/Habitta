@@ -1,51 +1,44 @@
-import { useState, useEffect } from "react";
 import Login from "./Login";
 import Register from "./Register";
+// Importamos un "hook" personalizado que maneja la lógica de la página de autenticación (estado, imágenes, etc.)
+import { useAuthPage } from "./hooks/useAuthPage";
+// Importamos los estilos específicos para esta página.
 import "./Auth.css";
 
-import img1 from "../../assets/images/auth/dream_home_1.png";
-import img2 from "../../assets/images/auth/dream_home_2.png";
-import img3 from "../../assets/images/auth/dream_home_3.png";
-
-// Images generated and placeholders
-const backgroundImages = [
-  img1,
-  img2,
-  img3,
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80", // Luxury Penthouse
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80", // Modern Villa
-];
-
+/**
+ * Componente Auth (Página de Autenticación)
+ * Este componente es el contenedor principal para el inicio de sesión y el registro.
+ * Maneja el carrusel de fondo y las pestañas para cambiar entre Login y Registro.
+ */
 function Auth() {
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIndex(
-        (prevIndex) => (prevIndex + 1) % backgroundImages.length,
-      );
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
+  // Extraemos las variables y funciones que necesitamos desde nuestro hook personalizado.
+  // activeTab: dice si estamos en 'login' o 'register'.
+  // setActiveTab: función para cambiar entre pestañas.
+  // currentImageIndex: índice de la imagen de fondo actual.
+  // backgroundImages: lista de imágenes para el carrusel.
+  const { activeTab, setActiveTab, currentImageIndex, backgroundImages } =
+    useAuthPage();
 
   return (
     <div className="auth-container">
-      {/* Background Carousel */}
+      {/* Carrusel de Fondo: Muestra imágenes que cambian automáticamente */}
       <div className="auth-carousel">
         {backgroundImages.map((image, index) => (
           <div
             key={index}
+            // Añadimos la clase 'active' solo a la imagen actual para mostrarla con transición suave.
             className={`carousel-slide ${index === currentImageIndex ? "active" : ""}`}
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}
+        {/* Capa oscura para mejorar el contraste del texto sobre las imágenes */}
         <div className="carousel-overlay"></div>
       </div>
 
+      {/* Tarjeta de Autenticación: El cuadro blanco central */}
       <div className="auth-card">
         <div className="auth-header">
+          {/* Enlace para volver a la página de inicio */}
           <div className="home-link">
             <span className="home-icon">🏠</span>
             <a href="/">Volver al inicio</a>
@@ -54,14 +47,17 @@ function Auth() {
           <p>Encuentra tu hogar ideal</p>
         </div>
 
+        {/* Pestañas de Navegación (Login / Registro) */}
         <div className="auth-tabs">
           <button
+            // Si la pestaña actual es 'login', le añadimos la clase 'active' para resaltarla.
             className={`tab-button ${activeTab === "login" ? "active" : ""}`}
             onClick={() => setActiveTab("login")}
           >
             Iniciar Sesión
           </button>
           <button
+            // Si la pestaña actual es 'register', le añadimos la clase 'active'.
             className={`tab-button ${activeTab === "register" ? "active" : ""}`}
             onClick={() => setActiveTab("register")}
           >
@@ -69,6 +65,7 @@ function Auth() {
           </button>
         </div>
 
+        {/* Contenido Dinámico: Muestra el formulario de Login o Registro según la pestaña elegida */}
         <div className="auth-content">
           {activeTab === "login" ? <Login /> : <Register />}
         </div>

@@ -1,15 +1,20 @@
+/* ==========================================================================
+   ESTILOS DEL PIE DE PÁGINA (FOOTER)
+   ========================================================================== */
+
 .footer {
   width: 100%;
-  background-color: #182134;
-  color: #ffffff;
+  background-color: #182134; /* Fondo oscuro elegante */
+  color: #ffffff; /* Texto blanco */
   padding: 60px 20px 40px;
-  margin-top: 80px;
+  margin-top: 80px; /* Separación con el contenido anterior */
   box-sizing: border-box;
 }
 
+/* Contenedor principal (Grid de 2 columnas: Info izquierda y Enlaces derecha) */
 .footer__container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 2fr; /* Info ocupa 1 parte, enlaces ocupan 2 */
   gap: 32px;
   max-width: 1200px;
   width: 100%;
@@ -18,7 +23,9 @@
   padding: 0 20px;
 }
 
-/* Left Section */
+/* ==========================================================================
+   SECCIÓN IZQUIERDA: LOGO E INFORMACIÓN
+   ========================================================================== */
 .footer__left {
   display: flex;
   flex-direction: column;
@@ -40,7 +47,7 @@
 
 .footer__title {
   font-family: "Inter", sans-serif;
-  font-size: clamp(18px, 1.8vw, 22px);
+  font-size: clamp(18px, 1.8vw, 22px); /* Tamaño responsivo */
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -51,6 +58,7 @@
   max-width: none;
 }
 
+/* Datos de contacto */
 .footer__contact {
   display: flex;
   flex-direction: column;
@@ -63,7 +71,7 @@
   gap: 12px;
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #b0b8c1;
+  color: #b0b8c1; /* Gris claro para texto secundario */
 }
 
 .footer__contact-item a {
@@ -73,7 +81,7 @@
 }
 
 .footer__contact-item a:hover {
-  color: #35c8be;
+  color: #35c8be; /* Turquesa al pasar el mouse */
 }
 
 .footer__icon {
@@ -82,10 +90,12 @@
   align-items: center;
 }
 
-/* Center Section */
+/* ==========================================================================
+   SECCIÓN CENTRAL: ENLACES DE NAVEGACIÓN
+   ========================================================================== */
 .footer__center {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas de enlaces */
   gap: 16px;
 }
 
@@ -116,7 +126,9 @@
   font-size: 14px;
 }
 
-/* Countries Section */
+/* ==========================================================================
+   SECCIÓN DE PAÍSES (Operamos en)
+   ========================================================================== */
 .footer__countries-section {
   display: flex;
   flex-direction: column;
@@ -124,7 +136,7 @@
   align-items: center;
   margin-bottom: 40px;
   padding: 24px 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08); /* Línea divisoria sutil */
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -139,7 +151,7 @@
 .footer__countries {
   display: flex;
   gap: 15px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Bajamos los botones si no caben */
   justify-content: center;
 }
 
@@ -147,7 +159,7 @@
   padding: 12px 24px;
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  background-color: #2a3545;
+  background-color: #2a3545; /* Fondo oscuro un poco más claro que el footer */
   color: #ffffff;
   font-family: "Inter", sans-serif;
   font-size: 14px;
@@ -157,12 +169,14 @@
 }
 
 .footer__country-btn:hover {
-  background-color: #35c8be;
+  background-color: #35c8be; /* Fondo turquesa */
   border-color: #35c8be;
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Pequeña elevación */
 }
 
-/* Bottom Section */
+/* ==========================================================================
+   SECCIÓN INFERIOR: REDES SOCIALES Y LEGAL
+   ========================================================================== */
 .footer__bottom {
   display: flex;
   justify-content: space-between;
@@ -211,7 +225,7 @@
 .footer__social-icon:hover {
   background-color: #35c8be;
   border-color: #35c8be;
-  transform: scale(1.1);
+  transform: scale(1.1); /* Aumenta un poco el tamaño */
 }
 
 .footer__legal {
@@ -237,7 +251,9 @@
   color: #7c828c;
 }
 
-/* Copyright */
+/* ==========================================================================
+   COPYRIGHT
+   ========================================================================== */
 .footer__copyright {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -252,10 +268,15 @@
   margin: 0;
 }
 
-/* Responsive */
+/* ==========================================================================
+   DISEÑO RESPONSIVO (Móviles y Tablets)
+   ========================================================================== */
 @media (max-width: 1200px) {
   .footer__center {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* 2 columnas en pantallas medianas */
     gap: 20px;
   }
 }
@@ -270,6 +291,6 @@
   }
 
   .footer__country-btn {
-    width: 100%;
+    width: 100%; /* Botones de países ocupan todo el ancho en móviles */
   }
 }

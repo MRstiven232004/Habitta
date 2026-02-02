@@ -1,7 +1,8 @@
-/* ============================================================
-   ESTILOS GENERALES
-   ============================================================ */
-/* Box sizing global para evitar sorpresas con padding/margins */
+/* ==========================================================================
+   ESTILOS GENERALES DE LA PÁGINA DE REGISTRO
+   ========================================================================== */
+
+/* Configuración global de tamaño de caja para evitar problemas con bordes y rellenos */
 *,
 *::before,
 *::after {
@@ -13,37 +14,37 @@ body {
   height: 100%;
 }
 
-/* Centrar todo el contenido dejando 500px a cada lado */
+/* Centramos el contenido y definimos estilos base */
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: #f5f5f5; /* Fondo gris claro */
   margin: 0;
-  padding: 0; /* quitar padding global para no afectar navbar/footer */
+  padding: 0; /* Sin relleno global para no romper el navbar o footer */
 }
 
-/* Wrapper específico para la página de registro */
+/* Contenedor principal específico para esta página */
 .register-page {
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 1000px; /* Ancho máximo centrado */
+  margin: 0 auto; /* Centrado horizontal automático */
   padding: 40px 20px;
 }
 
 h3,
 h4 {
   margin-bottom: 10px;
-  color: #444;
+  color: #444; /* Texto gris oscuro */
 }
 
-/* ============================================================
-   TARJETAS SECCIONALES Y LAYOUT INTERNO
-   ============================================================ */
+/* ==========================================================================
+   TARJETAS SECCIONALES (Cards)
+   ========================================================================== */
 .card {
-  background: #fff;
-  border: 1px solid #cfe6ff; /* borde similar al de la imagen */
+  background: #fff; /* Fondo blanco */
+  border: 1px solid #cfe6ff; /* Borde azul muy claro */
   padding: 18px;
-  border-radius: 8px;
-  margin: 20px 0;
+  border-radius: 8px; /* Esquinas redondeadas */
+  margin: 20px 0; /* Separación vertical entre tarjetas */
 }
 
 .card h4 {
@@ -51,63 +52,71 @@ h4 {
   margin: 0 0 12px 0;
 }
 
-/* Fuerza que todos los controles dentro de la tarjeta ocupen el ancho interno */
+/* Estilos para textos y etiquetas dentro de la tarjeta */
 .card p,
 .card label {
-  font-weight: 600;
+  font-weight: 600; /* Texto en negrita */
   margin: 6px 0 6px 0;
 }
 
+/* Hacemos que los inputs ocupen todo el ancho disponible dentro de la tarjeta */
 .card input,
 .card select,
 .card textarea {
   width: 100%;
 }
 
-/* Contenedores de dos columnas para pares (precio/area, ciudad/depto, etc.) */
+/* ==========================================================================
+   LAYOUT INTERNO (Columnas)
+   ========================================================================== */
+
+/* Contenedor de dos columnas para agrupar campos relacionados */
 .two-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+  gap: 18px; /* Espacio entre columnas */
   align-items: start;
 }
 
+/* Contenedor para los botones de acción (alineados a la derecha) */
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 }
 
-/* ============================================================
-   INPUTS Y SELECTS — Estilo uniforme
-   ============================================================ */
+/* ==========================================================================
+   ENTRADAS DE TEXTO (Inputs) Y SELECTORES
+   ========================================================================== */
 input,
 select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde gris estándar */
   border-radius: 6px;
   background: #fff;
 }
 
+/* Efecto al seleccionar un campo (Focus) */
 input:focus,
 select:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #007bff; /* Cambia a azul al escribir */
 }
 
-/* ============================================================
-   GRID PARA CARACTERÍSTICAS ADICIONALES
-   ============================================================ */
+/* ==========================================================================
+   GRID DE CARACTERÍSTICAS ADICIONALES (Amenities)
+   ========================================================================== */
 .amenities-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
   gap: 16px 18px;
   margin-top: 12px;
 }
 
+/* Etiquetas de los checkboxes */
 .amenities-grid label {
   display: flex;
   align-items: center;
@@ -117,19 +126,20 @@ select:focus {
   transition: background 0.2s ease;
 }
 
+/* Efecto hover en las opciones */
 .amenities-grid label:hover {
-  background: #f8f8f8;
+  background: #f8f8f8; /* Fondo gris muy claro */
 }
 
 .amenities-grid input[type="checkbox"] {
-  width: auto;
+  width: auto; /* Ancho automático para la casilla */
   margin: 0;
   cursor: pointer;
 }
 
-/* ============================================================
-   FIELDSET — Caja de características adicionales
-   ============================================================ */
+/* ==========================================================================
+   FIELDSET (Agrupador de opciones)
+   ========================================================================== */
 fieldset {
   background: transparent;
   border: none;
@@ -144,9 +154,9 @@ legend {
   font-size: 1rem;
 }
 
-/* ============================================================
+/* ==========================================================================
    SECCIÓN DE FOTOS
-   ============================================================ */
+   ========================================================================== */
 input[type="file"] {
   border: none;
   padding: 0;
@@ -154,9 +164,9 @@ input[type="file"] {
   font-size: 14px;
 }
 
-/* ============================================================
+/* ==========================================================================
    BOTONES
-   ============================================================ */
+   ========================================================================== */
 button {
   padding: 12px 20px;
   border: none;
@@ -166,13 +176,14 @@ button {
   margin-right: 10px;
 }
 
-/* Estilos específicos para los botones dentro de la tarjeta de acciones */
+/* Estilos específicos para los botones de acción finales */
 .card.actions .btn-cancel {
-  background: #f68146;
+  background: #f68146; /* Naranja */
   color: white;
 }
 
 .card.actions .btn-primary {
+  /* Gradiente turquesa */
   background: linear-gradient(
     to right,
     #35d2db 0%,
@@ -184,17 +195,18 @@ button {
 }
 
 button:hover {
-  opacity: 0.9;
+  opacity: 0.9; /* Ligera transparencia al pasar el mouse */
 }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+/* ==========================================================================
+   DISEÑO RESPONSIVO (Móviles y Tablets)
+   ========================================================================== */
 @media (max-width: 768px) {
   .register-page {
     padding: 20px 16px;
   }
 
+  /* Las columnas se vuelven una sola fila en móviles */
   .two-col {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -204,6 +216,7 @@ button:hover {
     grid-template-columns: 1fr;
   }
 
+  /* Los botones se apilan verticalmente */
   .actions {
     flex-direction: column-reverse;
   }

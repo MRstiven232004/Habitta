@@ -1,3 +1,9 @@
+/**
+ * Datos estáticos para el pie de página (Footer)
+ * Aquí se definen los enlaces, países, redes sociales e información de contacto.
+ * Facilitamos la traducción y modificación sin tocar el componente visual.
+ */
+
 export const footerSections = [
   {
     title: "Propiedades",
@@ -8,7 +14,7 @@ export const footerSections = [
     links: [
       "Asesoría inmobiliaria",
       "Financiamiento",
-      "Evaluos",
+      "Avalúos", // Corregido 'Evaluos' -> 'Avalúos'
       "Promociones",
     ],
   },
@@ -32,14 +38,17 @@ export const footerSections = [
   },
 ];
 
+// Lista de países donde operamos
 export const countries = ["México", "Colombia", "Chile", "Perú", "Argentina"];
 
+// Enlaces a redes sociales
 export const socialMedia = [
-  { name: "facebook", url: "https://facebook.com"},
+  { name: "facebook", url: "https://facebook.com" },
   { name: "instagram", url: "https://instagram.com" },
   { name: "youtube", url: "https://youtube.com" },
 ];
 
+// Información de contacto principal
 export const contactInfo = {
   email: "hola@habitta.com",
   phone: "+57 55 1234 5678",

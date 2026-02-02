@@ -1,30 +1,43 @@
+// Importamos los estilos específicos para la página de registro de propiedades.
 import "./styleRegisterP.css";
 
+/**
+ * Página de Registro de Propiedades (Publicación)
+ * Esta página contiene un formulario detallado para que los usuarios puedan subir
+ * y publicar sus propiedades (casas, apartamentos, lotes) en la plataforma.
+ */
 function RegisterPropertyPage() {
   return (
     <>
       <div className="register-page">
-        {/* formulario de registro de propiedades */}
-        <h3>Publicar Propriedades</h3>
+        {/* Título y subtítulo principal */}
+        <h3>Publicar Propiedades</h3>
         <p>Datos Principales de la Propiedad</p>
 
         <br />
+
+        {/* =========================================
+            SECCIÓN 1: INFORMACIÓN BÁSICA
+           ========================================= */}
         <div className="card">
-          {/*Aqui va la informacion basica de la propiedad*/}
-          <h4>Informacion Basica</h4>
-          <p>Titulo del anuncio</p>
+          <h4>Información Básica</h4>
+
+          <p>Título del anuncio</p>
           <input
             type="text"
             placeholder="Ej: Hermoso apartamento en zona céntrica"
           />
-          <p>Descripcion</p>
+
+          <p>Descripción</p>
           <input
             type="text"
-            placeholder="Describe las características de la propiedad"
+            placeholder="Describe las características principales de la propiedad"
           />
+
           <div>
+            {/* Selector: Tipo de propiedad */}
             <label htmlFor="propertyType">
-              tipo de propiedad <span aria-hidden="true">*</span>
+              Tipo de propiedad <span aria-hidden="true">*</span>
             </label>
             <br />
             <select id="propertyType" name="propertyType" defaultValue="">
@@ -36,11 +49,13 @@ function RegisterPropertyPage() {
               <option value="lot">Lote</option>
             </select>
             <br />
+
+            {/* Selector: Tipo de operación (Venta/Arriendo) */}
             <label htmlFor="operationType">
-              tipo de operación<span aria-hidden="true">*</span>
+              Tipo de operación <span aria-hidden="true">*</span>
             </label>
             <br />
-            {/*esta seccion esta de forma provisional  */}
+            {/* Nota: Esta sección es provisional y podría cambiar en el futuro */}
             <select id="operationType" name="operationType" defaultValue="">
               <option value="" disabled>
                 Selecciona
@@ -49,63 +64,81 @@ function RegisterPropertyPage() {
               <option value="rent">Arriendo</option>
             </select>
           </div>
+
           <br />
+
+          {/* Fila de dos columnas para Precio y Área */}
           <div className="two-col">
             <div>
               <p>Precio (COP)</p>
               <input type="text" placeholder="00.00" />
             </div>
             <div>
-              <p>Área (m2)</p>
+              <p>Área (m²)</p>
               <input type="text" placeholder="0" />
             </div>
           </div>
         </div>
+
         <br />
+
+        {/* =========================================
+            SECCIÓN 2: UBICACIÓN
+           ========================================= */}
         <div className="card">
-          {/*Aqui va la ubicacion de la propiedad*/}
           <h4>Ubicación</h4>
+
           <p>Dirección</p>
           <input type="text" placeholder="Calle 00 #00-00" />
+
           <div className="two-col">
             <div>
               <p>Ciudad</p>
-              <input type="text" placeholder="Tunja" />
+              <input type="text" placeholder="Ej: Tunja" />
             </div>
             <div>
               <p>Departamento</p>
-              <input type="text" placeholder="Boyaca" />
+              <input type="text" placeholder="Ej: Boyacá" />
             </div>
           </div>
+
           <br />
+
           <div className="two-col">
             <div>
               <p>Barrio</p>
-              <input type="text" placeholder="Centro" />
+              <input type="text" placeholder="Ej: Centro" />
             </div>
             <div>
-              <p>Codigo postal</p>
-              <input type="text" placeholder="1500001" />
+              <p>Código postal</p>
+              <input type="text" placeholder="150001" />
             </div>
           </div>
         </div>
+
         <br />
+
+        {/* =========================================
+            SECCIÓN 3: CARACTERÍSTICAS
+           ========================================= */}
         <div className="card">
-          {/*Aqui van las caracteristicas de la propiedad*/}
-          <h4>Caracteristicas</h4>
+          <h4>Características</h4>
+
           <div className="two-col">
             <div>
               <p>Habitaciones</p>
-              <input type="text" placeholder="1 principal, 2 auxiliares" />
+              <input type="text" placeholder="Ej: 1 principal, 2 auxiliares" />
             </div>
             <div>
               <p>Baños</p>
-              <input type="text" placeholder="3 baños" />
+              <input type="text" placeholder="Ej: 3 baños" />
             </div>
           </div>
+
           <br />
+
           <div>
-            {/*faltaria agregar la logica para que si es lote no aparezca esta opcion de amoblado*/}
+            {/* Nota: Faltaría agregar lógica para ocultar la opción 'Amoblado' si es un lote */}
             <label htmlFor="furnished">
               Amoblado <span aria-hidden="true">*</span>
             </label>
@@ -114,9 +147,10 @@ function RegisterPropertyPage() {
               <option value="" disabled>
                 Selecciona
               </option>
-              <option value="yes">si</option>
-              <option value="no">no</option>
+              <option value="yes">Sí</option>
+              <option value="no">No</option>
             </select>
+
             <label htmlFor="parkingLot">
               Estacionamiento <span aria-hidden="true">*</span>
             </label>
@@ -125,14 +159,16 @@ function RegisterPropertyPage() {
               <option value="" disabled>
                 Selecciona
               </option>
-              <option value="yes">si</option>
-              <option value="no">no</option>
+              <option value="yes">Sí</option>
+              <option value="no">No</option>
             </select>
           </div>
+
           <br />
+
           <div className="two-col">
             <div>
-              <p>Antiguedad (años)</p>
+              <p>Antigüedad (años)</p>
               <input type="text" placeholder="0" />
             </div>
             <div>
@@ -140,22 +176,26 @@ function RegisterPropertyPage() {
               <input type="text" placeholder="3" />
             </div>
           </div>
+
           <br />
+
           <div className="two-col">
             <div>
-              {/*estos dos campos son para propiedades tipo casa o edificio*/}
-              <p>Pisos</p>
-              <input type="text" placeholder="2 pisos" />
+              {/* Estos campos son relevantes principalmente para casas o edificios */}
+              <p>Pisos (Nivel de la propiedad)</p>
+              <input type="text" placeholder="Ej: 2° piso" />
             </div>
             <div>
-              <p>Total Pisos</p>
-              <input type="text" placeholder="5 pisos" />
+              <p>Total Pisos (Del edificio/casa)</p>
+              <input type="text" placeholder="Ej: 5 pisos" />
             </div>
           </div>
+
           <br />
-          {/*aqui van las caracteristicas adicionales de la propiedad*/}
+
+          {/* Checkboxes para características adicionales (Amenities) */}
           <fieldset>
-            <legend>Caracteristicas adicionales</legend>
+            <legend>Características adicionales</legend>
             <div className="amenities-grid">
               <label>
                 <input type="checkbox" name="amenities" value="pool" />
@@ -216,25 +256,34 @@ function RegisterPropertyPage() {
             </div>
           </fieldset>
         </div>
+
         <br />
+
+        {/* =========================================
+            SECCIÓN 4: FOTOGRAFÍAS
+           ========================================= */}
         <div className="card">
-          {/*Aqui van las fotos de la propiedad*/}
           <h4>Fotos de la Propiedad</h4>
-          <p>Sube hasta 15 imagenes de la propiedad</p>
+          <p>
+            Sube hasta 15 imágenes de la propiedad para mostrarla en detalle
+          </p>
           <input
             type="file"
-            placeholder="Elegir archivos"
+            // placeholder="Elegir archivos" // Nota: 'placeholder' no funciona en input type="file" estándar
             multiple
             accept="image/*"
           />
         </div>
+
         <br />
+
+        {/* Botones de Acción Final (Cancelar / Publicar) */}
         <div className="card actions">
-          <button className="btn-cancel">cancelar</button>
+          <button className="btn-cancel">Cancelar</button>
           <button className="btn-primary">Publicar Propiedad</button>
         </div>
       </div>
-      {/* FALTAN DESCARGAR Y PONER LOS ICONOS CORRESPONDIENTES */}
+      {/* TODO: Faltan descargar y poner iconos correspondientes si se requieren */}
     </>
   );
 }

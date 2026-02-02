@@ -1,28 +1,35 @@
-/* Estilos para la barra de búsqueda de Properties */
-/* Container centrado dentro de la página */
+/* ==========================================================================
+   ESTILOS DE LA PÁGINA DE PROPIEDADES
+   ========================================================================== */
+
+/* Contenedor principal de la página */
 .properties-page {
-  padding: 18px 10px; /* mantiene 250px laterales similares al diseño */
+  padding: 18px 10px; /* Margen interno lateral pequeño, confiando en el max-width del layout */
 }
 
+/* Descripción debajo del título */
 #descripcionPropiedades {
   color: #555555;
   margin-top: -10px;
   margin-bottom: 20px;
 }
 
-/* Tarjeta principal de búsqueda */
+/* ==========================================================================
+   BARRA DE BÚSQUEDA SUPERIOR
+   ========================================================================== */
 .search-bar {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto; /* 3 columnas: Input flexible, Filtros auto, Acciones auto */
   gap: 16px 20px;
   align-items: center;
   background: #fff;
   border: 1px solid #dbeff6;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04);
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04); /* Sombra suave */
 }
 
+/* Campo de entrada de búsqueda con icono */
 .search-input {
   display: flex;
   align-items: center;
@@ -48,17 +55,19 @@
   color: #94a3b8;
 }
 
+/* Contenedor de filtros rápidos (Dropdowns) */
 .filters {
   display: flex;
   gap: 12px;
 }
 
-/* Dropdown filter */
+/* Estilos para los menús desplegables (Dropdowns) */
 .filter-dropdown {
   position: relative;
   display: inline-block;
 }
 
+/* Botón estilo "píldora" para los filtros */
 .filter-dropdown .filter.pill {
   background: #fff;
   border: 1px solid #e6eef3;
@@ -77,6 +86,7 @@
   border-color: #cbd5e1;
 }
 
+/* Menú que aparece al pasar el mouse (Hover) */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -87,19 +97,21 @@
   margin-top: 8px;
   min-width: 180px;
   box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
-  opacity: 0;
+  opacity: 0; /* Oculto por defecto */
   visibility: hidden;
   transition:
     opacity 0.2s ease,
     visibility 0.2s ease;
-  z-index: 10;
+  z-index: 10; /* Se muestra sobre otros elementos */
 }
 
+/* Mostrar menú al hacer hover */
 .filter-dropdown:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
 }
 
+/* Elementos individuales del menú */
 .dropdown-item {
   display: block;
   width: 100%;
@@ -114,9 +126,10 @@
 }
 
 .dropdown-item:hover {
-  background: #f1f5f9;
+  background: #f1f5f9; /* Color de fondo al pasar el mouse */
 }
 
+/* Redondear bordes del primer y último elemento para encajar en el menú */
 .dropdown-item:first-child {
   border-radius: 11px 11px 0 0;
 }
@@ -125,14 +138,20 @@
   border-radius: 0 0 11px 11px;
 }
 
+/* Grupo de acciones (Buscar + Vistas) */
 .actions {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
+/* Botón principal de búsqueda */
 .btn-search {
-  background: linear-gradient(90deg, #35d2db 0%, #33bb9d 100%);
+  background: linear-gradient(
+    90deg,
+    #35d2db 0%,
+    #33bb9d 100%
+  ); /* Gradiente turquesa */
   color: white;
   border: none;
   padding: 14px 26px;
@@ -143,13 +162,14 @@
   gap: 10px;
 }
 
+/* Botones para cambiar tipo de vista (Iconos) */
 .view-toggles {
   display: flex;
   gap: 8px;
 }
 
 .view-toggles .icon {
-  background: #fb8f58;
+  background: #fb8f58; /* Naranja */
   border: none;
   color: white;
   width: 36px;
@@ -161,7 +181,7 @@
   font-size: 14px;
 }
 
-/* Fila inferior: ordenar */
+/* Parte inferior de la búsqueda (Ordenamiento) */
 .search-bottom {
   margin-top: 14px;
   background: transparent;
@@ -175,7 +195,7 @@
   align-items: center;
 }
 
-/* Dropdown de ordenamiento */
+/* Dropdown de ordenamiento reutilizando estilos básicos */
 .sort-dropdown {
   position: relative;
   display: inline-block;
@@ -229,12 +249,13 @@
   box-shadow: inset 0 0 0 1px rgba(16, 24, 40, 0.03);
 }
 
+/* Ajustes responsivos para la barra de búsqueda */
 @media (max-width: 1000px) {
   .properties-page {
     padding: 12px 20px;
   }
   .search-bar {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Una sola columna en pantallas medianas */
   }
   .actions {
     justify-content: space-between;
@@ -242,25 +263,25 @@
 }
 
 /* ============================================================
-   LAYOUT PRINCIPAL: SIDEBAR + CONTENT
+   DISEÑO PRINCIPAL (LAYOUT): BARRA LATERAL + CONTENIDO
    ============================================================ */
 .content-wrapper {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 260px 1fr; /* Columna fija para filtros, el resto para contenido */
   gap: 24px;
   margin-top: 24px;
 }
 
 /* ============================================================
-   SIDEBAR DE FILTROS
+   ESTILOS DE LA BARRA LATERAL DE FILTROS
    ============================================================ */
 .filters-sidebar {
   background: #fff;
   border: 1px solid #dbeff6;
   border-radius: 12px;
   padding: 20px;
-  height: fit-content;
-  position: sticky;
+  height: fit-content; /* Altura se ajusta al contenido */
+  position: sticky; /* Se queda fija al hacer scroll */
   top: 20px;
 }
 
@@ -321,7 +342,7 @@
   border-color: #35d2db;
 }
 
-/* Sliders */
+/* Estilos de los deslizadores (Sliders) de rango */
 .range-container {
   display: flex;
   flex-direction: column;
@@ -334,10 +355,11 @@
   border-radius: 3px;
   background: #e6eef3;
   outline: none;
-  -webkit-appearance: none;
+  -webkit-appearance: none; /* Necesario para personalizar en Webkit */
   cursor: pointer;
 }
 
+/* Personalización del botón del deslizador (Thumb) */
 .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -367,10 +389,10 @@
   color: #667085;
 }
 
-/* Botones de opciones (Habitaciones, Baños) */
+/* Grupo de botones de opciones (ej. Habitaciones 1, 2, 3...) */
 .button-group {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
   gap: 8px;
 }
 
@@ -397,7 +419,7 @@
   border-color: #35d2db;
 }
 
-/* Botón aplicar filtros */
+/* Botón aplicar filtros del sidebar */
 .btn-apply-filters {
   width: 100%;
   padding: 12px 20px;
@@ -416,17 +438,14 @@
 }
 
 /* ============================================================
-   GRID DE PROPIEDADES
+   GRID DE RESULTADOS Y PAGINACIÓN
    ============================================================ */
 .properties-grid {
   width: 100%;
-  /* Removed fixed dimensions causing overflow */
+  /* El grid interno lo maneja el componente CardPropetie */
 }
 
-/* ============================================================
-   GRID DE PAGINACIÓN
-   ============================================================ */
-
+/* Paginación */
 .button-page {
   display: flex;
   justify-content: center;
@@ -434,9 +453,10 @@
   margin-top: 20px;
 }
 
+/* Ajustes responsivos para tablets y móviles */
 @media (max-width: 1200px) {
   .content-wrapper {
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 220px 1fr; /* Sidebar más estrecho */
     gap: 18px;
   }
   .properties-grid {
@@ -446,14 +466,13 @@
 
 @media (max-width: 900px) {
   .content-wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Sidebar pasa arriba o desaparece según diseño, aquí ocupa todo el ancho */
   }
   .filters-sidebar {
     position: relative;
-    top: 0;
+    top: 0; /* Ya no es sticky */
   }
   .properties-grid {
-    /* Let the inner component handle the grid */
     display: block;
   }
 }

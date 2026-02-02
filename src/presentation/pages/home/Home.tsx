@@ -1,18 +1,32 @@
+// Importamos 'useState' y 'useEffect' de React.
+// 'useState' nos permite guardar datos que pueden cambiar (como el índice de la imagen actual).
+// 'useEffect' nos permite ejecutar código automático, como el temporizador para cambiar imágenes.
 import { useState, useEffect } from "react";
+
+// Importamos el componente de tarjeta de propiedad para mostrar las destacadas.
 import CardPropetie from "../../components/cardPropetie/Card_propietie";
+
+// Importamos los estilos específicos para la página de inicio.
 import "./home.css";
+
+// 'Link' se usa para crear enlaces que navegan a otras partes de la app sin recargar la página.
 import { Link } from "react-router-dom";
+
+// Importamos iconos SVG para usarlos en las secciones de características y búsqueda.
 import shieldIcon from "../../assets/icons/UI/shield-alt-1-svgrepo-com.svg";
 import medallIcon from "../../assets/icons/UI/medal-ribbon-svgrepo-com.svg";
 import peopleIcon from "../../assets/icons/UI/peoples-svgrepo-com.svg";
 import timerIcon from "../../assets/icons/UI/timer-svgrepo-com.svg";
 import searchIcon from "../../assets/icons/UI/navbaricons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg";
 
-// Imágenes de fondo para el slideshow (las mismas del Auth)
+// Importamos las imágenes que usaremos en el fondo del carrusel (slideshow).
+// Estas imágenes están guardadas en nuestra carpeta de recursos.
 import img1 from "../../assets/images/auth/dream_home_1.png";
 import img2 from "../../assets/images/auth/dream_home_2.png";
 import img3 from "../../assets/images/auth/dream_home_3.png";
 
+// Creamos una lista (array) con todas las imágenes que vamos a mostrar en el fondo.
+// Incluimos tanto las imágenes importadas como algunas URLs directas.
 const backgroundImages = [
   img1,
   img2,
@@ -21,52 +35,78 @@ const backgroundImages = [
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
 ];
 
+/**
+ * Componente Home (Página de Inicio)
+ * Esta es la página principal que ven los usuarios al entrar.
+ * Contiene el buscador principal, propiedades destacadas y razones para elegir la plataforma.
+ */
 function Home() {
+  // 'currentImageIndex' guarda el número de la imagen que se está mostrando actualmente (0, 1, 2...).
+  // 'setCurrentImageIndex' es la función que usamos para cambiar ese número.
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Este efecto se ejecuta una vez al cargar la página para iniciar el cambio automático de imágenes.
   useEffect(() => {
+    // Configuramos un temporizador que se dispara cada 5000 milisegundos (5 segundos).
     const timer = setInterval(() => {
       setCurrentImageIndex(
+        // Calculamos el siguiente índice. El operador '%' (módulo) nos ayuda a volver al 0
+        // cuando llegamos a la última imagen, creando un ciclo infinito.
         (prevIndex) => (prevIndex + 1) % backgroundImages.length,
       );
     }, 5000);
 
+    // Cuando el usuario sale de esta página, limpiamos el temporizador para no gastar recursos.
     return () => clearInterval(timer);
   }, []);
 
   return (
     <>
+      {/* Contenedor principal de la página de inicio */}
       <main className="home-container">
-        {/* HERO SECTION */}
+        {/* =========================================
+            SECCIÓN HÉROE (Hero Section)
+            Es la primera sección grande con la imagen de fondo y el buscador.
+           ========================================= */}
         <section className="hero-section">
-          {/* Background Slideshow */}
+          {/* Carrusel de imágenes de fondo */}
           <div className="hero-slideshow">
+            {/* Recorremos la lista de imágenes para crear un div para cada una */}
             {backgroundImages.map((image, index) => (
               <div
                 key={index}
+                // Si el índice coincide con el actual, le añadimos la clase clase 'active' para mostrarla.
                 className={`hero-slide ${index === currentImageIndex ? "active" : ""}`}
                 style={{ backgroundImage: `url(${image})` }}
               />
             ))}
+            {/* Capa oscura superpuesta para que el texto resalte sobre la imagen */}
             <div className="hero-overlay"></div>
           </div>
 
+          {/* Contenido principal sobre la imagen (Texto y Buscador) */}
           <div className="hero-content">
-            <h1>Encuentra tu <span className="text-primary">hogar ideal</span> en Latinoamérica</h1>
+            <h1>
+              Encuentra tu <span className="text-primary">hogar ideal</span> en
+              Latinoamérica
+            </h1>
             <h3>
               Miles de propiedades esperándote. Compra, vende o alquila con la
               confianza que mereces.
             </h3>
 
-            {/* SEARCH CARD */}
+            {/* TARJETA DE BÚSQUEDA (El cuadro blanco grande) */}
             <div className="search-card">
+              {/* Pestañas para elegir tipo de operación */}
               <div className="search-tabs">
                 <button className="tab active">Comprar</button>
                 <button className="tab">Alquilar</button>
                 <button className="tab">Vender</button>
               </div>
 
+              {/* Campos de entrada de datos (Inputs) */}
               <div className="search-inputs">
+                {/* Selector de tipo de propiedad */}
                 <div className="input-group">
                   <label>Tipo de propiedad</label>
                   <select id="propertyType" name="propertyType" defaultValue="">
@@ -79,8 +119,10 @@ function Home() {
                   </select>
                 </div>
 
+                {/* Línea divisoria vertical estética */}
                 <div className="divider"></div>
 
+                {/* Campo de ubicación */}
                 <div className="input-group flex-grow">
                   <label>Ubicación</label>
                   <input
@@ -90,10 +132,12 @@ function Home() {
                   />
                 </div>
 
+                {/* Botón de buscar con icono */}
                 <button className="search-btn">
                   <img
                     src={searchIcon}
                     alt="Search"
+                    /* Invertimos el color del icono a blanco usando filtros CSS */
                     style={{
                       width: "20px",
                       height: "20px",
@@ -104,6 +148,7 @@ function Home() {
                 </button>
               </div>
 
+              {/* Etiquetas de búsquedas populares para acceso rápido */}
               <div className="popular-searches">
                 <span className="label">Búsquedas populares:</span>
                 <div className="tags">
@@ -115,7 +160,7 @@ function Home() {
               </div>
             </div>
 
-            {/* HERO STATS */}
+            {/* ESTADÍSTICAS RÁPIDAS (Números debajo del buscador) */}
             <div className="hero-stats">
               <div className="stat-item">
                 <span className="stat-number">25,000+</span>
@@ -137,7 +182,10 @@ function Home() {
           </div>
         </section>
 
-        {/* PROMINENT SECTION (Featured Properties) */}
+        {/* =========================================
+            SECCIÓN PROPIEDADES DESTACADAS
+            Muestra una selección de inmuebles importantes.
+           ========================================= */}
         <section className="section-container prominent-section">
           <div className="section-header">
             <h4>Propiedades destacadas</h4>
@@ -147,6 +195,7 @@ function Home() {
             </h5>
           </div>
 
+          {/* Componente que renderiza las tarjetas de propiedades */}
           <CardPropetie />
 
           <div className="center-btn">
@@ -156,7 +205,10 @@ function Home() {
           </div>
         </section>
 
-        {/* WHY CHOOSE HABITTA */}
+        {/* =========================================
+            SECCIÓN CARACTERÍSTICAS (¿Por qué elegirnos?)
+            Iconos y texto explicando los beneficios.
+           ========================================= */}
         <section className="section-container features-section">
           <div className="section-header">
             <h4>¿Por qué elegir Habitta?</h4>
@@ -167,11 +219,12 @@ function Home() {
           </div>
 
           <div className="features-grid">
+            {/* Tarjeta de beneficio 1: Verificación */}
             <div className="feature-card">
               <div className="icon-box">
                 <img
                   src={shieldIcon}
-                  alt="Verified"
+                  alt="Verificado"
                   style={{ width: "30px", height: "30px" }}
                 />
               </div>
@@ -181,11 +234,13 @@ function Home() {
                 de verificación
               </p>
             </div>
+
+            {/* Tarjeta de beneficio 2: Asesoría */}
             <div className="feature-card">
               <div className="icon-box">
                 <img
                   src={medallIcon}
-                  alt="Expert"
+                  alt="Experto"
                   style={{ width: "30px", height: "30px" }}
                 />
               </div>
@@ -195,11 +250,13 @@ function Home() {
                 tu decisión
               </p>
             </div>
+
+            {/* Tarjeta de beneficio 3: Comunidad */}
             <div className="feature-card">
               <div className="icon-box">
                 <img
                   src={peopleIcon}
-                  alt="Community"
+                  alt="Comunidad"
                   style={{ width: "30px", height: "30px" }}
                 />
               </div>
@@ -209,11 +266,13 @@ function Home() {
                 con nosotros
               </p>
             </div>
+
+            {/* Tarjeta de beneficio 4: Soporte */}
             <div className="feature-card">
               <div className="icon-box">
                 <img
                   src={timerIcon}
-                  alt="Support"
+                  alt="Soporte"
                   style={{ width: "60px", height: "60px" }}
                 />
               </div>
@@ -225,6 +284,7 @@ function Home() {
             </div>
           </div>
 
+          {/* Barra de certificaciones (logotipos de seguridad) */}
           <div className="certifications-bar">
             <span className="cert-label">
               Certificaciones y reconocimientos
@@ -238,9 +298,12 @@ function Home() {
           </div>
         </section>
 
-        {/* CTA SECTION */}
+        {/* =========================================
+            SECCIÓN DE LLAMADA A LA ACCIÓN (CTA)
+            Invita al usuario a registrarse al final de la página.
+           ========================================= */}
         <section className="cta-section">
-          {/* Background Slideshow */}
+          {/* Fondo animado también para esta sección */}
           <div className="cta-slideshow">
             {backgroundImages.map((image, index) => (
               <div
@@ -259,16 +322,17 @@ function Home() {
               ideal. Crear tu cuenta es gratis y solo toma unos minutos.
             </h3>
 
+            {/* Acciones del CTA: Botón e Input */}
             <div className="cta-actions">
               <Link to="/properties" className="cta-primary-btn">
                 Crear cuenta gratis <span>→</span>
               </Link>
               <div className="cta-input-group">
-                {/* Visual placeholder for input if needed, or just white space as in image */}
                 <input type="email" placeholder="Tu correo electrónico" />
               </div>
             </div>
 
+            {/* Tarjetas informativas sobre versiones Web y Móvil */}
             <div className="app-cards-grid">
               <div className="app-card">
                 <div className="app-icon"></div>

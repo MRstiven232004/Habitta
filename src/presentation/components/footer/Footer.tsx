@@ -1,4 +1,6 @@
+// Importamos los estilos del pie de página.
 import "./footer.css";
+// Importamos los datos dinámicos que alimentan el footer (secciones, redes sociales, etc).
 import {
   footerSections,
   countries,
@@ -7,16 +9,23 @@ import {
 } from "./footerData";
 import logoHabitta from "../../assets/images/logoCF.png";
 
+/**
+ * Componente Footer (Pie de Página)
+ * Muestra información de contacto, enlaces de navegación, paises de operación y redes sociales.
+ * Se divide en secciones: Izquierda (Logo/Info), Centro (Enlaces), Medio (Paises), Abajo (Redes/Legal).
+ */
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer__container">
-        {/* Left Section: Logo and Description */}
+        {/* =========================================
+            SECCIÓN IZQUIERDA: LOGO Y DESCRIPCIÓN
+           ========================================= */}
         <div className="footer__left">
           <div className="footer__logo-section">
             <img
               src={logoHabitta}
-              alt="Habitta logo"
+              alt="Logo de Habitta"
               className="footer__logo"
             />
             <h2 className="footer__title">Habitta</h2>
@@ -24,7 +33,7 @@ function Footer() {
 
           <p className="footer__description">{contactInfo.description}</p>
 
-          {/* Contact Info */}
+          {/* Información de Contacto */}
           <div className="footer__contact">
             <div className="footer__contact-item">
               <span className="footer__icon">✉️</span>
@@ -32,6 +41,7 @@ function Footer() {
             </div>
             <div className="footer__contact-item">
               <span className="footer__icon">📞</span>
+              {/* Eliminamos espacios del teléfono para el link 'tel:' */}
               <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}>
                 {contactInfo.phone}
               </a>
@@ -43,7 +53,9 @@ function Footer() {
           </div>
         </div>
 
-        {/* Center Section: Links */}
+        {/* =========================================
+            SECCIÓN CENTRAL: ENLACES DE NAVEGACIÓN
+           ========================================= */}
         <div className="footer__center">
           {footerSections.map((section) => (
             <div key={section.title} className="footer__section">
@@ -62,7 +74,9 @@ function Footer() {
         </div>
       </div>
 
-      {/* Middle Section: Countries */}
+      {/* =========================================
+          SECCIÓN MEDIO: PAÍSES DE OPERACIÓN
+         ========================================= */}
       <div className="footer__countries-section">
         <p className="footer__countries-label">Operamos en:</p>
         <div className="footer__countries">
@@ -74,7 +88,9 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom Section: Social Media and Legal */}
+      {/* =========================================
+          SECCIÓN INFERIOR: REDES Y LEGAL
+         ========================================= */}
       <div className="footer__bottom">
         <div className="footer__social">
           <p className="footer__social-label">Síguenos en:</p>
@@ -120,6 +136,10 @@ function Footer() {
   );
 }
 
+/**
+ * Función auxiliar para obtener el icono de cada red social.
+ * Retorna un emoji o un icono genérico si no encuentra la red social.
+ */
 function getSocialIcon(name: string) {
   const icons: { [key: string]: string } = {
     facebook: "📘",
