@@ -15,6 +15,7 @@ function Home() {
         {/*section de filtro de propiedades */}
         <div className="filterProperties">
           <button>comprar</button>
+          <label htmlFor="propertyType">Tipo de propiedad</label>
           <select id="propertyType" name="propertyType" defaultValue="">
             <option value="" disabled>
               Selecciona
