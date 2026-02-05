@@ -79,7 +79,7 @@ function Home() {
               <div className="search-inputs">
                 {/* Tipo de Propiedad */}
                 <div className="input-group">
-                  <label>Tipo de propiedad</label>
+                  <label htmlFor="propertyType">Tipo de propiedad</label>
                   <select id="propertyType" name="propertyType" defaultValue="">
                     <option value="" disabled>
                       Selecciona

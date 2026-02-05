@@ -33,7 +33,7 @@ function RegisterPropertyPage() {
             </label>
             <br />
             <select id="propertyType" name="propertyType" defaultValue="">
-              <option value="" disabled>
+              <option value="disabled" disabled>
                 Selecciona
               </option>
               <option value="apartment">Apartamento</option>
@@ -48,7 +48,7 @@ function RegisterPropertyPage() {
             </label>
             <br />
             <select id="operationType" name="operationType" defaultValue="">
-              <option value="" disabled>
+              <option value="disabled" disabled>
                 Selecciona
               </option>
               <option value="sale">Venta</option>
@@ -60,15 +60,15 @@ function RegisterPropertyPage() {
 
           <br />
 
-          {/* Precio y Área */}
+          {/* Precio y Área verificar */}
           <div className="two-col">
             <div>
               <p>Precio (COP)</p>
-              <input type="text" placeholder="00.00" />
+              <input type="number" placeholder="00.00" />
             </div>
             <div>
               <p>Área (m²)</p>
-              <input type="text" placeholder="0" />
+              <input type="number" placeholder="0" />
             </div>
           </div>
         </div>
@@ -262,9 +262,11 @@ function RegisterPropertyPage() {
           <p>
             Sube hasta 15 imágenes de la propiedad para mostrarla en detalle
           </p>
+          <label htmlFor="fileInput">Seleccionar archivos</label>
           <input
+            id="fileInput"
             type="file"
-            // placeholder="Elegir archivos"
+            title="Elegir archivos"
             multiple
             accept="image/*"
           />
