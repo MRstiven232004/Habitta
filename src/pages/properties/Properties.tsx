@@ -79,7 +79,7 @@ function Properties() {
                     {/* Tipo de propiedad */}
                     <div className="filter-group">
                         <label>Tipo de propiedad</label>
-                        <select defaultValue="">
+                        <select defaultValue="null">
                             <option value="">Seleccionar</option>
                             <option value="house">Casa</option>
                             <option value="apartment">Apartamento</option>
@@ -91,7 +91,7 @@ function Properties() {
                     <div className="filter-group">
                         <label>Rango de precio</label>
                         <div className="range-container">
-                            <input type="range" className="range-slider" min="0" max="7560000000" defaultValue="3780000000" />
+                            <input placeholder="Rango" type="range" className="range-slider" min="0" max="7560000000" defaultValue="3780000000" />
                             <div className="range-labels">
                                 <span>$0 COP</span>
                                 <span>$7.560.000.000 COP</span>
@@ -103,7 +103,7 @@ function Properties() {
                     <div className="filter-group">
                         <label>Área (m²)</label>
                         <div className="range-container">
-                            <input type="range" className="range-slider" min="0" max="870" defaultValue="435" />
+                            <input placeholder="null" type="range" className="range-slider" min="0" max="870" defaultValue="435" />
                             <div className="range-labels">
                                 <span>0 m²</span>
                                 <span>870 m²</span>
