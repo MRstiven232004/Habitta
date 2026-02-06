@@ -10,6 +10,9 @@ import searchIcon from "../../assets/icons/UI/navbaricons/glass-magnifier-search
 import img1 from "../../assets/images/auth/dream_home_1.png";
 import img2 from "../../assets/images/auth/dream_home_2.png";
 import img3 from "../../assets/images/auth/dream_home_3.png";
+import { supabase } from "@infrastructure/api/supabase/client";
+
+
 
 // Imágenes de fondo para el carrusel
 const backgroundImages = [
@@ -22,6 +25,9 @@ const backgroundImages = [
 
 // Componente de Página Principal
 function Home() {
+  useEffect(() => {
+    console.log("supabase listo:", supabase);
+  }, []);
   // Estado de rotación de imágenes
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -79,7 +85,7 @@ function Home() {
               <div className="search-inputs">
                 {/* Tipo de Propiedad */}
                 <div className="input-group">
-                  <label>Tipo de propiedad</label>
+                  <label htmlFor="propertyType">Tipo de propiedad</label>
                   <select id="propertyType" name="propertyType" defaultValue="">
                     <option value="" disabled>
                       Selecciona
@@ -309,6 +315,7 @@ function Home() {
               </div>
             </div>
           </div>
+          client
         </section>
       </main>
     </>

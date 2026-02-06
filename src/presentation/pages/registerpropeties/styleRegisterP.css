@@ -26,7 +26,10 @@ body {
   padding: 40px 20px;
 }
 
-h3,
+h3 { margin-bottom: 10px;
+  color: #444;
+  font-size: xx-large;
+}
 h4 {
   margin-bottom: 10px;
   color: #444;
