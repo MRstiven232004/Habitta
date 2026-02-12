@@ -47,7 +47,9 @@ function Promotion() {
         {/* Plan Básico */}
         <div className="promotion-card basic">
           <h2>Publicación Básica</h2>
-          <p className="price">$0 por 30 días</p>
+          <p className="card-subtitle">Publicación estándar de tu propiedad</p>
+          <p className="price">$0</p>
+          <p className="price-label">Por 30 días</p>
           <ul className="feature-list">
             <li>
               <span className="check basic">✔</span> Publicación por 30 días
@@ -67,7 +69,9 @@ function Promotion() {
         {/* Plan Destacado */}
         <div className="promotion-card featured">
           <h2>Publicación Destacada</h2>
-          <p className="price">$199 por 30 días</p>
+          <p className="card-subtitle">Tu propiedad destacada en los resultados</p>
+          <p className="price">$199</p>
+          <p className="price-label">Por 30 días</p>
           <ul className="feature-list">
             <li>
               <span className="check featured">✔</span> Publicación por 30 días
