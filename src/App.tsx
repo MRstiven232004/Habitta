@@ -8,6 +8,7 @@ import Promotion from "@presentation/pages/promotion/Promotion";
 import Auth from "@presentation/pages/auth/Auth";
 import ModalN from "@presentation/pages/notification/Modal/ModalN"; 
 import Notification from "@presentation/pages/notification/Notification";
+import MyPanel from "@presentation/pages/myPanel/MyPanel";
 
 // Componente Principal de la Aplicación
 function App() {
@@ -33,6 +34,8 @@ function App() {
           <Route path="ModalN" element={<ModalN />} />
 
           <Route path="Notification" element={<Notification />} />
+
+          <Route path="myPanel" element={<MyPanel />} />
         </Route>
       </Routes>
     </>

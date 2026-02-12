@@ -1,9 +1,9 @@
 import "./cardStyle.css";
 const heartIcon = "/icons/UI/navbaricons/hearth-svgrepo-com.svg";
 const homeIcon = "/icons/UI/navbaricons/house-01-svgrepo-com.svg";
-const house1 = "/images/auth/dream_home_1.png";
-const house2 = "/images/auth/dream_home_2.png";
-const house3 = "/images/auth/dream_home_3.png";
+const house1 = "/public/images/example/dream_home_1.png";
+const house2 = "/public/images/example/dream_home_2.png";
+const house3 = "/public/images/example/dream_home_3.png";
 
 function CardPropetie() {
   return (
