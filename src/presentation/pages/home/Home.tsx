@@ -2,23 +2,21 @@ import { useState, useEffect } from "react";
 import CardPropetie from "../../components/cardPropetie/Card_propietie";
 import "./home.css";
 import { Link } from "react-router-dom";
-const shieldIcon = "/icons/UI/shield-alt-1-svgrepo-com.svg";
-const medallIcon = "/icons/UI/medal-ribbon-svgrepo-com.svg";
-const peopleIcon = "/icons/UI/peoples-svgrepo-com.svg";
-const timerIcon = "/icons/UI/timer-svgrepo-com.svg";
+const shieldIcon = "/icons/UI/heroIcons/shield-alt-1-svgrepo-com.svg";
+const medallIcon = "/icons/UI/heroIcons/medal-ribbon-svgrepo-com.svg";
+const peopleIcon = "/icons/UI/heroIcons/peoples-svgrepo-com.svg";
+const timerIcon = "/icons/UI/heroIcons/timer-svgrepo-com.svg";
 const searchIcon =
   "/icons/UI/navbaricons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg";
-const img1 = "/images/auth/dream_home_1.png";
-const img2 = "/images/auth/dream_home_2.png";
-const img3 = "/images/auth/dream_home_3.png";
+const img1 = "/public/images/example/dream_home_1.png";
+const img2 = "/public/images/example/dream_home_2.png";
+const img3 = "/public/images/example/dream_home_3.png";
 
 // Imágenes de fondo para el carrusel
 const backgroundImages = [
   img1,
   img2,
-  img3,
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80",
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
+  img3
 ];
 
 // Componente de Página Principal
@@ -283,7 +281,7 @@ function Home() {
 
             {/* Acciones CTA */}
             <div className="cta-actions">
-              <Link to="/properties" className="cta-primary-btn">
+              <Link to="/auth" className="cta-primary-btn">
                 Crear cuenta gratis <span>→</span>
               </Link>
               <div className="cta-input-group">
