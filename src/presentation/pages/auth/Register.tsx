@@ -20,10 +20,30 @@ function Register() {
 
     togglePasswordVisibility,
     handleSubmit,
+    error,
+    loading,
   } = useRegisterForm();
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
+      {/* Mensaje de error */}
+      {error && (
+        <div
+          className="auth-error"
+          style={{
+            color: "#ff6b6b",
+            backgroundColor: "rgba(255, 107, 107, 0.1)",
+            border: "1px solid rgba(255, 107, 107, 0.3)",
+            borderRadius: "8px",
+            padding: "0.75rem 1rem",
+            marginBottom: "1rem",
+            fontSize: "0.9rem",
+          }}
+        >
+          {error}
+        </div>
+      )}
+
       {/* Nombre Completo */}
       <div className="form-group">
         <label htmlFor="fullName">Nombre Completo</label>
@@ -34,6 +54,7 @@ function Register() {
           onChange={(e) => setFullName(e.target.value)}
           placeholder="Juan Pérez"
           required
+          disabled={loading}
         />
       </div>
 
@@ -47,6 +68,7 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="tu@email.com"
           required
+          disabled={loading}
         />
       </div>
       {/* Campo de Confirmación de Email */}
@@ -86,6 +108,7 @@ function Register() {
             placeholder="••••••••"
             minLength={8}
             required
+            disabled={loading}
           />
           <button
             type="button"
@@ -123,8 +146,8 @@ function Register() {
       </div>
 
       {/* Botón de Envío */}
-      <button type="submit" className="submit-button">
-        Crear Cuenta
+      <button type="submit" className="submit-button" disabled={loading}>
+        {loading ? "Creando cuenta..." : "Crear Cuenta"}
       </button>
     </form>
   );

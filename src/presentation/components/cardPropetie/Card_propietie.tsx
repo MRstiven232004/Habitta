@@ -1,131 +1,103 @@
+import type { Property } from "@domain/entities/Property";
 import "./cardStyle.css";
+
+// Iconos
 const heartIcon = "/icons/UI/navbaricons/hearth-svgrepo-com.svg";
 const homeIcon = "/icons/UI/navbaricons/house-01-svgrepo-com.svg";
-const house1 = "/public/images/example/dream_home_1.png";
-const house2 = "/public/images/example/dream_home_2.png";
-const house3 = "/public/images/example/dream_home_3.png";
 
-function CardPropetie() {
+/**
+ * Props del componente CardPropetie.
+ * Recibe una propiedad individual desde Supabase.
+ */
+interface CardPropetieProps {
+  property: Property;
+}
+
+/**
+ * Formatea un número de precio en formato colombiano (COP).
+ * Ejemplo: 3200000000 → "$3.200.000.000 COP"
+ */
+function formatPrecio(precio: number | null): string {
+  if (precio === null || precio === undefined) return "Precio no disponible";
+  return `$${precio.toLocaleString("es-CO")} COP`;
+}
+
+/**
+ * Componente de tarjeta de propiedad.
+ * Muestra la información de una propiedad individual con sus datos reales de Supabase.
+ */
+function CardPropetie({ property }: CardPropetieProps) {
   return (
-    <div className="property-cards-grid">
-      {/* Card 1 */}
-      <div className="property-card">
-        <div className="property-card__image-container">
-          <img
-            src={house1}
-            alt="Casa en Polanco"
-            className="property-card__img"
-          />
-          {/* Badges */}
-          <div className="property-card__badges">
-            <span className="badge badge--featured">Destacada</span>
-            <span className="badge badge--type">Venta</span>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="property-card__actions">
-            <button className="action-btn" title="Agregar a favoritos">
-              <img src={heartIcon} alt="Favorito" className="icon-svg" />
-            </button>
-          </div>
+    <div className="property-card">
+      <div className="property-card__image-container">
+        {/* Imagen placeholder — se reemplazará cuando se integre la tabla archivos */}
+        <div
+          className="property-card__img"
+          style={{
+            backgroundColor: "#2a2a3e",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#888",
+            fontSize: "0.9rem",
+            minHeight: "200px",
+          }}
+        >
+          Sin imagen
         </div>
 
-        <div className="property-card__body">
-          <h3 className="property-card__title">Casa moderna en Polanco</h3>
-          <p className="property-card__location">Polanco, Ciudad de México</p>
+        {/* Badges */}
+        <div className="property-card__badges">
+          {property.estado_publicacion && (
+            <span className="badge badge--featured">
+              {property.estado_publicacion}
+            </span>
+          )}
+          {property.tipo && (
+            <span className="badge badge--type">{property.tipo}</span>
+          )}
+        </div>
 
-          <p className="property-card__price">$3.200.000.000 COP</p>
+        {/* Botón de favorito */}
+        <div className="property-card__actions">
+          <button className="action-btn" title="Agregar a favoritos">
+            <img src={heartIcon} alt="Favorito" className="icon-svg" />
+          </button>
+        </div>
+      </div>
 
-          <div className="property-card__features">
+      <div className="property-card__body">
+        <h3 className="property-card__title">
+          {property.titulo ?? "Sin título"}
+        </h3>
+        {property.estrato && (
+          <p className="property-card__location">Estrato {property.estrato}</p>
+        )}
+
+        <p className="property-card__price">{formatPrecio(property.precio)}</p>
+
+        <div className="property-card__features">
+          {property.habitaciones !== null && (
             <span className="feature-item">
               <img src={homeIcon} alt="Habitaciones" className="feature-icon" />
-              4
+              {property.habitaciones}
             </span>
+          )}
+          {property.banos !== null && (
             <span className="feature-item">
-              <img src={homeIcon} alt="Baños" className="feature-icon" />3
+              <img src={homeIcon} alt="Baños" className="feature-icon" />
+              {property.banos}
             </span>
-            <span className="feature-item">
-              <img src={homeIcon} alt="Área" className="feature-icon" />
-              250 m²
-            </span>
-          </div>
-
-          <button className="property-card__btn-details">Ver detalles</button>
-        </div>
-      </div>
-
-      {/* Card 2 */}
-      <div className="property-card">
-        <div className="property-card__image-container">
-          <img
-            src={house2}
-            alt="Apartamento de lujo"
-            className="property-card__img"
-          />
-          <div className="property-card__badges">
-            <span className="badge badge--type">Renta</span>
-          </div>
-          <div className="property-card__actions">
-            <button className="action-btn">
-              <img src={heartIcon} alt="Favorito" className="icon-svg" />
-            </button>
-          </div>
-        </div>
-        <div className="property-card__body">
-          <h3 className="property-card__title">Apartamento de lujo</h3>
-          <p className="property-card__location">Bogotá, Cundinamarca</p>
-          <p className="property-card__price">$2.500.000.000 COP</p>
-          <div className="property-card__features">
-            <span className="feature-item">
-              <img src={homeIcon} alt="Hab" className="feature-icon" />3
-            </span>
-            <span className="feature-item">
-              <img src={homeIcon} alt="Baños" className="feature-icon" />2
-            </span>
+          )}
+          {property.area !== null && (
             <span className="feature-item">
               <img src={homeIcon} alt="Área" className="feature-icon" />
-              180 m²
+              {property.area} m²
             </span>
-          </div>
-          <button className="property-card__btn-details">Ver detalles</button>
+          )}
         </div>
-      </div>
 
-      {/* Card 3 */}
-      <div className="property-card">
-        <div className="property-card__image-container">
-          <img
-            src={house3}
-            alt="Casa Campestre"
-            className="property-card__img"
-          />
-          <div className="property-card__badges">
-            <span className="badge badge--type">Venta</span>
-          </div>
-          <div className="property-card__actions">
-            <button className="action-btn">
-              <img src={heartIcon} alt="Favorito" className="icon-svg" />
-            </button>
-          </div>
-        </div>
-        <div className="property-card__body">
-          <h3 className="property-card__title">Casa Campestre</h3>
-          <p className="property-card__location">Medellín, Antioquia</p>
-          <p className="property-card__price">$1.800.000.000 COP</p>
-          <div className="property-card__features">
-            <span className="feature-item">
-              <img src={homeIcon} alt="Hab" className="feature-icon" />5
-            </span>
-            <span className="feature-item">
-              <img src={homeIcon} alt="Baños" className="feature-icon" />4
-            </span>
-            <span className="feature-item">
-              <img src={homeIcon} alt="Área" className="feature-icon" />
-              350 m²
-            </span>
-          </div>
-          <button className="property-card__btn-details">Ver detalles</button>
-        </div>
+        <button className="property-card__btn-details">Ver detalles</button>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export default function Layout() {
   return (
     <>
       {!isAuthPage && (
-        <Navbar onToggleNotifications={() => setIsNotifOpen(true)} />
+        <Navbar />
       )}
 
       {/* Main Content */}
