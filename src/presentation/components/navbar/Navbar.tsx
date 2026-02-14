@@ -1,15 +1,16 @@
 import "./navbar.css";
 import { useState } from "react";
-// import logoSF from "../../assets/images/logoSF.png";
-const logoSF = "/images/logoSF.png";
 import { Link, useLocation } from "react-router-dom";
-// import notificationIcon from "/public/notification-9-svgrepo-com.svg";
-const notificationIcon = "/notification-9-svgrepo-com.svg";
+import { useAuth } from "@application/context/AuthContext";
 import UserModal from "../userModal/UserModal";
 
-// Navbar Component
-function Navbar({ onToggleNotifications }: { onToggleNotifications?: () => void }) {
+const logoSF = "/images/logoSF.png";
+const notificationIcon = "/notification-9-svgrepo-com.svg";
+
+// Componente de Barra de Navegación
+function Navbar() {
   const location = useLocation();
+  const { usuario } = useAuth();
 
   // Estado para controlar la visibilidad del modal de usuario
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -109,7 +110,6 @@ function Navbar({ onToggleNotifications }: { onToggleNotifications?: () => void 
         </nav>
 
         {/* Notifications */}
-
         <Link to="/ModalN">
           <div id="notificationButton">
             <img
@@ -122,17 +122,36 @@ function Navbar({ onToggleNotifications }: { onToggleNotifications?: () => void 
 
         {/* Actions */}
         <div className="navbar__actions">
-          <Link to="/registerpropeties" className="navbar__publish-btn">
-            + Publicar
-          </Link>
-          {/* User Profile */}
-          <div style={{ position: "relative" }}>
-            <button className="navbar__user-btn" onClick={toggleUserModal}>
-              <img className="navbar_user-icon" src="/icons/UI/navbaricons/user-alt-1-svgrepo-com.svg" alt="Icono de usuario" />
-            </button>
-            {/* Modal de usuario */}
-            <UserModal isOpen={isUserModalOpen} onClose={closeUserModal} />
-          </div>
+          {usuario ? (
+            <>
+              {/* Usuario autenticado */}
+              <Link to="/registerpropeties" className="navbar__publish-btn">
+                + Publicar
+              </Link>
+              <div style={{ position: "relative" }}>
+                <button className="navbar__user-btn" onClick={toggleUserModal}>
+                  <span className="navbar__user-avatar">
+                    {usuario.nombre
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase()}
+                  </span>
+                  <span className="navbar__user-name">{usuario.nombre}</span>
+                </button>
+                {/* Modal de usuario */}
+                <UserModal isOpen={isUserModalOpen} onClose={closeUserModal} />
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Usuario NO autenticado */}
+              <Link to="/auth" className="navbar__login-btn">
+                Iniciar Sesión
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

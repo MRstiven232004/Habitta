@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { Outlet, Link, useLocation } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function Layout() {
   return (
     <>
       {!isAuthPage && (
-        <Navbar onToggleNotifications={() => setIsNotifOpen(true)} />
+        <Navbar />
       )}
 
       {/* Main Content */}
