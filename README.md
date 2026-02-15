@@ -1,10 +1,10 @@
-# 🏡 Habitta
+# Habitta
 
 **Habitta** es una plataforma web moderna para la gestión y publicación de propiedades inmobiliarias. Permite a los usuarios explorar propiedades disponibles, registrar nuevas publicaciones con planes de promoción personalizados, y gestionar favoritos de manera intuitiva. Construida con tecnologías de vanguardia para ofrecer una experiencia fluida y profesional.
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 Este proyecto está construido utilizando las siguientes tecnologías y herramientas:
 
@@ -30,7 +30,7 @@ Este proyecto está construido utilizando las siguientes tecnologías y herramie
 
 ---
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalado lo siguiente en tu entorno de desarrollo:
 
@@ -50,7 +50,7 @@ git --version
 
 ---
 
-## ⚙️ Instalación y Configuración
+## Instalación y Configuración
 
 Sigue estos pasos para instalar y configurar el proyecto en tu máquina local:
 
@@ -82,7 +82,7 @@ VITE_SUPABASE_ANON_KEY=tu_supabase_anon_key
 
 ---
 
-## 🎯 Cómo Usar el Proyecto
+## Cómo Usar el Proyecto
 
 ### Comandos Disponibles
 
@@ -124,7 +124,7 @@ npm run lint
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 El proyecto sigue una **arquitectura en capas** basada en principios de Clean Architecture, separando responsabilidades y facilitando el mantenimiento:
 
@@ -178,33 +178,33 @@ Habitta/
 
 ---
 
-## 🌟 Funcionalidades Principales
+## Funcionalidades Principales
 
-### ✅ Autenticación de Usuarios
+### Autenticación de Usuarios
 
 - Registro e inicio de sesión con confirmación por correo electrónico
 - Gestión de estado de autenticación con React Context
 - Integración completa con Supabase Auth
 
-### 🏠 Gestión de Propiedades
+### Gestión de Propiedades
 
 - Exploración y búsqueda de propiedades disponibles
 - Registro de nuevas propiedades con formularios validados
 - Sistema de favoritos para guardar propiedades de interés
 
-### 📢 Planes de Promoción
+### Planes de Promoción
 
 - Planes Basic, Premium y Ultra para promocionar propiedades
 - Modales interactivos para selección de planes
 - Visualización clara de beneficios por plan
 
-### 🔔 Sistema de Notificaciones
+### Sistema de Notificaciones
 
 - Notificaciones en tiempo real
 - Modal de vista rápida de notificaciones desde el Navbar
 - Página dedicada para gestión completa de notificaciones
 
-### 👤 Panel de Usuario
+### Panel de Usuario
 
 - Navegación por pestañas (Mis Propiedades, Favoritos)
 - Modal de perfil de usuario
@@ -212,7 +212,7 @@ Habitta/
 
 ---
 
-## 📊 Estado del Proyecto
+## Estado del Proyecto
 
 🟢 **En desarrollo activo** - Versión 0.0.0
 
@@ -220,7 +220,7 @@ El proyecto se encuentra en desarrollo continuo con actualizaciones frecuentes. 
 
 ---
 
-## 👥 Autores
+## Autores
 
 - **Stiven Medina** - Desarrollador Principal - [@MRstiven232004](https://github.com/MRstiven232004)
 - **Julian Acero** - Colaborador - [@JulianAcero252](https://github.com/JulianAcero252)
@@ -228,13 +228,13 @@ El proyecto se encuentra en desarrollo continuo con actualizaciones frecuentes. 
 
 ---
 
-## 📝 Licencia
+## Licencia
 
 Este proyecto es privado y de uso personal/educativo.
 
 ---
 
-## 📞 Soporte
+## Soporte
 
 Si tienes alguna pregunta o necesitas ayuda, puedes:
 
@@ -243,7 +243,7 @@ Si tienes alguna pregunta o necesitas ayuda, puedes:
 
 ---
 
-## 🙏 Agradecimientos
+## Agradecimientos
 
 - A **Juan Fernando** por las observaciones y retroalimentación del proyecto
 - A la comunidad de **React** y **Supabase** por su excelente documentación
