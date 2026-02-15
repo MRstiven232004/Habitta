@@ -34,8 +34,10 @@ function App() {
           {/* Autenticación */}
           <Route path="auth" element={<Auth />} />
 
+          {/* Notificaciones */}
           <Route path="notification" element={<Notification />} />
 
+          {/* Panel Personal */}
           <Route path="myPanel" element={<MyPanel />} />
         </Route>
       </Routes>

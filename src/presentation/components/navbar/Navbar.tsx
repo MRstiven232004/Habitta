@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@application/context/AuthContext";
 import UserModal from "../userModal/UserModal";
+import ModalN from "../../pages/notification/Modal/ModalN";
 
 const logoSF = "/images/logoSF.png";
 const notificationIcon = "/notification-9-svgrepo-com.svg";
@@ -14,6 +15,9 @@ function Navbar() {
 
   // Estado para controlar la visibilidad del modal de usuario
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+
+  // Estado para controlar la visibilidad del modal de notificaciones
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
   /**
    * Alterna la visibilidad del modal de usuario
@@ -27,6 +31,20 @@ function Navbar() {
    */
   const closeUserModal = () => {
     setIsUserModalOpen(false);
+  };
+
+  /**
+   * Alterna la visibilidad del modal de notificaciones
+   */
+  const toggleNotificationModal = () => {
+    setIsNotificationModalOpen(!isNotificationModalOpen);
+  };
+
+  /**
+   * Cierra el modal de notificaciones
+   */
+  const closeNotificationModal = () => {
+    setIsNotificationModalOpen(false);
   };
 
   // Renderizamos la estructura visual de la barra de navegación.
@@ -110,15 +128,24 @@ function Navbar() {
         </nav>
 
         {/* Notifications */}
-        <Link to="/ModalN">
-          <div id="notificationButton">
+        <div style={{ position: "relative" }}>
+          <div
+            id="notificationButton"
+            onClick={toggleNotificationModal}
+            style={{ cursor: "pointer" }}
+          >
             <img
               id="notificationIcon"
               src={notificationIcon}
               alt="Notificaciones"
             />
           </div>
-        </Link>
+          {/* Modal de Notificaciones */}
+          <ModalN
+            isOpen={isNotificationModalOpen}
+            onClose={closeNotificationModal}
+          />
+        </div>
 
         {/* Actions */}
         <div className="navbar__actions">

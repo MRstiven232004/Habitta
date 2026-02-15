@@ -17,24 +17,6 @@ function Login() {
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
-      {/* Mensaje de error */}
-      {error && (
-        <div
-          className="auth-error"
-          style={{
-            color: "#ff6b6b",
-            backgroundColor: "rgba(255, 107, 107, 0.1)",
-            border: "1px solid rgba(255, 107, 107, 0.3)",
-            borderRadius: "8px",
-            padding: "0.75rem 1rem",
-            marginBottom: "1rem",
-            fontSize: "0.9rem",
-          }}
-        >
-          {error}
-        </div>
-      )}
-
       {/* Campo de Email */}
       <div className="form-group">
         <label htmlFor="email">Correo Electrónico</label>
@@ -71,6 +53,25 @@ function Login() {
           </button>
         </div>
       </div>
+
+      {/* Mensaje de error (abajo, cerca del botón) */}
+      {error && (
+        <div
+          className="auth-error"
+          style={{
+            color: "#ff6b6b",
+            backgroundColor: "rgba(255, 107, 107, 0.1)",
+            border: "1px solid rgba(255, 107, 107, 0.3)",
+            borderRadius: "8px",
+            padding: "0.75rem 1rem",
+            marginBottom: "0.75rem",
+            fontSize: "0.9rem",
+            textAlign: "center",
+          }}
+        >
+          ⚠️ {error}
+        </div>
+      )}
 
       {/* Botón de Envío */}
       <button type="submit" className="submit-button" disabled={loading}>

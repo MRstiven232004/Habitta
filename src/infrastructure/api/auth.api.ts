@@ -3,53 +3,93 @@ import type { Usuario } from "@domain/entities/Usuario";
 
 /**
  * Traduce los mensajes de error de Supabase Auth de inglés a español.
- * Supabase retorna errores en inglés, pero la app es en español.
+ * Supabase retorna errores en inglés, pero la app está en español.
  */
 function traducirError(mensajeIngles: string): string {
   const traducciones: Record<string, string> = {
-    "User already registered":
+    "user already registered":
       "Este correo ya está registrado. Intenta iniciar sesión.",
-    "Invalid login credentials": "Correo o contraseña incorrectos.",
-    "Email not confirmed":
-      "Debes confirmar tu correo electrónico antes de iniciar sesión.",
-    "Password should be at least 6 characters":
+    "invalid login credentials": "Correo o contraseña incorrectos.",
+    "email not confirmed":
+      "Debes confirmar tu correo electrónico antes de iniciar sesión. Revisa tu bandeja de entrada.",
+    "password should be at least 6 characters":
       "La contraseña debe tener al menos 6 caracteres.",
-    "Unable to validate email address: invalid format":
+    "unable to validate email address: invalid format":
       "El formato del correo electrónico no es válido.",
-    "Signup requires a valid password": "Debes ingresar una contraseña válida.",
-    "To signup, please provide your email":
+    "signup requires a valid password": "Debes ingresar una contraseña válida.",
+    "to signup, please provide your email":
       "Debes ingresar un correo electrónico.",
-    "Email rate limit exceeded":
-      "Has excedido el límite de intentos. Espera unos minutos.",
-    "For security purposes, you can only request this once every 60 seconds":
+    "email rate limit exceeded":
+      "Has excedido el límite de envío de correos. Espera unos minutos e intenta de nuevo.",
+    "for security purposes, you can only request this once every 60 seconds":
       "Por seguridad, solo puedes intentar una vez cada 60 segundos.",
+    over_email_send_rate_limit:
+      "Has excedido el límite de envío de correos. Espera unos minutos e intenta de nuevo.",
+    "error sending confirmation email":
+      "Error al enviar el correo de confirmación. Verifica la configuración SMTP en Supabase.",
   };
 
-  return traducciones[mensajeIngles] ?? mensajeIngles;
+  // Comparar en minúsculas para evitar problemas de capitalización
+  const mensajeLower = mensajeIngles.toLowerCase().trim();
+  return traducciones[mensajeLower] ?? mensajeIngles;
 }
 
 /**
- * API de autenticación — usa Supabase Auth + tabla `usuarios`.
+ * Resultado del registro.
+ * - needsConfirmation: true → el usuario debe confirmar su email
+ */
+export interface SignUpResult {
+  needsConfirmation: boolean;
+}
+
+/**
+ * API de autenticación — Supabase Auth + tabla `usuarios`.
  *
- * Flujo:
- * 1. signUp → supabase.auth.signUp() + INSERT en tabla `usuarios`
- * 2. signIn → supabase.auth.signInWithPassword() + UPDATE fechalogin
- * 3. signOut → supabase.auth.signOut()
+ * FLUJO IMPORTANTE (con confirmación de email habilitada):
+ *
+ * 1. signUp:
+ *    - Crea usuario en auth.users con metadata (nombre, teléfono)
+ *    - NO inserta en tabla `usuarios` (aún no hay sesión = RLS lo bloquea)
+ *    - Retorna needsConfirmation: true
+ *
+ * 2. Usuario confirma su email (link en correo)
+ *
+ * 3. signIn:
+ *    - Autentica con Supabase Auth
+ *    - Si NO existe en tabla `usuarios` → lo crea usando la metadata de Auth
+ *    - Retorna el objeto Usuario completo
+ *
+ * 4. signOut:
+ *    - Elimina la sesión JWT
  */
 export const authApi = {
   /**
-   * Registra un nuevo usuario.
-   * Crea el usuario en Supabase Auth y luego inserta en la tabla `usuarios`.
+   * Registra un nuevo usuario en Supabase Auth.
+   *
+   * NOTA: NO inserta en la tabla `usuarios` porque con confirmación
+   * de email habilitada, no hay sesión activa después del signUp,
+   * y RLS bloquea el INSERT. La fila en `usuarios` se crea
+   * automáticamente en el primer signIn.
+   *
+   * Los datos extra (nombre, teléfono) se guardan como user_metadata
+   * en Supabase Auth para luego usarlos al crear el registro en `usuarios`.
    */
   signUp: async (
     email: string,
     password: string,
     nombre: string,
-  ): Promise<Usuario> => {
-    // 1. Crear usuario en Supabase Auth
+    telefono: string,
+  ): Promise<SignUpResult> => {
+    // Crear usuario en Supabase Auth con metadata
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          nombre: nombre,
+          telefono: telefono,
+        },
+      },
     });
 
     if (authError) {
@@ -61,74 +101,53 @@ export const authApi = {
       throw new Error("No se pudo crear el usuario.");
     }
 
-    // Detectar "éxito falso" — Supabase con confirmación de email desactivada
-    // retorna un user pero con identities vacío si el email ya existe
+    // Detectar "éxito falso" — Supabase retorna user con identities vacío
+    // si el email ya existe (con confirmación de email desactivada)
     if (authData.user.identities && authData.user.identities.length === 0) {
       throw new Error(
         "Este correo ya está registrado. Intenta iniciar sesión.",
       );
     }
 
-    // 2. Verificar si ya existe en la tabla `usuarios` (puede pasar si
-    //    se registró antes pero el INSERT no se completó)
-    const { data: existente } = await supabase
-      .from("usuarios")
-      .select("*")
-      .eq("correo", email)
-      .maybeSingle();
+    // Determinar si necesita confirmación de email
+    const tieneSession = authData.session !== null;
 
-    if (existente) {
-      return existente;
+    // Si NO necesita confirmación (sesión creada inmediatamente),
+    // podemos intentar crear el registro en `usuarios` ahora
+    if (tieneSession) {
+      await crearRegistroUsuario(email, nombre, telefono);
     }
 
-    // 3. Insertar en la tabla `usuarios` para sincronizar
-    const { data: usuario, error: dbError } = await supabase
-      .from("usuarios")
-      .insert({
-        correo: email,
-        nombre: nombre,
-        contrasena: "managed_by_supabase_auth",
-        telefono: null,
-        fotoperfil: null,
-        descripcion: null,
-      })
-      .select()
-      .maybeSingle();
-
-    if (dbError || !usuario) {
-      console.error("Error al insertar en tabla usuarios:", dbError?.message);
-      throw new Error(
-        "Cuenta creada, pero hubo un problema al guardar tu perfil. " +
-          "Verifica las políticas RLS de la tabla 'usuarios'.",
-      );
-    }
-
-    return usuario;
+    return {
+      needsConfirmation: !tieneSession,
+    };
   },
 
   /**
    * Inicia sesión con correo y contraseña.
-   * Actualiza la fecha de último login en la tabla `usuarios`.
+   * Si el usuario no existe en tabla `usuarios`, lo crea automáticamente
+   * usando la metadata guardada en Supabase Auth durante el registro.
    */
   signIn: async (email: string, password: string): Promise<Usuario> => {
     // 1. Autenticar con Supabase Auth
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data: authData, error: authError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
     if (authError) {
       console.error("Error al iniciar sesión:", authError.message);
       throw new Error(traducirError(authError.message));
     }
 
-    // 2. Intentar actualizar fechalogin (si falla por RLS, no es crítico)
+    // 2. Actualizar fechalogin (no crítico, no bloquea el login)
     await supabase
       .from("usuarios")
       .update({ fechalogin: new Date().toISOString() })
       .eq("correo", email);
 
-    // 3. Obtener datos del usuario
+    // 3. Obtener datos del usuario de la tabla `usuarios`
     const { data: usuario, error: dbError } = await supabase
       .from("usuarios")
       .select("*")
@@ -144,18 +163,22 @@ export const authApi = {
     }
 
     if (!usuario) {
-      // El usuario existe en Auth pero NO en tabla usuarios — auto-crear
-      console.warn(
-        "Usuario autenticado pero no existe en tabla 'usuarios'. Creando registro...",
-      );
+      // El usuario NO existe en `usuarios` → es su primer login después
+      // de confirmar email. Crear la fila usando metadata de Auth.
+      console.log("Primer login después de confirmar email. Creando perfil...");
+
+      // Extraer nombre y teléfono de la metadata de Auth
+      const metadata = authData.user?.user_metadata;
+      const nombre = metadata?.nombre || email.split("@")[0];
+      const telefono = metadata?.telefono || null;
 
       const { data: nuevoUsuario, error: insertError } = await supabase
         .from("usuarios")
         .insert({
           correo: email,
-          nombre: email.split("@")[0],
+          nombre: nombre,
+          telefono: telefono,
           contrasena: "managed_by_supabase_auth",
-          telefono: null,
           fotoperfil: null,
           descripcion: null,
         })
@@ -163,7 +186,7 @@ export const authApi = {
         .maybeSingle();
 
       if (insertError || !nuevoUsuario) {
-        console.error("Error al auto-crear usuario:", insertError?.message);
+        console.error("Error al crear perfil:", insertError?.message);
         throw new Error(
           "Sesión iniciada, pero no se pudo crear tu perfil. " +
             "Verifica las políticas RLS de la tabla 'usuarios'.",
@@ -188,7 +211,8 @@ export const authApi = {
   },
 
   /**
-   * Obtiene la sesión actual (si existe).
+   * Obtiene la sesión activa (si existe).
+   * Se usa al cargar la app para restaurar el usuario.
    */
   getSession: async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -200,7 +224,7 @@ export const authApi = {
   },
 
   /**
-   * Obtiene los datos del usuario de la tabla `usuarios` por correo.
+   * Busca un usuario en la tabla `usuarios` por correo.
    * Retorna null si no existe (no lanza error).
    */
   getUsuarioByCorreo: async (correo: string): Promise<Usuario | null> => {
@@ -218,3 +242,36 @@ export const authApi = {
     return data;
   },
 };
+
+/**
+ * Función auxiliar para crear un registro en la tabla `usuarios`.
+ * Se usa cuando el usuario tiene una sesión activa (signUp sin confirmación,
+ * o primer signIn después de confirmar).
+ */
+async function crearRegistroUsuario(
+  correo: string,
+  nombre: string,
+  telefono: string,
+) {
+  // Verificar si ya existe
+  const { data: existente } = await supabase
+    .from("usuarios")
+    .select("idusuario")
+    .eq("correo", correo)
+    .maybeSingle();
+
+  if (existente) return;
+
+  const { error } = await supabase.from("usuarios").insert({
+    correo,
+    nombre,
+    telefono: telefono || null,
+    contrasena: "managed_by_supabase_auth",
+    fotoperfil: null,
+    descripcion: null,
+  });
+
+  if (error) {
+    console.error("Error al crear registro en usuarios:", error.message);
+  }
+}

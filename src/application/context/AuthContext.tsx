@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { supabase } from "@infrastructure/supabase/client";
-import { authApi } from "@infrastructure/api/auth.api";
+import { authApi, type SignUpResult } from "@infrastructure/api/auth.api";
 import type { Usuario } from "@domain/entities/Usuario";
 
 /**
@@ -18,7 +18,12 @@ interface AuthContextType {
   usuario: Usuario | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, nombre: string) => Promise<void>;
+  signUp: (
+    email: string,
+    password: string,
+    nombre: string,
+    telefono: string,
+  ) => Promise<SignUpResult>;
   signOut: () => Promise<void>;
 }
 
@@ -41,14 +46,14 @@ export function useAuth(): AuthContextType {
  * Proveedor de autenticación.
  * Envuelve la app y escucha cambios de sesión en Supabase Auth.
  *
- * Usa una bandera `isManualAction` para evitar que `onAuthStateChange`
- * interfiera cuando signIn/signUp están ejecutándose manualmente.
+ * Usa `isManualAction` para evitar que onAuthStateChange
+ * interfiera cuando signIn/signUp se ejecutan manualmente.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Bandera para evitar que onAuthStateChange interfiera con signIn/signUp
+  // Bandera para evitar condiciones de carrera con onAuthStateChange
   const isManualAction = useRef(false);
 
   // Al montar: verificar si hay sesión activa
@@ -69,12 +74,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     initAuth();
 
-    // Escuchar cambios de autenticación (solo cuando NO es una acción manual)
+    // Escuchar cambios de sesión (solo cuando NO es una acción manual)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      // Si estamos en una acción manual (signIn/signUp), no hacer nada aquí
-      // para evitar queries duplicados y condiciones de carrera
       if (isManualAction.current) return;
 
       if (event === "SIGNED_IN" && session?.user?.email) {
@@ -85,13 +88,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     });
 
-    // Limpiar suscripción al desmontar
     return () => {
       subscription.unsubscribe();
     };
   }, []);
 
-  // Función de inicio de sesión
+  // Inicio de sesión
   const signIn = async (email: string, password: string) => {
     isManualAction.current = true;
     try {
@@ -102,18 +104,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Función de registro
-  const signUp = async (email: string, password: string, nombre: string) => {
+  // Registro — retorna SignUpResult para que el hook maneje la confirmación
+  const signUp = async (
+    email: string,
+    password: string,
+    nombre: string,
+    telefono: string,
+  ): Promise<SignUpResult> => {
     isManualAction.current = true;
     try {
-      const user = await authApi.signUp(email, password, nombre);
-      setUsuario(user);
+      const result = await authApi.signUp(email, password, nombre, telefono);
+      // Si NO necesita confirmación, obtener el usuario de la tabla
+      if (!result.needsConfirmation) {
+        const user = await authApi.getUsuarioByCorreo(email);
+        setUsuario(user);
+      }
+      return result;
     } finally {
       isManualAction.current = false;
     }
   };
 
-  // Función de cierre de sesión
+  // Cierre de sesión
   const signOut = async () => {
     isManualAction.current = true;
     try {

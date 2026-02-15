@@ -28,14 +28,15 @@ const ModalN: FC<ModalNProps> = ({ isOpen, onClose }) => {
 
   const handleViewAll = () => {
     onClose();
-    navigate("/Notification");
+    navigate("/notification");
   };
 
   const notifications: Notification[] = [
     {
       id: 1,
       title: "Nueva Propiedad disponible",
-      description: "se ha publicado una nueva propiedad que coincide con tus búsquedas",
+      description:
+        "se ha publicado una nueva propiedad que coincide con tus búsquedas",
       time: "Hace 29 minutos",
       type: "property",
     },
