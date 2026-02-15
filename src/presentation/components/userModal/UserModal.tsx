@@ -87,7 +87,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     {
       id: 3,
       label: "PQRS",
-      icon: "/icons/UI/shield-alt-1-svgrepo-com.svg",
+      icon: "/icons/UI/navbaricons/message-circle-chat-svgrepo-com.svg",
       link: "/pqrs",
     },
     {
@@ -99,7 +99,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     {
       id: 5,
       label: "Panel Admin",
-      icon: "/icons/UI/timer-svgrepo-com.svg",
+      icon: "/icons/UI/navbaricons/admin-svgrepo-com.svg",
       link: "/admin",
     },
   ];
