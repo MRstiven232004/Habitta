@@ -5,7 +5,7 @@ import "./styleProperties.css";
 function PropertiesPage() {
   return (
     <>
-      <h1>Propiedades</h1>
+      <h1 className="properties-title">Propiedades</h1>
       <p id="descripcionPropiedades">
         Encuentra tu hogar ideal entre miles de opciones verificadas
       </p>
