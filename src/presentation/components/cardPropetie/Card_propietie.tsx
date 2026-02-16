@@ -1,105 +1,101 @@
-import type { Property } from "@domain/entities/Property";
-import "./cardStyle.css";
 
-// Iconos
+import React, { useState } from "react";
+import "./cardStyle.css";
+import PropertyDetailsModal from "./PropertyDetailsModal";
 const heartIcon = "/icons/UI/navbaricons/hearth-svgrepo-com.svg";
 const homeIcon = "/icons/UI/navbaricons/house-01-svgrepo-com.svg";
+const house1 = "/images/auth/dream_home_1.png";
+const house2 = "/images/auth/dream_home_2.png";
+const house3 = "/images/auth/dream_home_3.png";
 
-/**
- * Props del componente CardPropetie.
- * Recibe una propiedad individual desde Supabase.
- */
-interface CardPropetieProps {
-  property: Property;
-}
+const properties = [
+  {
+    title: "Casa moderna en Polanco",
+    location: "Polanco, Ciudad de México",
+    price: "$3.200.000.000 COP",
+    image: house1,
+    features: [
+      { label: "Habitaciones", value: 4 },
+      { label: "Baños", value: 3 },
+      { label: "Área", value: "250 m²" },
+    ],
+    description: "Casa moderna con acabados de lujo en Polanco, cerca de parques y centros comerciales.",
+    badges: ["Destacada", "Venta"],
+  },
+  {
+    title: "Apartamento de lujo",
+    location: "Bogotá, Cundinamarca",
+    price: "$2.500.000.000 COP",
+    image: house2,
+    features: [
+      { label: "Habitaciones", value: 3 },
+      { label: "Baños", value: 2 },
+      { label: "Área", value: "180 m²" },
+    ],
+    description: "Apartamento de lujo en el corazón de Bogotá, con vista panorámica y excelentes amenidades.",
+    badges: ["Renta"],
+  },
+  {
+    title: "Casa Campestre",
+    location: "Medellín, Antioquia",
+    price: "$1.800.000.000 COP",
+    image: house3,
+    features: [
+      { label: "Habitaciones", value: 5 },
+      { label: "Baños", value: 4 },
+      { label: "Área", value: "350 m²" },
+    ],
+    description: "Casa campestre rodeada de naturaleza, ideal para familias grandes y eventos al aire libre.",
+    badges: ["Venta"],
+  },
+];
 
-/**
- * Formatea un número de precio en formato colombiano (COP).
- * Ejemplo: 3200000000 → "$3.200.000.000 COP"
- */
-function formatPrecio(precio: number | null): string {
-  if (precio === null || precio === undefined) return "Precio no disponible";
-  return `$${precio.toLocaleString("es-CO")} COP`;
-}
+import { useNavigate } from "react-router-dom";
 
-/**
- * Componente de tarjeta de propiedad.
- * Muestra la información de una propiedad individual con sus datos reales de Supabase.
- */
-function CardPropetie({ property }: CardPropetieProps) {
+function CardPropetie() {
+  const navigate = useNavigate();
   return (
-    <div className="property-card">
-      <div className="property-card__image-container">
-        {/* Imagen placeholder — se reemplazará cuando se integre la tabla archivos */}
-        <div
-          className="property-card__img"
-          style={{
-            backgroundColor: "#2a2a3e",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#888",
-            fontSize: "0.9rem",
-            minHeight: "200px",
-          }}
-        >
-          Sin imagen
-        </div>
-
-        {/* Badges */}
-        <div className="property-card__badges">
-          {property.estado_publicacion && (
-            <span className="badge badge--featured">
-              {property.estado_publicacion}
-            </span>
-          )}
-          {property.tipo && (
-            <span className="badge badge--type">{property.tipo}</span>
-          )}
-        </div>
-
-        {/* Botón de favorito */}
-        <div className="property-card__actions">
-          <button className="action-btn" title="Agregar a favoritos">
-            <img src={heartIcon} alt="Favorito" className="icon-svg" />
-          </button>
-        </div>
+    <>
+      <div className="property-cards-grid">
+        {properties.map((property, idx) => (
+          <div className="property-card" key={idx}>
+            <div className="property-card__image-container">
+              <img
+                src={property.image}
+                alt={property.title}
+                className="property-card__img"
+              />
+              {/* Badges */}
+              <div className="property-card__badges">
+                {property.badges.map((badge, i) => (
+                  <span key={i} className={`badge badge--${badge === "Destacada" ? "featured" : "type"}`}>{badge}</span>
+                ))}
+              </div>
+              {/* Action Buttons */}
+              <div className="property-card__actions">
+                <button className="action-btn" title="Agregar a favoritos">
+                  <img src={heartIcon} alt="Favorito" className="icon-svg" />
+                </button>
+              </div>
+            </div>
+            <div className="property-card__body">
+              <h3 className="property-card__title">{property.title}</h3>
+              <p className="property-card__location">{property.location}</p>
+              <p className="property-card__price">{property.price}</p>
+              <div className="property-card__features">
+                {property.features.map((f, i) => (
+                  <span className="feature-item" key={i}>
+                    <img src={homeIcon} alt={f.label} className="feature-icon" />
+                    {f.value}
+                  </span>
+                ))}
+              </div>
+              <button className="property-card__btn-details" onClick={() => navigate("/property-details")}>Ver detalles</button>
+            </div>
+          </div>
+        ))}
       </div>
-
-      <div className="property-card__body">
-        <h3 className="property-card__title">
-          {property.titulo ?? "Sin título"}
-        </h3>
-        {property.estrato && (
-          <p className="property-card__location">Estrato {property.estrato}</p>
-        )}
-
-        <p className="property-card__price">{formatPrecio(property.precio)}</p>
-
-        <div className="property-card__features">
-          {property.habitaciones !== null && (
-            <span className="feature-item">
-              <img src={homeIcon} alt="Habitaciones" className="feature-icon" />
-              {property.habitaciones}
-            </span>
-          )}
-          {property.banos !== null && (
-            <span className="feature-item">
-              <img src={homeIcon} alt="Baños" className="feature-icon" />
-              {property.banos}
-            </span>
-          )}
-          {property.area !== null && (
-            <span className="feature-item">
-              <img src={homeIcon} alt="Área" className="feature-icon" />
-              {property.area} m²
-            </span>
-          )}
-        </div>
-
-        <button className="property-card__btn-details">Ver detalles</button>
-      </div>
-    </div>
+    </>
   );
 }
 

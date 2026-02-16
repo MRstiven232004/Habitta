@@ -7,9 +7,11 @@ import RegisterPropertyPage from "@presentation/pages/registerpropeties/Register
 import Promotion from "@presentation/pages/promotion/Promotion";
 import ToolsPage from "@presentation/pages/tools/ToolsPage";
 import Auth from "@presentation/pages/auth/Auth";
-import Notification from "@presentation/pages/notification/NotificationPage/Notification";
-import MyPanel from "@presentation/pages/myPanel/MyPanel";
-
+import "./presentation/pages/registerpropeties/styleRegisterP.css";
+import "./presentation/pages/promotion/promotion.css";
+import "./presentation/pages/properties/styleProperties.css";
+import Favorites from "@presentation/pages/favorites/Favorites";
+import PropertyDetailsPage from "@presentation/pages/propertyDetails/PropertyDetailsPage";
 // Componente Principal de la Aplicación
 function App() {
   return (
@@ -34,11 +36,11 @@ function App() {
           {/* Autenticación */}
           <Route path="auth" element={<Auth />} />
 
-          {/* Notificaciones */}
-          <Route path="notification" element={<Notification />} />
+          {/* Ruta de Favoritos */}
+          <Route path="favorites" element={<Favorites />} />
 
-          {/* Panel Personal */}
-          <Route path="myPanel" element={<MyPanel />} />
+            {/* Ruta de Detalles de Propiedad */}
+          <Route path="propertydetails" element={<PropertyDetailsPage />} />
         </Route>
       </Routes>
     </>
