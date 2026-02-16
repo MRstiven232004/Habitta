@@ -12,6 +12,7 @@ import "./presentation/pages/promotion/promotion.css";
 import "./presentation/pages/properties/styleProperties.css";
 import Favorites from "@presentation/pages/favorites/Favorites";
 import PropertyDetailsPage from "@presentation/pages/propertyDetails/PropertyDetailsPage";
+import mypanel from "@presentation/pages/mypanel/mypanel";
 // Componente Principal de la Aplicación
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
 
           {/* Ruta de Favoritos */}
           <Route path="favorites" element={<Favorites />} />
+
+          <Route path="mypanel" element={<Mypanel/>}
 
             {/* Ruta de Detalles de Propiedad */}
           <Route path="propertydetails" element={<PropertyDetailsPage />} />
