@@ -36,6 +36,9 @@ function App() {
           {/* Autenticación */}
           <Route path="auth" element={<Auth />} />
 
+          {/* Favoritos */}
+          <Route path="favorites" element={<Favorites />} />
+
           {/* Mi Panel */}
           <Route path="mypanel" element={<Mypanel />} />
 
