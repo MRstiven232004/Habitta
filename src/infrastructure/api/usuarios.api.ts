@@ -1,59 +1,31 @@
 import { supabase } from "@infrastructure/supabase/client";
-import type { Usuario } from "@domain/entities/Usuario";
-
-/** Datos editables del perfil */
-export interface UpdatePerfilInput {
-  nombre?: string;
-  telefono?: string | null;
-  descripcion?: string | null;
-  fotoperfil?: string | null;
-}
-
-/** Estadísticas del dashboard del usuario */
-export interface UserStats {
-  totalPropiedades: number;
-  totalFavoritos: number;
-}
 
 /** API de usuarios — operaciones sobre la tabla `usuarios` */
 export const usuariosApi = {
-  /** RF09 — Actualizar perfil del usuario */
-  updatePerfil: async (
-    idusuario: number,
-    datos: UpdatePerfilInput,
-  ): Promise<Usuario> => {
-    const { data, error } = await supabase
-      .from("usuarios")
-      .update(datos)
-      .eq("idusuario", idusuario)
-      .select()
-      .single();
+    /** Cambiar el plan del usuario (gratuito ↔ premium) */
+    cambiarPlan: async (
+        idusuario: number,
+        nuevoPlan: "gratuito" | "premium",
+    ): Promise<void> => {
+        const { error } = await supabase
+            .from("usuarios")
+            .update({ plan: nuevoPlan })
+            .eq("idusuario", idusuario);
 
-    if (error) throw new Error(`Error actualizando perfil: ${error.message}`);
-    return data;
-  },
+        if (error) throw new Error(`Error cambiando plan: ${error.message}`);
+    },
 
-  /** RF57 — Obtener estadísticas del usuario para el dashboard */
-  getStats: async (idusuario: number): Promise<UserStats> => {
-    // Contar propiedades del usuario
-    const { count: totalPropiedades, error: errProps } = await supabase
-      .from("propiedades")
-      .select("idpropiedad", { count: "exact", head: true })
-      .eq("idusuario", idusuario);
+    /** Obtener el plan actual del usuario */
+    obtenerPlan: async (
+        idusuario: number,
+    ): Promise<"gratuito" | "premium"> => {
+        const { data, error } = await supabase
+            .from("usuarios")
+            .select("plan")
+            .eq("idusuario", idusuario)
+            .single();
 
-    if (errProps) throw new Error(errProps.message);
-
-    // Contar favoritos del usuario
-    const { count: totalFavoritos, error: errFavs } = await supabase
-      .from("favoritos")
-      .select("idfavorito", { count: "exact", head: true })
-      .eq("idusuario", idusuario);
-
-    if (errFavs) throw new Error(errFavs.message);
-
-    return {
-      totalPropiedades: totalPropiedades ?? 0,
-      totalFavoritos: totalFavoritos ?? 0,
-    };
-  },
+        if (error) throw new Error(`Error obteniendo plan: ${error.message}`);
+        return data.plan ?? "gratuito";
+    },
 };
