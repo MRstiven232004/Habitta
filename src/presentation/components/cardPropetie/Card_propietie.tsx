@@ -12,6 +12,10 @@ interface CardPropetieProps {
   isFav?: boolean;
   /** Callback al hacer click en el corazón */
   onToggleFav?: (idpropiedad: number) => void;
+  /** ¿El usuario actual es el dueño de esta propiedad? */
+  isOwner?: boolean;
+  /** Callback al hacer click en eliminar */
+  onDelete?: (idpropiedad: number) => void;
 }
 
 // Componente de tarjeta de propiedad individual
@@ -19,6 +23,8 @@ function CardPropetie({
   property,
   isFav = false,
   onToggleFav,
+  isOwner = false,
+  onDelete,
 }: CardPropetieProps) {
   const navigate = useNavigate();
 
@@ -58,8 +64,39 @@ function CardPropetie({
             ))}
           </div>
         )}
-        {/* Botón de favoritos (siempre visible) */}
+        {/* Botones de acción */}
         <div className="property-card__actions">
+          {/* Botón de eliminar (solo para propiedades propias) */}
+          {isOwner && onDelete && (
+            <button
+              className="action-btn action-btn--delete"
+              title="Eliminar propiedad"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(property.idpropiedad);
+              }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M3 6h18" />
+                <path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+              </svg>
+            </button>
+          )}
+
+          {/* Botón de favoritos (siempre visible) */}
           <button
             className={`action-btn ${isFav ? "action-btn--fav-active" : ""}`}
             title={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
