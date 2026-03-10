@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { propertyService } from "@application/services/propertyService";
 import { usuariosApi } from "@infrastructure/api/usuarios.api";
 import type { Property } from "@domain/entities/Property";
@@ -12,6 +12,7 @@ const fallbackImage = "/images/auth/dream_home_1.png";
 
 function PropertyDetailsPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
   const [vendedor, setVendedor] = useState<Usuario | null>(null);
   const [caracteristicas, setCaracteristicas] = useState<Caracteristica[]>([]);
@@ -19,15 +20,20 @@ function PropertyDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [imgIndex, setImgIndex] = useState(0);
-  const [showContactModal, setShowContactModal] = useState(false); // Added showContactModal
+  const [showContactModal, setShowContactModal] = useState(false);
 
   // Tabs
   const [activeTab, setActiveTab] = useState("Descripción");
   const [showLightbox, setShowLightbox] = useState(false);
   const tabNames = ["Descripción", "Características", "Ubicación"];
 
-  // Imagen seleccionada (primera foto o fallback)
+  // Imagen/video seleccionado (primera foto o fallback)
   const selectedImg = fotos.length > 0 ? fotos[imgIndex] : fallbackImage;
+
+  // Detectar si una URL es un video MP4
+  const isVideo = (url: string) =>
+    url.toLowerCase().includes(".mp4") ||
+    url.toLowerCase().includes("/video/");
 
   // Navegación de imágenes
   const prevImg = () => setImgIndex((i) => (i > 0 ? i - 1 : fotos.length - 1));
@@ -119,26 +125,30 @@ function PropertyDetailsPage() {
       <div className="property-details-main">
         {/* Sección de Imágenes */}
         <div className="property-details-image-section">
-          {(() => {
-            const isVid = selectedImg.toLowerCase().includes(".mp4") || selectedImg.toLowerCase().includes("/video/");
-            return isVid ? (
-              <video
-                src={selectedImg}
-                controls
-                className="property-details-main-img"
-                style={{ cursor: "pointer", objectFit: "contain", background: "#000" }}
-                onClick={() => setShowLightbox(true)}
-              />
-            ) : (
-              <img
-                src={selectedImg}
-                alt={property.titulo || "Propiedad"}
-                className="property-details-main-img"
-                onClick={() => setShowLightbox(true)}
-                style={{ cursor: "zoom-in" }}
-              />
-            );
-          })()}
+          {/* Imagen o Video principal */}
+          {isVideo(selectedImg) ? (
+            <video
+              src={selectedImg}
+              className="property-details-main-img"
+              controls
+              playsInline
+              style={{
+                cursor: "default",
+                background: "#000",
+                objectFit: "contain",
+                maxHeight: "480px",
+                width: "100%",
+              }}
+            />
+          ) : (
+            <img
+              src={selectedImg}
+              alt={property.titulo || "Propiedad"}
+              className="property-details-main-img"
+              onClick={() => setShowLightbox(true)}
+              style={{ cursor: "zoom-in" }}
+            />
+          )}
           <button
             className="property-details-arrow left"
             aria-label="Anterior"
@@ -251,28 +261,27 @@ function PropertyDetailsPage() {
 
         {/* Miniaturas */}
         <div className="property-details-thumbnails">
-          {fotos.map((img, idx) => {
-            const isVid = img.toLowerCase().includes(".mp4") || img.toLowerCase().includes("/video/");
-            return isVid ? (
+          {fotos.map((media, idx) => (
+            isVideo(media) ? (
               <div
                 key={idx}
-                className={`property-details-thumbnail${imgIndex === idx ? " selected" : ""}`}
+                className={`property-details-thumbnail video-thumb${imgIndex === idx ? " selected" : ""}`}
                 onClick={() => setImgIndex(idx)}
-                style={{ position: "relative", cursor: "pointer" }}
+                title="Video"
               >
-                <video src={img} muted preload="metadata" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "inherit" }} />
-                <span style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: "1.2rem", pointerEvents: "none" }}>▶️</span>
+                <video src={media} muted playsInline preload="metadata" />
+                <span className="thumb-play-icon">▶</span>
               </div>
             ) : (
               <img
                 key={idx}
-                src={img}
+                src={media}
                 alt={`Miniatura ${idx + 1}`}
                 className={`property-details-thumbnail${imgIndex === idx ? " selected" : ""}`}
                 onClick={() => setImgIndex(idx)}
               />
-            );
-          })}
+            )
+          ))}
         </div>
 
         {/* Info rápida */}
@@ -515,36 +524,23 @@ function PropertyDetailsPage() {
               </div>
             )}
           </div>
-          {/* Botones de contacto (RF50/RF49) */}
           <div className="property-details-contact-buttons">
-            {/* WhatsApp — usa el tel del vendedor si está disponible */}
-            {(() => {
-              const tel = vendedor?.telefono
-                ? vendedor.telefono.replace(/\D/g, "")
-                : "57";
-              const prefix = tel.startsWith("57") || tel.length > 10 ? "" : "57";
-              const num = `${prefix}${tel}`;
-              const msg = encodeURIComponent(
-                `¡Hola! Vi tu propiedad "${property.titulo ?? ""}" en Habitta y me interesa. ¿Podemos hablar?`
-              );
-              return (
-                <a
-                  href={`https://wa.me/${num}?text=${msg}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="property-details-info-whatsapp-btn"
-                  aria-label="Contactar por WhatsApp"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.129.555 4.13 1.527 5.862L0 24l6.302-1.504A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.013-1.375l-.36-.213-3.735.891.933-3.607-.235-.371A9.818 9.818 0 1112 21.818z"/>
-                  </svg>
-                  WhatsApp
-                </a>
-              );
-            })()}
+            {/* Botón WhatsApp */}
+            <a
+              href={`https://wa.me/57?text=${encodeURIComponent(`Hola! Estoy interesado en la propiedad "${property.titulo ?? ""}". ¿Podrías darme más información? https://habitta.app/propertydetailspage/${property.idpropiedad}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="property-details-info-whatsapp-btn"
+              aria-label="Contactar por WhatsApp"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.129.555 4.13 1.527 5.862L0 24l6.302-1.504A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.013-1.375l-.36-.213-3.735.891.933-3.607-.235-.371A9.818 9.818 0 1112 21.818z"/>
+              </svg>
+              WhatsApp
+            </a>
 
-            {/* Llamar */}
+            {/* Botón Llamar */}
             <button
               className="property-details-info-call-btn"
               onClick={() => setShowContactModal(true)}
@@ -556,9 +552,10 @@ function PropertyDetailsPage() {
               Llamar
             </button>
 
-            {/* Mensaje (PQRS / contacto) */}
+            {/* Botón Mensaje interno */}
             <button
               className="property-details-info-msg-btn"
+              onClick={() => navigate(`/messages?property=${property.idpropiedad}`)}
               aria-label="Enviar mensaje al vendedor"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -568,7 +565,7 @@ function PropertyDetailsPage() {
             </button>
           </div>
 
-          {/* Modal de llamada */}
+          {/* Modal de contacto (cuando no hay teléfono registrado) */}
           {showContactModal && (
             <div className="contact-modal-overlay" onClick={() => setShowContactModal(false)}>
               <div className="contact-modal" onClick={(e) => e.stopPropagation()}>
@@ -579,33 +576,22 @@ function PropertyDetailsPage() {
                   </svg>
                 </div>
                 <h3>Contactar al vendedor</h3>
-                {vendedor?.telefono ? (
-                  <>
-                    <p>Llama directamente al vendedor:</p>
-                    <a
-                      href={`tel:${vendedor.telefono.replace(/\D/g, "")}`}
-                      className="contact-modal__msg-btn"
-                      style={{ display: "block", textDecoration: "none" }}
-                    >
-                      📞 {vendedor.telefono}
-                    </a>
-                  </>
-                ) : (
-                  <>
-                    <p>El vendedor no ha registrado un número de teléfono aún.</p>
-                    <p style={{ color: "#aaa", fontSize: "0.9rem" }}>Contáctalo por WhatsApp para coordinar la llamada.</p>
-                    <button className="contact-modal__msg-btn" onClick={() => setShowContactModal(false)}>
-                      Entendido
-                    </button>
-                  </>
-                )}
+                <p>El vendedor no ha registrado un número de teléfono aún.</p>
+                <p style={{color: '#aaa', fontSize: '0.9rem'}}>Contáctalo por WhatsApp para coordinar la llamada.</p>
+                <button
+                  className="contact-modal__msg-btn"
+                  onClick={() => setShowContactModal(false)}
+                >
+                  Entendido
+                </button>
               </div>
             </div>
           )}
+
         </div>{/* /property-details-info-box */}
 
-
         {/* Metadatos */}
+
         <div className="property-details-meta-box">
           <div className="property-details-meta-row">
             <span>ID de propiedad:</span>
@@ -632,13 +618,15 @@ function PropertyDetailsPage() {
             >
               &times;
             </button>
-            {(selectedImg.toLowerCase().includes(".mp4") || selectedImg.toLowerCase().includes("/video/")) ? (
+            {isVideo(selectedImg) ? (
               <video
                 src={selectedImg}
+                className="property-lightbox__img"
                 controls
                 autoPlay
-                className="property-lightbox__img"
-                style={{ maxHeight: "85vh", maxWidth: "90vw", borderRadius: "12px" }}
+                playsInline
+                style={{ background: "#000" }}
+                onClick={(e) => e.stopPropagation()}
               />
             ) : (
               <img

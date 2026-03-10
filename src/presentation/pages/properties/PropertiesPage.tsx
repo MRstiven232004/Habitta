@@ -34,10 +34,11 @@ function PropertiesPage() {
   }, []);
 
   // Estado local para los inputs del formulario antes de aplicarlos, inicializado con URL
+  const precioMaxFromUrl = searchParams.get("precioMax") ? Number(searchParams.get("precioMax")) : 7560000000;
   const [localFilters, setLocalFilters] = useState({
     searchTerm: searchParams.get("searchTerm") || "",
     tipoPropiedad: searchParams.get("tipoPropiedad") || "",
-    precioMax: 7560000000,
+    precioMax: precioMaxFromUrl,
     areaMax: 870,
     habitaciones: undefined as number | undefined,
     banos: undefined as number | undefined,
@@ -49,10 +50,11 @@ function PropertiesPage() {
   const { properties, loading, error, updateFilters } = useProperties({
     searchTerm: searchParams.get("searchTerm") || undefined,
     tipoPropiedad: searchParams.get("tipoPropiedad") || undefined,
-    precioMax: 7560000000,
+    precioMax: precioMaxFromUrl,
     areaMax: 870,
     sortBy: "Relevancia"
   });
+
 
   const handleApplyFilters = () => {
     // Al aplicar, enviamos el estado al hook, lo cual provocará un refetch
