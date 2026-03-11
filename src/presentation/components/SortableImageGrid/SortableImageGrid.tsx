@@ -1,10 +1,10 @@
 /**
- * SortableImageGrid — RF19
+ * SortableImageGrid — RF19/RF20
  *
- * Grid de imágenes con drag-and-drop para reordenar.
+ * Grid de imágenes/videos con drag-and-drop para reordenar.
  * Usa @dnd-kit/sortable para arrastrar y soltar.
- * La primera imagen se convierte en la foto principal.
- * Click en una imagen abre un lightbox a pantalla completa.
+ * La primera imagen/video se convierte en la foto principal.
+ * Click en un media abre un lightbox a pantalla completa.
  */
 
 import React, { useState } from "react";
@@ -27,23 +27,39 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import "./sortableImageGrid.css";
 
+/** Detectar si una URL es un video (blob de video o URL terminada en .mp4) */
+function isVideoUrl(url: string): boolean {
+  if (url.startsWith("blob:")) {
+    // No podemos saber el tipo sólo por la URL de blob, así que pasamos el flag
+    return false; // se gestiona por el map de { url, isVideo }
+  }
+  return url.includes(".mp4") || url.includes("video/");
+}
+
+interface MediaItem {
+  url: string;
+  isVideo: boolean;
+}
+
 interface SortableImageGridProps {
   previews: string[];
   onReorder: (newOrder: string[]) => void;
   onRemove: (index: number) => void;
+  /** Permite al padre indicar cuáles URLs son videos (por índice) */
+  videoFlags?: boolean[];
 }
 
-/** Tarjeta individual de imagen sorteable */
-function SortableImage({
-  url,
+/** Tarjeta individual de media sorteable */
+function SortableMedia({
+  item,
   index,
   onRemove,
   onExpand,
 }: {
-  url: string;
+  item: MediaItem;
   index: number;
   onRemove: (i: number) => void;
-  onExpand: (url: string) => void;
+  onExpand: (item: MediaItem) => void;
 }) {
   const {
     attributes,
@@ -52,7 +68,7 @@ function SortableImage({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: url });
+  } = useSortable({ id: item.url });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -68,8 +84,9 @@ function SortableImage({
       ref={setNodeRef}
       style={style}
       className={`sortable-img-item ${isDragging ? "sortable-img-item--dragging" : ""}`}
-      onClick={() => onExpand(url)}
+      onClick={() => onExpand(item)}
     >
+      {/* Handle de drag */}
       <div
         className="sortable-img-item__drag"
         {...attributes}
@@ -85,21 +102,39 @@ function SortableImage({
           <circle cx="15" cy="19" r="1.5" />
         </svg>
       </div>
-      {isVideo ? (
+
+      {/* Media: imagen o miniatura de video */}
+      {item.isVideo ? (
         <div className="sortable-img-item__video-thumb">
-          <video src={url} className="sortable-img-item__img" muted preload="metadata" />
-          <span className="sortable-img-item__play-icon">▶️</span>
+          <video
+            src={item.url}
+            className="sortable-img-item__img"
+            muted
+            playsInline
+            preload="metadata"
+          />
+          {/* Ícono de play centrado */}
+          <div className="sortable-img-item__play-icon">
+            <svg viewBox="0 0 24 24" fill="white" width="32" height="32">
+              <circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.5)" />
+              <polygon points="9,7 19,12 9,17" fill="white" />
+            </svg>
+          </div>
         </div>
       ) : (
         <img
-          src={url}
+          src={item.url}
           alt={`Foto ${index + 1}`}
           className="sortable-img-item__img"
         />
       )}
+
       {index === 0 && (
-        <span className="sortable-img-item__badge">Principal</span>
+        <span className="sortable-img-item__badge">
+          {item.isVideo ? "🎬 Video" : "Principal"}
+        </span>
       )}
+
       <button
         type="button"
         className="sortable-img-item__remove"
@@ -107,7 +142,7 @@ function SortableImage({
           e.stopPropagation();
           onRemove(index);
         }}
-        title="Eliminar foto"
+        title={item.isVideo ? "Eliminar video" : "Eliminar foto"}
       >
         ✕
       </button>
@@ -115,14 +150,21 @@ function SortableImage({
   );
 }
 
-/** Grid de imágenes con drag-and-drop + lightbox */
+/** Grid de imágenes/videos con drag-and-drop + lightbox */
 const SortableImageGrid: React.FC<SortableImageGridProps> = ({
   previews,
   onReorder,
   onRemove,
+  videoFlags,
 }) => {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<MediaItem | null>(null);
+
+  // Construir lista de MediaItems combinando URL e indicador de video
+  const mediaItems: MediaItem[] = previews.map((url, i) => ({
+    url,
+    isVideo: videoFlags ? (videoFlags[i] ?? isVideoUrl(url)) : isVideoUrl(url),
+  }));
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -156,10 +198,10 @@ const SortableImageGrid: React.FC<SortableImageGridProps> = ({
       >
         <SortableContext items={previews} strategy={rectSortingStrategy}>
           <div className="sortable-image-grid">
-            {previews.map((url, i) => (
-              <SortableImage
-                key={url}
-                url={url}
+            {mediaItems.map((item, i) => (
+              <SortableMedia
+                key={item.url}
+                item={item}
                 index={i}
                 onRemove={onRemove}
                 onExpand={setLightbox}
@@ -181,18 +223,17 @@ const SortableImageGrid: React.FC<SortableImageGridProps> = ({
       {/* Lightbox */}
       {lightbox && createPortal(
         <div className="sortable-lightbox" onClick={() => setLightbox(null)}>
-          {(lightbox.toLowerCase().includes(".mp4") || lightbox.toLowerCase().includes("/video/")) ? (
+          {lightbox.isVideo ? (
             <video
-              src={lightbox}
+              src={lightbox.url}
+              className="sortable-lightbox__img"
               controls
               autoPlay
-              className="sortable-lightbox__img"
               onClick={(e) => e.stopPropagation()}
-              style={{ maxHeight: "85vh", maxWidth: "90vw", borderRadius: "12px" }}
             />
           ) : (
             <img
-              src={lightbox}
+              src={lightbox.url}
               alt="Vista ampliada"
               className="sortable-lightbox__img"
               onClick={(e) => e.stopPropagation()}
