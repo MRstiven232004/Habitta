@@ -10,8 +10,9 @@ export interface Usuario {
   estadocuenta: string | null;
   ultimaactividad: string | null;
   fechalogin: string | null;
-  fecharegistro?: string | null;
   plan: "gratuito" | "premium";
+  rol?: string | null;
+  created_at?: string;
 }
 
 /** Crear usuario — sin campos auto-generados */
@@ -21,6 +22,6 @@ export type CreateUsuarioInput = Omit<
   | "estadocuenta"
   | "ultimaactividad"
   | "fechalogin"
-  | "fecharegistro"
   | "plan"
+  | "rol"
 >;

@@ -32,7 +32,7 @@ function MapUpdater({ center }: { center: [number, number] }) {
 // Componente para manejar clics en el mapa
 function MapClickHandler({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number) => void }) {
   useMapEvents({
-    click(e: any) {
+    click(e: L.LeafletMouseEvent) {
       onLocationSelect(e.latlng.lat, e.latlng.lng);
     },
   });
@@ -42,7 +42,7 @@ function MapClickHandler({ onLocationSelect }: { onLocationSelect: (lat: number,
 export function MapSelector({ initialLat, initialLng, city, department, address, onLocationSelect }: MapSelectorProps) {
   // Centro por defecto (un lugar promedio de Colombia, Ej. Bogotá)
   const defaultCenter: [number, number] = [4.6097, -74.0817];
-  
+
   const [position, setPosition] = useState<[number, number] | null>(
     initialLat && initialLng ? [initialLat, initialLng] : null
   );
@@ -57,16 +57,16 @@ export function MapSelector({ initialLat, initialLng, city, department, address,
   useEffect(() => {
     const geocodeLocation = async () => {
       if (!city || !department) return;
-      
+
       const query = `${address ? address + ", " : ""}${city}, ${department}, Colombia`;
-      
+
       // Evitar re-geocodificar si la consulta de texto es idéntica a la última exitosa o a la inicial
       if (query === lastQuery) return;
-      
+
       try {
         const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
         const data = await res.json();
-        
+
         if (data && data.length > 0) {
           const lat = parseFloat(data[0].lat);
           const lon = parseFloat(data[0].lon);
@@ -99,11 +99,11 @@ export function MapSelector({ initialLat, initialLng, city, department, address,
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <MapUpdater center={center} />
-        <MapClickHandler 
+        <MapClickHandler
           onLocationSelect={(lat, lng) => {
             setPosition([lat, lng]);
             onLocationSelect(lat, lng);
-          }} 
+          }}
         />
         {position && <Marker position={position} />}
       </MapContainer>

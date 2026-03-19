@@ -1,121 +1,148 @@
-import "../promotion/promotion.css";
-import { useState } from "react";
-import PublicationBasic from "./modals/publicationBasic/PublicationBasic";
-import PublicationOutstanding from "./modals/publicationOutstanding/PublicationOutstanding";
-import { useToast } from "@application/context/ToastContext";
+import "./promotion.css";
+import { useAuth } from "@application/context/AuthContext";
 
-// Componente de Promoción
+// Enlace de pago de Stripe (Payment Link)
+const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/test_fZu9AVexa1v3dAW5DxdIA00";
+
+const FREE_FEATURES = [
+  { label: "Publicaciones activas", value: "3", yes: true },
+  { label: "Fotos por propiedad", value: "5", yes: true },
+  { label: "Aparece en búsquedas", value: "", yes: true },
+  { label: "Destacado en búsquedas", value: "", yes: false },
+  { label: "Posición top en resultados", value: "", yes: false },
+  { label: "Notificaciones prioritarias", value: "", yes: false },
+  { label: "Estadísticas avanzadas", value: "", yes: false },
+  { label: "Herramienta financiera", value: "Básica", yes: true },
+  { label: "Soporte", value: "Estándar", yes: true },
+  { label: "Mapa destacado", value: "", yes: false },
+  { label: "Reportes descargables", value: "", yes: false },
+];
+
+const PREMIUM_FEATURES = [
+  { label: "Publicaciones activas", value: "Ilimitadas", yes: true },
+  { label: "Fotos por propiedad", value: "25", yes: true },
+  { label: "Aparece en búsquedas", value: "", yes: true },
+  { label: "Destacado en búsquedas", value: "7 días", yes: true },
+  { label: "Posición top en resultados", value: "", yes: true },
+  { label: "Notificaciones prioritarias", value: "", yes: true },
+  { label: "Estadísticas avanzadas", value: "", yes: true },
+  { label: "Herramienta financiera PRO", value: "Completa", yes: true },
+  { label: "Soporte prioritario", value: "24 h", yes: true },
+  { label: "Mapa destacado", value: "", yes: true },
+  { label: "Reportes descargables", value: "", yes: true },
+];
+
 function Promotion() {
-  const [isBasicModalOpen, setIsBasicModalOpen] = useState(false);
-  const [isOutstandingModalOpen, setIsOutstandingModalOpen] = useState(false);
-  const { showToast } = useToast();
+  const { usuario } = useAuth();
 
-  const openBasicModal = () => setIsBasicModalOpen(true);
-  const closeBasicModal = () => setIsBasicModalOpen(false);
-
-  const openOutstandingModal = () => setIsOutstandingModalOpen(true);
-  const closeOutstandingModal = () => setIsOutstandingModalOpen(false);
-
-  const handlePublishSuccess = () => {
-    showToast("Propiedad publicada exitosamente", "success");
-    setIsBasicModalOpen(false);
-    setIsOutstandingModalOpen(false);
+  const handlePremium = () => {
+    // Añadimos el ID del usuario como referencia para identificar el pago en el webhook
+    const clientRef = usuario?.idusuario ?? "guest";
+    window.location.href = `${STRIPE_PAYMENT_LINK}?client_reference_id=${clientRef}`;
   };
+
+  const isPremium = usuario?.plan === "premium";
 
   return (
     <div className="promotion-container">
-      <h1 className="promotion-title">Planes de Publicación</h1>
+      <p className="promotion-eyebrow">Planes de Habitta</p>
+      <h1 className="promotion-title">Elige tu plan</h1>
       <p className="promotion-subtitle">
-        Aumenta la visibilidad de tu propiedad
+        Publica tus propiedades y llega a más compradores con el plan que mejor se adapte a ti.
       </p>
 
       <div className="promotion-cards">
-        {/* Plan Básico */}
+        {/* ── Plan Gratis ──────────────────────── */}
         <div className="promotion-card basic">
-          <div className="plan-icon-container" style={{ padding: "18px" }}>
-            <svg
-              className="plan-icon"
-              width="74"
-              height="74"
-              viewBox="0 0 44 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M35.9439 3.55218V11.5503M39.5431 7.55122H32.3448M19.7784 5.17979C19.8555 4.72111 20.0745 4.30683 20.3976 4.00871C20.7207 3.71059 21.1274 3.54739 21.5474 3.54739C21.9673 3.54739 22.374 3.71059 22.6971 4.00871C23.0202 4.30683 23.2392 4.72111 23.3163 5.17979L25.2077 16.2931C25.342 17.0832 25.6876 17.81 26.1993 18.3786C26.711 18.9471 27.3651 19.3311 28.0762 19.4804L38.0782 21.5819C38.491 21.6675 38.8639 21.9109 39.1322 22.2699C39.4005 22.6289 39.5474 23.0808 39.5474 23.5474C39.5474 24.014 39.4005 24.4659 39.1322 24.8249C38.8639 25.1839 38.491 25.4273 38.0782 25.5129L28.0762 27.6144C27.3651 27.7637 26.711 28.1476 26.1993 28.7162C25.6876 29.2848 25.342 30.0116 25.2077 30.8017L23.3163 41.915C23.2392 42.3737 23.0202 42.788 22.6971 43.0861C22.374 43.3842 21.9673 43.5474 21.5474 43.5474C21.1274 43.5474 20.7207 43.3842 20.3976 43.0861C20.0745 42.788 19.8555 42.3737 19.7784 41.915L17.887 30.8017C17.7527 30.0116 17.4071 29.2848 16.8954 28.7162C16.3837 28.1476 15.7296 27.7637 15.0185 27.6144L5.01652 25.5129C4.60371 25.4273 4.23086 25.1839 3.96255 24.8249C3.69424 24.4659 3.54736 24.014 3.54736 23.5474C3.54736 23.0808 3.69424 22.6289 3.96255 22.2699C4.23086 21.9109 4.60371 21.6675 5.01652 21.5819L15.0185 19.4804C15.7296 19.3311 16.3837 18.9471 16.8954 18.3786C17.4071 17.81 17.7527 17.0832 17.887 16.2931L19.7784 5.17979ZM10.7499 39.5436C10.7499 41.7522 9.13856 43.5426 7.15081 43.5426C5.16306 43.5426 3.55167 41.7522 3.55167 39.5436C3.55167 37.335 5.16306 35.5445 7.15081 35.5445C9.13856 35.5445 10.7499 37.335 10.7499 39.5436Z"
-                stroke="#00C4B4"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <div className="plan-header">
+            <div className="plan-icon-container">
+              <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M50 20 C52 40 60 48 80 50 C60 52 52 60 50 80 C48 60 40 52 20 50 C40 48 48 40 50 20 Z"
+                  stroke="#35d2db" strokeWidth="7" strokeLinejoin="round"
+                />
+                <path d="M70 25 L82 25 M76 19 L76 31" stroke="#35d2db" strokeWidth="7" strokeLinecap="round" />
+              </svg>
+            </div>
+            <h2>Gratis</h2>
           </div>
-          <h2>Publicación Básica</h2>
-          <p className="card-subtitle">Publicación estándar de tu propiedad</p>
-          <p className="price">$0</p>
-          <p className="price-label">Por 30 días</p>
+          <p className="card-subtitle">Para comenzar a publicar tus propiedades</p>
+
+          <div className="price-block">
+            <p className="price"><sup>$</sup>0</p>
+            <p className="price-label">Para siempre</p>
+          </div>
+
+          <hr className="promo-divider" />
+          <p className="features-heading">Qué incluye</p>
+
           <ul className="feature-list">
-            <li>
-              <span className="check basic">✔</span> Publicación por 30 días
-            </li>
-            <li>
-              <span className="check basic">✔</span> Hasta 7 fotos
-            </li>
-            <li>
-              <span className="check basic">✔</span> Aparece en búsquedas
-            </li>
+            {FREE_FEATURES.map((f) => (
+              <li key={f.label}>
+                <span className={`feat-check ${f.yes ? "yes" : "no"}`}>
+                  {f.yes ? "✓" : "✕"}
+                </span>
+                <span className="feat-label">{f.label}</span>
+                {f.value && <span className="feat-value">{f.value}</span>}
+              </li>
+            ))}
           </ul>
-          <button className="select-button orange" onClick={openBasicModal}>
-            Seleccionar Plan
+
+          <button
+            className="select-button free"
+            disabled={!isPremium && !!usuario}
+            onClick={() => {/* plan actual */}}
+          >
+            {!usuario ? "Crear cuenta gratis" : isPremium ? "Cambiar a Gratis" : "Plan actual"}
           </button>
         </div>
 
-        {/* Plan Destacado */}
+        {/* ── Plan Premium ─────────────────────── */}
         <div className="promotion-card featured">
-          <div className="plan-icon-container" style={{ backgroundColor: "#E6F9F8", padding: "10px" }}>
-            <svg width="109" height="111" viewBox="0 0 109 111" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "105px", height: "105px" }}>
-              <path d="M32.7305 60.5987V58.5987L32.7241 58.5987L32.7305 60.5987ZM30.6079 56.4433L29.219 55.0042C29.1761 55.0457 29.135 55.089 29.096 55.134L30.6079 56.4433ZM57.5477 30.44L58.9367 31.879C58.9639 31.8527 58.9904 31.8257 59.0161 31.7979L57.5477 30.44ZM59.888 31.6127L61.7813 32.2573C61.7904 32.2304 61.799 32.2034 61.807 32.1761L59.888 31.6127ZM54.6633 46.9597L56.521 47.7006C56.5337 47.6688 56.5455 47.6367 56.5566 47.6043L54.6633 46.9597ZM57.2212 50.4013V48.4013L57.2151 48.4013L57.2212 50.4013ZM76.2695 50.4013V52.4013L76.2759 52.4013L76.2695 50.4013ZM78.3921 54.5567L79.781 55.9958C79.8239 55.9543 79.865 55.911 79.904 55.866L78.3921 54.5567ZM51.4523 80.56L50.0633 79.121C50.0361 79.1473 50.0096 79.1743 49.9839 79.2021L51.4523 80.56ZM49.112 79.3873L47.2188 78.7427C47.2096 78.7696 47.201 78.7966 47.193 78.8239L49.112 79.3873ZM54.3367 64.0403L52.479 63.2994C52.4663 63.3312 52.4545 63.3633 52.4434 63.3957L54.3367 64.0403ZM54.0208 61.6913L55.626 60.4982L54.0208 61.6913ZM51.7788 60.5987V62.5987L51.7849 62.5987L51.7788 60.5987ZM32.7305 60.5987L32.7241 58.5987C32.5611 58.5992 32.4096 58.5559 32.2883 58.4846L31.2745 60.2086L30.2607 61.9326C31.0117 62.3742 31.8699 62.6014 32.7369 62.5987L32.7305 60.5987ZM31.2745 60.2086L32.2883 58.4846C32.1679 58.4138 32.0905 58.3239 32.0477 58.24L30.2666 59.1498L28.4855 60.0595C28.8872 60.846 29.5088 61.4904 30.2607 61.9326L31.2745 60.2086ZM30.2666 59.1498L32.0477 58.24C32.0057 58.1578 31.9935 58.0762 32.0031 58.0005L30.0188 57.7502L28.0345 57.4999C27.9232 58.3824 28.0829 59.2714 28.4855 60.0595L30.2666 59.1498ZM30.0188 57.7502L32.0031 58.0005C32.0127 57.9241 32.0468 57.8369 32.1199 57.7525L30.6079 56.4433L29.096 55.134C28.5202 55.7989 28.1457 56.6181 28.0345 57.4999L30.0188 57.7502ZM30.6079 56.4433L31.9969 57.8823L58.9367 31.879L57.5477 30.44L56.1588 29.001L29.219 55.0042L30.6079 56.4433ZM57.5477 30.44L59.0161 31.7979C58.909 31.9137 58.7832 31.9723 58.6701 31.9919L58.3287 30.0213L57.9873 28.0506C57.2672 28.1754 56.5906 28.5293 56.0794 29.0821L57.5477 30.44ZM58.3287 30.0213L58.6701 31.9919C58.5575 32.0114 58.4369 31.9964 58.3218 31.9388L59.2178 30.1507L60.1138 28.3626C59.4545 28.0322 58.7067 27.926 57.9873 28.0506L58.3287 30.0213ZM59.2178 30.1507L58.3218 31.9388C58.2051 31.8803 58.0845 31.7715 58.0082 31.6051L59.8263 30.7717L61.6444 29.9384C61.3245 29.2406 60.7748 28.6938 60.1138 28.3626L59.2178 30.1507ZM59.8263 30.7717L58.0082 31.6051C57.9304 31.4354 57.9141 31.236 57.969 31.0493L59.888 31.6127L61.807 32.1761C62.0255 31.4318 61.9657 30.6394 61.6444 29.9384L59.8263 30.7717ZM59.888 31.6127L57.9947 30.9682L52.77 46.3152L54.6633 46.9597L56.5566 47.6043L61.7813 32.2573L59.888 31.6127ZM54.6633 46.9597L52.8056 46.2188C52.5251 46.9222 52.4291 47.6845 52.5303 48.4372L54.5125 48.1707L56.4946 47.9041C56.4858 47.8386 56.4934 47.7699 56.521 47.7006L54.6633 46.9597ZM54.5125 48.1707L52.5303 48.4372C52.6315 49.1896 52.9249 49.8975 53.374 50.5018L54.9792 49.3088L56.5844 48.1157C56.5304 48.0431 56.5035 47.9701 56.4946 47.9041L54.5125 48.1707ZM54.9792 49.3088L53.374 50.5018C53.8225 51.1052 54.411 51.5853 55.0804 51.9115L55.9566 50.1137L56.8327 48.3158C56.7212 48.2614 56.6389 48.1891 56.5844 48.1157L54.9792 49.3088ZM55.9566 50.1137L55.0804 51.9115C55.7495 52.2376 56.4857 52.4036 57.2273 52.4013L57.2212 50.4013L57.2151 48.4013C57.0764 48.4018 56.9447 48.3703 56.8327 48.3158L55.9566 50.1137ZM57.2212 50.4013V52.4013H76.2695V50.4013V48.4013H57.2212V50.4013ZM76.2695 50.4013L76.2759 52.4013C76.4389 52.4008 76.5904 52.4441 76.7117 52.5154L77.7255 50.7914L78.7393 49.0674C77.9883 48.6258 77.1301 48.3986 76.2631 48.4013L76.2695 50.4013ZM77.7255 50.7914L76.7117 52.5154C76.8321 52.5862 76.9095 52.6761 76.9523 52.76L78.7334 51.8502L80.5145 50.9405C80.1128 50.154 79.4912 49.5096 78.7393 49.0674L77.7255 50.7914ZM78.7334 51.8502L76.9523 52.76C76.9943 52.8422 77.0065 52.9238 76.9969 52.9995L78.9812 53.2498L80.9655 53.5001C81.0768 52.6177 80.9171 51.7286 80.5145 50.9405L78.7334 51.8502ZM78.9812 53.2498L76.9969 52.9995C76.9873 53.076 76.9532 53.1631 76.8801 53.2475L78.3921 54.5567L79.904 55.866C80.4798 55.2011 80.8543 54.3819 80.9655 53.5001L78.9812 53.2498ZM78.3921 54.5567L77.0031 53.1177L50.0633 79.121L51.4523 80.56L52.8412 81.999L79.781 55.9958L78.3921 54.5567ZM51.4523 80.56L49.9839 79.2021C50.091 79.0863 50.2168 79.0277 50.3299 79.0081L50.6713 80.9787L51.0127 82.9494C51.7328 82.8246 52.4094 82.4707 52.9206 81.9179L51.4523 80.56ZM50.6713 80.9787L50.3299 79.0081C50.4424 78.9886 50.5631 79.0036 50.6782 79.0613L49.7822 80.8493L48.8862 82.6374C49.5455 82.9678 50.2933 83.074 51.0127 82.9494L50.6713 80.9787ZM49.7822 80.8493L50.6782 79.0613C50.7949 79.1197 50.9155 79.2285 50.9918 79.3949L49.1737 80.2283L47.3556 81.0616C47.6755 81.7594 48.2252 82.3062 48.8862 82.6374L49.7822 80.8493ZM49.1737 80.2283L50.9918 79.3949C51.0696 79.5646 51.0859 79.764 51.031 79.9507L49.112 79.3873L47.193 78.8239C46.9745 79.5682 47.0343 80.3606 47.3556 81.0616L49.112 79.3873ZM49.112 79.3873L51.0053 80.0318L56.23 64.6848L54.3367 64.0403L52.4434 63.3957L47.2188 78.7427L49.112 79.3873ZM54.3367 64.0403L56.1944 64.7812C56.4749 64.0779 56.5709 63.3155 56.4697 62.5628L54.4875 62.8293L52.5054 63.0959C52.5142 63.1614 52.5066 63.2301 52.479 63.2994L54.3367 64.0403ZM54.4875 62.8293L56.4697 62.5628C56.3685 61.8104 56.0751 61.1025 55.626 60.4982L54.0208 61.6913L52.4156 62.8843C52.4696 62.9569 52.4965 63.0299 52.5054 63.0959L54.4875 62.8293ZM54.0208 61.6913L55.626 60.4982C55.1775 59.8948 54.589 59.4147 53.9196 59.0885L53.0434 60.8863L52.1673 62.6842C52.2788 62.7386 52.3611 62.8109 52.4156 62.8843L54.0208 61.6913ZM53.0434 60.8863L53.9196 59.0885C53.2505 58.7624 52.5143 58.5964 51.7727 58.5987L51.7788 60.5987L51.7849 62.5987C51.9236 62.5982 52.0553 62.6297 52.1673 62.6842L53.0434 60.8863ZM51.7788 60.5987V58.5987H32.7305V60.5987V62.5987H51.7788V60.5987Z" fill="#00C4B4" />
-            </svg>
+          <span className="promo-badge">⚡ Popular</span>
+
+          <div className="plan-header">
+            <div className="plan-icon-container premium">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M13 2L6 12H11L10 22L18 11H13L14 2.5"
+                  stroke="#35d2db" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <h2>Premium</h2>
           </div>
-          <h2>Publicación Destacada</h2>
-          <p className="card-subtitle">
-            Tu propiedad destacada en los resultados
-          </p>
-          <p className="price">$199</p>
-          <p className="price-label">Por 30 días</p>
+          <p className="card-subtitle">Máxima visibilidad para vender más rápido</p>
+
+          <div className="price-block">
+            <p className="price"><sup>$</sup>29.900</p>
+            <p className="price-label">COP / mes · cancela cuando quieras</p>
+          </div>
+
+          <hr className="promo-divider" />
+          <p className="features-heading">Todo lo de Gratis, más:</p>
+
           <ul className="feature-list">
-            <li>
-              <span className="check featured">✔</span> Publicación por 30 días
-            </li>
-            <li>
-              <span className="check featured">✔</span> Hasta 15 fotos
-            </li>
-            <li>
-              <span className="check featured">✔</span> Aparece como destacada
-            </li>
-            <li>
-              <span className="check featured">✔</span> Mayor visibilidad
-            </li>
-            <li>
-              <span className="check featured">✔</span> Etiqueta de destacado
-            </li>
+            {PREMIUM_FEATURES.map((f) => (
+              <li key={f.label}>
+                <span className={`feat-check ${f.yes ? "yes" : "no"}`}>
+                  {f.yes ? "✓" : "✕"}
+                </span>
+                <span className="feat-label">{f.label}</span>
+                {f.value && <span className="feat-value">{f.value}</span>}
+              </li>
+            ))}
           </ul>
-          <button className="select-button teal" onClick={openOutstandingModal}>
-            Seleccionar Plan
+
+          <button
+            className="select-button premium-btn"
+            onClick={handlePremium}
+            disabled={isPremium}
+          >
+            {isPremium ? "✓ Plan activo" : "Obtener Premium"}
           </button>
         </div>
       </div>
-
-      <PublicationBasic
-        isOpen={isBasicModalOpen}
-        onClose={closeBasicModal}
-        onPublish={handlePublishSuccess}
-      />
-      <PublicationOutstanding
-        isOpen={isOutstandingModalOpen}
-        onClose={closeOutstandingModal}
-        onPublish={handlePublishSuccess}
-      />
     </div>
   );
 }

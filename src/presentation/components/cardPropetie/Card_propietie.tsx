@@ -40,10 +40,19 @@ function CardPropetie({
   // Determinar badges según el estado de publicación y tipo de operación
   const badges = [];
   if (property.estadoPublicacion === "destacada") badges.push("Destacada");
-  if (property.tipoOperacion) badges.push(property.tipoOperacion);
+  if (property.tipoOperacion) {
+    const label = property.tipoOperacion.toLowerCase() === "arriendo" ? "Alquiler" : property.tipoOperacion;
+    badges.push(label);
+  }
 
   return (
     <div className="property-card">
+      {/* Listón de Destacada (Premium o Manual) - Efecto 3D */}
+      {(property.ownerPlan === "premium" || property.estadoPublicacion === "destacada") && (
+        <div className="premium-ribbon">
+          <span>Destacada</span>
+        </div>
+      )}
       <div className="property-card__image-container">
         {/* Si la foto principal es un video MP4, mostrar fallback image para no distorsionar la card */}
         {(() => {
@@ -58,6 +67,27 @@ function CardPropetie({
           );
         })()}
 
+        {/* Listón de Destacada (Premium) se movió al nivel de la card para efecto 3D */}
+
+
+        {/* Badges especiales por estado */}
+        {property.estadoPublicacion === "pending_manual" && (
+          <div className="property-card__status-badge" style={{
+            position: "absolute",
+            top: "8px",
+            right: "8px",
+            background: "#f59e0b",
+            color: "#fff",
+            padding: "4px 8px",
+            borderRadius: "4px",
+            fontSize: "0.75rem",
+            fontWeight: "bold",
+            zIndex: 10
+          }}>
+            En revisión (normalmente &lt; 12h)
+          </div>
+        )}
+
         {/* Badges */}
         {badges.length > 0 && (
           <div className="property-card__badges">
@@ -65,6 +95,7 @@ function CardPropetie({
               <span
                 key={i}
                 className={`badge badge--${badge === "Destacada" ? "featured" : "type"}`}
+                style={{ textTransform: 'capitalize' }}
               >
                 {badge}
               </span>
@@ -178,10 +209,10 @@ function CardPropetie({
         </div>
       </div>
       <div className="property-card__body">
-        <h3 className="property-card__title">
+        <h3 className="property-card__title" style={{ textTransform: 'capitalize' }}>
           {property.titulo || "Sin título"}
         </h3>
-        <p className="property-card__location">
+        <p className="property-card__location" style={{ textTransform: 'capitalize' }}>
           {[property.ciudad, property.departamento]
             .filter(Boolean)
             .join(", ") || "Ubicación no especificada"}
@@ -189,7 +220,7 @@ function CardPropetie({
 
         {/* Contenido expandible en hover */}
         <div className="property-card__expandable">
-          <p className="property-card__type">
+          <p className="property-card__type" style={{ textTransform: 'capitalize' }}>
             {property.tipoPropiedad || "Tipo no especificado"}
           </p>
           <p className="property-card__price">{formatPrice(property.precio)}</p>
