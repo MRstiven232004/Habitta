@@ -13,14 +13,7 @@ const TIPO_ICONS: Record<string, string> = {
   mensaje: "💬",
 };
 
-const TIPO_LABELS: Record<string, string> = {
-  propiedad_publicada: "Propiedad Publicada",
-  estado_propiedad: "Estado de Propiedad",
-  nueva_coincidencia: "Nueva Coincidencia",
-  favorito: "Favorito",
-  cuenta: "Cuenta",
-  mensaje: "Mensaje",
-};
+
 
 function formatFecha(iso: string | null): string {
   if (!iso) return "";
