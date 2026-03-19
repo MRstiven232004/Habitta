@@ -11,9 +11,9 @@ const TIPO_ICONS: Record<string, string> = {
 };
 
 const TIPO_LABELS: Record<string, string> = {
-  propiedad_publicada: "Propiedad publicada",
-  estado_propiedad: "Estado de propiedad",
-  nueva_coincidencia: "Nueva coincidencia",
+  propiedad_publicada: "Propiedad Publicada",
+  estado_propiedad: "Estado de Propiedad",
+  nueva_coincidencia: "Nueva Coincidencia",
 };
 
 function formatFecha(iso: string | null): string {

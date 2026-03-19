@@ -1,5 +1,5 @@
 import "./cardStyle.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import type { Property } from "@domain/entities/Property";
 
 const fallbackImage = "/images/auth/dream_home_1.png";
@@ -294,14 +294,12 @@ function CardPropetie({
               </span>
             )}
           </div>
-          <button
+          <Link
+            to={`/propertydetailspage/${property.idpropiedad}`}
             className="property-card__btn-details"
-            onClick={() =>
-              navigate(`/propertydetailspage/${property.idpropiedad}`)
-            }
           >
             Ver detalles
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { useAuth } from "@application/context/AuthContext";
 import UserModal from "../userModal/UserModal";
 import ModalN from "../../pages/notification/Modal/ModalN";
 
-const logoSF = "/images/logoSF.png";
+const logoSF = "/images/logoCF.png";
 const notificationIcon = "/notification-9-svgrepo-com.svg";
 
 // Componente de Barra de Navegación
@@ -54,11 +54,14 @@ function Navbar() {
         {/* Logo Section */}
         <div className="navbar__logo">
           <Link to="/">
-            <img
-              src={logoSF}
-              alt="Logo de Habitta"
-              className="navbar__logo-img"
-            />
+            <div className="navbar__logo-container">
+              <img
+                src={logoSF}
+                alt="Logo de Habitta"
+                className="navbar__logo-img"
+              />
+              <span className="navbar__logo-text">Habitta</span>
+            </div>
           </Link>
         </div>
 

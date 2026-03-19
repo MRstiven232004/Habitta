@@ -150,6 +150,7 @@
   margin-bottom: 6px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -244,7 +245,7 @@
 /* Details Button */
 .property-card__btn-details {
   background: #2dd4bf;
-  color: white;
+  color: white !important;
   border: none;
   padding: 12px;
   border-radius: 12px;
@@ -254,6 +255,15 @@
   width: 100%;
   margin-top: auto;
   transition: background 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.property-card__btn-details:active {
+  transform: scale(0.98);
 }
 
 .property-card__btn-details:hover {

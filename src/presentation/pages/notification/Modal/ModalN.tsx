@@ -48,17 +48,17 @@ const ModalN: FC<ModalNProps> = ({ isOpen, onClose }) => {
   const notifications: Notification[] = [
     {
       id: 1,
-      title: "Nueva Propiedad disponible",
+      title: "Nueva Propiedad Disponible",
       description:
-        "se ha publicado una nueva propiedad que coincide con tus búsquedas",
+        "Se ha publicado una nueva propiedad que coincide con tus búsquedas",
       time: "Hace 29 minutos",
       type: "property",
     },
     {
       id: 2,
       title: "Mensaje Recibido",
-      description: "tienes un nueva mensaje sobre tu propiedad",
-      time: "Hace 1 horas",
+      description: "Tienes un nuevo mensaje sobre tu propiedad",
+      time: "Hace 1 hora",
       type: "message",
     },
   ];
