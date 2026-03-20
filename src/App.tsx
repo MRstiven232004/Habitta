@@ -22,6 +22,8 @@ const RegisterPropertyPage = lazy(
   () => import("@presentation/pages/registerpropeties/RegisterProperty"),
 );
 const Promotion = lazy(() => import("@presentation/pages/promotion/Promotion"));
+const PaymentSuccess = lazy(() => import("@presentation/pages/promotion/PaymentSuccess"));
+const PaymentCancel = lazy(() => import("@presentation/pages/promotion/PaymentCancel"));
 const ToolsPage = lazy(() => import("@presentation/pages/tools/ToolsPage"));
 const Auth = lazy(() => import("@presentation/pages/auth/Auth"));
 const Favorites = lazy(() => import("@presentation/pages/favorites/Favorites"));
@@ -102,6 +104,22 @@ const router = createBrowserRouter(
         element={
           <Suspense fallback={<PageLoader />}>
             <Promotion />
+          </Suspense>
+        }
+      />
+      <Route
+        path="payment-success"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <PaymentSuccess />
+          </Suspense>
+        }
+      />
+      <Route
+        path="payment-cancel"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <PaymentCancel />
           </Suspense>
         }
       />

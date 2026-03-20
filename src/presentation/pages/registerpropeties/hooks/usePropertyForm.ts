@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@application/context/AuthContext";
 import { propertyService } from "@application/services/propertyService";
+import { propertyApi } from "@infrastructure/api/properties.api";
 import type { CreatePropertyInput } from "@domain/entities/Property";
 import type { Caracteristica } from "@domain/entities/Caracteristica";
 import { PHOTO_LIMIT, VIDEO_LIMIT, VIDEO_TYPES } from "@domain/entities/FotoPropiedad";
@@ -87,6 +88,10 @@ export function usePropertyForm(editId?: number) {
   // Modo edición
   const isEditMode = Boolean(editId);
   const [loadingEdit, setLoadingEdit] = useState(isEditMode);
+
+  // Límites Premium
+  const PROPS_LIMIT_FREE = 3;
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
   // Cargar características al montar
   useEffect(() => {
@@ -374,6 +379,19 @@ export function usePropertyForm(editId?: number) {
     setError(null);
     setSuccess(false);
 
+    // Bloqueo antes del submit si alcanzó el límite
+    if (!isEditMode && usuario?.plan !== "premium") {
+      try {
+        const count = await propertyApi.countActivasByUsuario(usuario!.idusuario);
+        if (count >= PROPS_LIMIT_FREE) {
+          setShowLimitModal(true);
+          return;
+        }
+      } catch (err) {
+        console.error("Error validando límite pre-submit", err);
+      }
+    }
+
     const err = validar();
     if (err) {
       setError(err);
@@ -505,5 +523,10 @@ export function usePropertyForm(editId?: number) {
     setCoordenadas,
     handleToggle,
     usuario,
+    // Límites y Promociones Premium
+    showLimitModal,
+    setShowLimitModal,
+    PROPS_LIMIT_FREE,
+    hasReachedFreeLimit: showLimitModal,
   };
 }
