@@ -581,6 +581,7 @@ function PropertiesPage() {
                         property={property}
                         isFav={isFavorito(property.idpropiedad)}
                         onToggleFav={usuario ? toggleFavorito : undefined}
+                        compact={viewMode === 'list'}
                       />
                     ))}
                   </div>

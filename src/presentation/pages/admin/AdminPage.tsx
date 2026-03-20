@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AdminPropertiesTab from "./components/AdminPropertiesTab";
 import AdminUsersTab from "./components/AdminUsersTab";
+import AdminReportsTab from "./components/AdminReportsTab";
 import "./AdminPage.css";
 
 function AdminPage() {
@@ -45,13 +46,7 @@ function AdminPage() {
 
         {activeTab === "propiedades" && <AdminPropertiesTab />}
 
-        {activeTab === "reportes" && (
-          <div className="admin-tab-content">
-            <h2>Gestión de reportes</h2>
-            <p>Revisa y gestiona reportes de propiedades.</p>
-            <div className="admin-empty-state" style={{marginTop:"30px", border:"1px dashed #e5e7eb", padding:"40px", color:"#aaa", borderRadius:"12px"}}>No hay reportes.</div>
-          </div>
-        )}
+        {activeTab === "reportes" && <AdminReportsTab />}
 
         {activeTab === "auditoria" && (
           <div className="admin-tab-content">

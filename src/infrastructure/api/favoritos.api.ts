@@ -38,4 +38,14 @@ export const favoritosApi = {
 
     if (error) throw new Error(error.message);
   },
+  /** Obtener el conteo total de favoritos de una propiedad */
+  getFavoritesCountByProperty: async (idpropiedad: number): Promise<number> => {
+    const { count, error } = await supabase
+      .from("favoritos")
+      .select("*", { count: "exact", head: true })
+      .eq("idpropiedad", idpropiedad);
+
+    if (error) throw new Error(error.message);
+    return count ?? 0;
+  },
 };

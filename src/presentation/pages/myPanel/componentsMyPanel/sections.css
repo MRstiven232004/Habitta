@@ -105,29 +105,32 @@
 }
 
 .estado-filter__btn {
-  padding: 8px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
+  padding: 10px 20px;
+  border: 2px solid #f1f5f9;
+  border-radius: 99px; /* Pill style */
   background: #fff;
-  color: #6b7280;
-  font-size: 0.85rem;
-  font-weight: 500;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
 .estado-filter__btn:hover {
   border-color: #35d2db;
   color: #35d2db;
+  background: #f0fdfa;
 }
 
 .estado-filter__btn--active {
-  background: #35d2db;
+  background: linear-gradient(135deg, #35d2db, #33bb9d);
   color: #fff;
-  border-color: #35d2db;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(53, 210, 219, 0.3);
 }
 
 .estado-filter__count {

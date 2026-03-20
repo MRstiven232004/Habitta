@@ -64,7 +64,7 @@ const ModalN: FC<ModalNProps> = ({
     }
   }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!isOpen) return null;
+  // Render persistente para animación de salida
 
   const handleVerTodas = () => {
     onClose();
@@ -81,7 +81,7 @@ const ModalN: FC<ModalNProps> = ({
   };
 
   return (
-    <div className="modal-content modal-animated" ref={modalRef}>
+    <div className={`modal-content modal-animated ${isOpen ? "open" : ""}`} ref={modalRef}>
       <header className="modal-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <h2 className="modal-title">Notificaciones</h2>
         {notificaciones.length > 0 && (

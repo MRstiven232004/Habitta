@@ -41,127 +41,137 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar__inner">
-        {/* Botón hamburguesa (visible en móvil) */}
-        <button
-          className="navbar__hamburger"
-          onClick={() => setMobileMenuOpen(prev => !prev)}
-          aria-label="Menú"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a202c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            {mobileMenuOpen ? (
-              <>
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </>
-            ) : (
-              <>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </>
-            )}
-          </svg>
-        </button>
+        {/* Contenedor Izquierdo: Logo + Hamburguesa */}
+        <div className="navbar__left">
+          <div className="navbar__logo">
+            <Link to={usuario?.rol === "admin" ? "/admin" : "/"}>
+              <div className="navbar__logo-container">
+                <img
+                  src="/images/logo_mobile.png"
+                  alt="Logo Habitta"
+                  className="navbar__logo-img"
+                />
+              </div>
+            </Link>
+          </div>
 
-        {/* Logo */}
-        <div className="navbar__logo">
-          <Link to={usuario?.rol === "admin" ? "/admin" : "/"}>
-            <div className="navbar__logo-container">
-              <img
-                src={logoSF}
-                alt="Logo de Habitta"
-                className="navbar__logo-img"
-              />
-              <span className="navbar__logo-text">Habitta</span>
-            </div>
-          </Link>
+          <button
+            className="navbar__hamburger"
+            onClick={() => setMobileMenuOpen(prev => !prev)}
+            aria-label="Menú"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a202c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {mobileMenuOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </>
+              )}
+            </svg>
+          </button>
         </div>
 
-        {/* Navigation Links */}
-        {usuario?.rol !== "admin" && (
-          <nav className="navbar__links">
-            <ul>
-              <li>
-                <Link className={`navbar_link ${location.pathname === "/" ? "active" : ""}`} to="/">
-                  <img className="navbar_icon" src="/icons/UI/navbaricons/house-01-svgrepo-com.svg" alt="Inicio" />
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link className={`navbar_link ${location.pathname === "/properties" ? "active" : ""}`} to="/properties">
-                  <img className="navbar_icon" src="/icons/UI/navbaricons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg" alt="Propiedades" />
-                  Propiedades
-                </Link>
-              </li>
-              <li>
-                <Link className={`navbar_link ${location.pathname === "/favorites" ? "active" : ""}`} to={usuario ? "/favorites" : "/auth"}>
-                  <img className="navbar_icon" src="/icons/UI/navbaricons/hearth-svgrepo-com.svg" alt="Favoritos" />
-                  Favoritos
-                </Link>
-              </li>
-              <li>
-                <Link className={`navbar_link ${location.pathname === "/tools" ? "active" : ""}`} to={usuario ? "/tools" : "/auth"}>
-                  <img className="navbar_icon" src="/icons/UI/navbaricons/calculator-svgrepo-com.svg" alt="Herramientas" />
-                  Herramientas
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        )}
+        {/* Navegación y Botón Central de Publicar */}
+        <div className="navbar__center">
+          {usuario?.rol !== "admin" && (
+            <nav className="navbar__links">
+              <ul>
+                <li>
+                  <Link className={`navbar_link ${location.pathname === "/" ? "active" : ""}`} to="/">
+                    <img className="navbar_icon" src="/icons/UI/navbaricons/house-01-svgrepo-com.svg" alt="Inicio" />
+                    Inicio
+                  </Link>
+                </li>
+                <li>
+                  <Link className={`navbar_link ${location.pathname === "/properties" ? "active" : ""}`} to="/properties">
+                    <img className="navbar_icon" src="/icons/UI/navbaricons/glass-magnifier-search-zoom-alert-notification-svgrepo-com.svg" alt="Propiedades" />
+                    Propiedades
+                  </Link>
+                </li>
+                <li>
+                  <Link className={`navbar_link ${location.pathname === "/favorites" ? "active" : ""}`} to={usuario ? "/favorites" : "/auth"}>
+                    <img className="navbar_icon" src="/icons/UI/navbaricons/hearth-svgrepo-com.svg" alt="Favoritos" />
+                    Favoritos
+                  </Link>
+                </li>
+                <li>
+                  <Link className={`navbar_link ${location.pathname === "/tools" ? "active" : ""}`} to={usuario ? "/tools" : "/auth"}>
+                    <img className="navbar_icon" src="/icons/UI/navbaricons/calculator-svgrepo-com.svg" alt="Herramientas" />
+                    Herramientas
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          )}
 
-        {/* Notifications */}
-        {usuario?.rol !== "admin" && (
-          <div style={{ position: "relative" }}>
-            <div
-              id="notificationButton"
-              onClick={toggleNotificationModal}
-              style={{ cursor: "pointer", position: "relative", display: "inline-flex" }}
-            >
-              <img id="notificationIcon" src={notificationIcon} alt="Notificaciones" />
-              {noLeidasCount > 0 && (
-                <span style={{
-                  position: "absolute",
-                  top: "-6px",
-                  right: "-6px",
-                  background: "#e74c3c",
-                  color: "#fff",
-                  borderRadius: "50%",
-                  width: "18px",
-                  height: "18px",
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  lineHeight: 1,
-                  pointerEvents: "none",
-                  border: "2px solid #fff",
-                }}>
-                  {noLeidasCount > 9 ? "9+" : noLeidasCount}
-                </span>
-              )}
-            </div>
-            {/* Pasar estado del único hook como props — evita canal Realtime duplicado */}
-            <ModalN
-              isOpen={isNotificationModalOpen}
-              onClose={closeNotificationModal}
-              notificaciones={notificaciones}
-              noLeidasCount={noLeidasCount}
-              onMarcarTodasLeidas={marcarTodasLeidas}
-            />
-          </div>
-        )}
+          {/* Botón Publicar Central (Móvil) */}
+          {usuario && usuario.rol !== "admin" && (
+             <Link to="/registerpropeties" className="navbar__publish-btn navbar__publish-btn--center">
+                Publicar
+             </Link>
+          )}
+        </div>
 
-        {/* User Actions */}
+        {/* User Actions & Notifications */}
         <div className="navbar__actions">
+          {/* Notifications */}
+          {usuario?.rol !== "admin" && (
+            <div style={{ position: "relative" }}>
+              <div
+                id="notificationButton"
+                onClick={toggleNotificationModal}
+                style={{ cursor: "pointer", position: "relative", display: "inline-flex" }}
+              >
+                <img id="notificationIcon" src={notificationIcon} alt="Notificaciones" />
+                {noLeidasCount > 0 && (
+                  <span style={{
+                    position: "absolute",
+                    top: "-6px",
+                    right: "-6px",
+                    background: "#e74c3c",
+                    color: "#fff",
+                    borderRadius: "50%",
+                    width: "18px",
+                    height: "18px",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    lineHeight: 1,
+                    pointerEvents: "none",
+                    border: "2px solid #fff",
+                  }}>
+                    {noLeidasCount > 9 ? "9+" : noLeidasCount}
+                  </span>
+                )}
+              </div>
+              <ModalN
+                isOpen={isNotificationModalOpen}
+                onClose={closeNotificationModal}
+                notificaciones={notificaciones}
+                noLeidasCount={noLeidasCount}
+                onMarcarTodasLeidas={marcarTodasLeidas}
+              />
+            </div>
+          )}
+
           {usuario ? (
-            <>
+            <div className="navbar__user-actions-container" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {/* Botón Publicar Desktop (se oculta en móvil vía CSS) */}
               {usuario?.rol !== "admin" && (
-                <Link to="/registerpropeties" className="navbar__publish-btn">
-                  + Publicar
+                <Link to="/registerpropeties" className="navbar__publish-btn navbar__publish-btn--desktop">
+                  Publicar
                 </Link>
               )}
-              <div style={{ position: "relative" }}>
+
+              <div style={{ position: 'relative' }}>
                 {/* id="userModalTrigger" allows UserModal to ignore clicks on this button */}
                 <button
                   id="userModalTrigger"
@@ -183,7 +193,7 @@ function Navbar() {
                 </button>
                 <UserModal isOpen={isUserModalOpen} onClose={closeUserModal} />
               </div>
-            </>
+            </div>
           ) : (
             <Link to="/auth" className="navbar__login-btn">
               Iniciar Sesión

@@ -278,36 +278,7 @@ span.text-primary {
   font-size: 1.2rem;
 }
 
-/* Búsquedas Populares */
-.popular-searches {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.popular-searches .label {
-  font-size: 0.9rem;
-  color: var(--text-gray);
-}
-
-.popular-searches .tags button {
-  background: #f3f4f6;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  color: var(--text-dark);
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-right: 8px;
-  margin-bottom: 4px;
-}
-
-.popular-searches .tags button:hover {
-  background: #e5e7eb;
-}
+/* Búsquedas Populares - Eliminado por solicitud del usuario */
 
 /* Estadísticas Hero */
 .hero-stats {

@@ -21,18 +21,23 @@
   align-items: center;
   justify-content: space-between;
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
   padding: 8px 16px;
   box-sizing: border-box;
+}
+
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: flex-start;
 }
 
 .navbar__logo {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: auto;
-  height: 80px;
 }
+
 .navbar__logo-container {
   display: flex;
   align-items: center;
@@ -41,7 +46,9 @@
 }
 
 .navbar__logo-img {
-  max-width: 50px;
+  max-width: 25%;
+  max-height: 80%;
+  width: auto;
   height: auto;
   object-fit: contain;
 }
@@ -50,9 +57,20 @@
   font-family: "Bolt", sans-serif;
   font-size: 1.6rem;
   font-weight: 800;
-  color: #1a202c;
-  letter-spacing: -0.8px;
-  line-height: 1;
+  color: #35d2db;
+  letter-spacing: -0.5px;
+  display: block;
+}
+
+.navbar__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+}
+
+.navbar__publish-btn--center {
+  display: none; /* Oculto en desktop */
 }
 
 /* Navigation Links */
@@ -163,7 +181,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-left: 8px;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 /* Publish Button */
@@ -334,7 +353,7 @@
 /* Laptop — 1200px */
 @media (max-width: 1200px) {
   .navbar__inner {
-    max-width: 1000px;
+    max-width: 100%;
     padding: 8px 12px;
   }
 
@@ -369,45 +388,75 @@
   }
 }
 
-/* Tablet Vertical — 768px (Menú hamburguesa) */
+/* Tablet Vertical — 768px (Nuevo Layout Solicitado) */
 @media (max-width: 768px) {
   .navbar__inner {
-    border-radius: 0;
-    padding: 8px 10px;
-    height: 70px;
-    position: relative;
+    height: 75px;
+    padding: 8px 12px;
+  }
+
+  /* Izquierda: Logo + Hamburguesa */
+  .navbar__left {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .navbar__logo-img {
-    max-width: min(40px, 10vw);
+    max-width: 40px;
   }
 
   .navbar__logo-text {
-    font-size: clamp(1rem, 4vw, 1.4rem);
-  }
-
-  .navbar__links {
-    display: none;
+    display: none; /* Se oculta el texto para dar espacio */
   }
 
   .navbar__hamburger {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    order: -1;
-    margin-right: 8px;
+    order: 2; /* Después del logo */
   }
 
-  .navbar__publish-btn {
-    display: none;
+  /* Centro: Botón Publicar */
+  .navbar__center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar__links {
+    display: none; /* Los links van al menú hamburguesa */
+  }
+
+  .navbar__publish-btn--center {
+    display: flex;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 10px rgba(53, 210, 219, 0.2);
+  }
+
+  .navbar__publish-btn--desktop {
+    display: none; /* Se oculta el de la derecha */
+  }
+
+  /* Derecha: Notif + User */
+  .navbar__actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
   }
 
   .navbar__user-btn {
-    padding: 3px 8px 3px 3px;
+    padding: 3px;
+    border-radius: 50%;
   }
 
   .navbar__user-name {
     display: none;
+  }
+
+  #notificationIcon {
+    width: 30px;
   }
 }
 

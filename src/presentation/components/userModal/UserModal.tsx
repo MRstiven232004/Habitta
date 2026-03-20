@@ -56,8 +56,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  // No renderizar si el modal no está abierto
-  if (!isOpen) return null;
+  // El componente se renderiza siempre para permitir animación de salida con CSS
 
   /**
    * Maneja el cierre de sesión real con Supabase Auth
@@ -118,7 +117,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
   );
 
   return (
-    <div className="user-modal" ref={modalRef}>
+    <div className={`user-modal ${isOpen ? "open" : ""}`} ref={modalRef}>
       <div className="user-modal__container">
         {/* Lista de opciones del menú */}
         <ul className="user-modal__menu">

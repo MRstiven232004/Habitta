@@ -72,7 +72,14 @@ export const propertyApi = {
       .order("fechacreacion", { ascending: false });
 
     if (error) throw new Error(error.message);
-    return (data ?? []).map(mapPropertyWithPhoto);
+    const formatted = (data ?? []).map(mapPropertyWithPhoto);
+    
+    // Ordenamiento final: Destacadas primero
+    return formatted.sort((a, b) => {
+      const aFeatured = a.estadoPublicacion === "destacada" ? 1 : 0;
+      const bFeatured = b.estadoPublicacion === "destacada" ? 1 : 0;
+      return bFeatured - aFeatured;
+    });
   },
 
   /** Todas las propiedades aplicando filtros dinámicos */

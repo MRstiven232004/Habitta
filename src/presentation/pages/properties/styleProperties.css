@@ -81,25 +81,27 @@
 
 .select-tipo-figma-custom {
   background: #ffffff;
-  border: 1.5px solid #e2e8f0;
+  border: 1.8px solid #35d2db; /* Color de marca más prominente */
   border-radius: 12px;
   padding: 0 16px;
   height: 48px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #1e293b;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-width: 140px;
-  transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(53, 210, 219, 0.08);
 }
 
 .select-tipo-figma-custom:hover {
-  border-color: #cbd5e1;
-  background: #f8fafc;
+  border-color: #33bb9d;
+  background: #f0fdfa;
+  box-shadow: 0 6px 16px rgba(53, 210, 219, 0.15);
+  transform: translateY(-1px);
 }
 
 /* Panel Genérico para Dropdowns Custom */
