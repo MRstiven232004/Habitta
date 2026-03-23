@@ -86,6 +86,9 @@ function PropertyDetailsPage() {
           setCaracteristicas(cars);
           setFotos(imgs);
 
+          // Registrar visita real (ignoramos await para no bloquear la UI)
+          propertyService.incrementPropertyViews(Number(id));
+
           // Obtener el teléfono del vendedor
           if (prop.idusuario) {
             const { data: seller } = await supabase
