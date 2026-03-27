@@ -188,27 +188,36 @@ Habitta/
 
 ### Gestión de Propiedades
 
-- Exploración y búsqueda de propiedades disponibles
-- Registro de nuevas propiedades con formularios validados
-- Sistema de favoritos para guardar propiedades de interés
+- Exploración y búsqueda de propiedades disponibles con filtros intuitivos.
+- Registro de nuevas propiedades con formularios modernizados (Floating Labels).
+- Sistema de favoritos para guardar propiedades de interés.
 
 ### Planes de Promoción
 
-- Planes Basic, Premium y Ultra para promocionar propiedades
-- Modales interactivos para selección de planes
-- Visualización clara de beneficios por plan
+- Planes Basic, Premium y Ultra para promocionar propiedades.
+- Modales interactivos para selección de planes con visualización de beneficios.
+
+### Auditorías y Administración
+
+- Sistema de logs de auditoría con filtros por tipo de acción.
+- Gestión de usuarios y visualización de fechas de registro.
 
 ### Sistema de Notificaciones
 
-- Notificaciones en tiempo real
-- Modal de vista rápida de notificaciones desde el Navbar
-- Página dedicada para gestión completa de notificaciones
+- Notificaciones globales y por usuario en tiempo real.
+- Modal de vista rápida y página de gestión completa.
+
+### Optimización y Rendimiento
+
+- **Aceleración por Hardware**: Uso de `will-change` en animaciones críticas.
+- **Rendimiento Visual**: Optimización de filtros CSS y sombras.
+- **Eficiencia**: Eliminación de código muerto y centralización de estilos.
 
 ### Panel de Usuario
 
-- Navegación por pestañas (Mis Propiedades, Favoritos)
-- Modal de perfil de usuario
-- Interfaz responsive y moderna
+- Navegación por pestañas (Mis Propiedades, Favoritos).
+- Gestión de perfil completa con cambio de correo y contraseña.
+- Interfaz premium y 100% responsive.
 
 ---
 

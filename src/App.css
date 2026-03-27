@@ -44,3 +44,139 @@ ul {
     transform: rotate(360deg);
   }
 }
+
+/* --- Estándar Global de Formularios (Outlined) --- */
+.form-group-outlined {
+  position: relative;
+  margin-bottom: 7px; /* Espaciado compacto solicitado */
+  margin-top: 10px;
+  width: 100%;
+  background: inherit;
+}
+
+.form-group-outlined label {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  font-size: 15px;
+  color: #718096;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  transform-origin: top left;
+}
+
+.form-group-outlined input,
+.form-group-outlined select,
+.form-group-outlined textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  font-size: 15px;
+  border: none; /* Borde manejado por fieldset */
+  background: transparent;
+  outline: none;
+  border-radius: 8px;
+}
+
+/* Nuevo Fieldset Border */
+.form-group-outlined .border-fieldset {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  margin: 0;
+  padding: 0 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  transition: border-color 0.2s, border-width 0.1s;
+}
+
+.form-group-outlined .border-fieldset legend {
+  padding: 0;
+  height: 11px;
+  font-size: 0.75em;
+  visibility: hidden;
+  max-width: 0.01px;
+  transition: max-width 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.form-group-outlined input:focus,
+.form-group-outlined select:focus,
+.form-group-outlined textarea:focus {
+  border-color: #35c8be;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(53, 200, 190, 0.1);
+}
+
+/* Lógica de Floating Label y Legend Gap */
+.form-group-outlined input:focus + label,
+.form-group-outlined input:not(:placeholder-shown) + label,
+.form-group-outlined textarea:focus + label,
+.form-group-outlined textarea:not(:placeholder-shown) + label,
+.form-group-outlined select:focus + label,
+.form-group-outlined select:valid + label,
+.form-group-outlined .password-input input:focus ~ label,
+.form-group-outlined .password-input input:not(:placeholder-shown) ~ label {
+  transform: translate(-2px, -19px) scale(0.8);
+  color: #35c8be;
+  font-weight: 700;
+  z-index: 11;
+}
+
+.form-group-outlined input:focus ~ .border-fieldset,
+.form-group-outlined textarea:focus ~ .border-fieldset,
+.form-group-outlined select:focus ~ .border-fieldset {
+  border-color: #35c8be;
+  border-width: 2px;
+}
+
+.form-group-outlined input:focus ~ .border-fieldset legend,
+.form-group-outlined input:not(:placeholder-shown) ~ .border-fieldset legend,
+.form-group-outlined textarea:focus ~ .border-fieldset legend,
+.form-group-outlined textarea:not(:placeholder-shown) ~ .border-fieldset legend,
+.form-group-outlined select:focus ~ .border-fieldset legend,
+.form-group-outlined select:valid ~ .border-fieldset legend,
+.form-group-outlined .password-input input:focus ~ .border-fieldset legend,
+.form-group-outlined .password-input input:not(:placeholder-shown) ~ .border-fieldset legend {
+  max-width: 1000px;
+  padding: 0 4px;
+}
+
+.form-group-outlined input:not(:focus):not(:placeholder-shown) + label,
+.form-group-outlined select:not(:focus):valid + label,
+.form-group-outlined .password-input input:not(:focus):not(:placeholder-shown) ~ label {
+  color: #64748b;
+}
+
+/* Password Input Helper */
+.password-input {
+  position: relative;
+  width: 100%;
+}
+
+.password-input input {
+  padding-right: 48px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #cbd5e0;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+  z-index: 11;
+}
+
+.toggle-password:hover {
+  color: #35c8be;
+}

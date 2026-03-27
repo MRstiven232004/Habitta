@@ -319,12 +319,16 @@ const PerfilSection: React.FC = () => {
 
           <div className="perfil-datos">
             {isEditing ? (
-              <input
-                className="edit-input-nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                placeholder="Tu nombre completo"
-              />
+              <div className="form-group-outlined">
+                <input
+                  id="nombre"
+                  className="edit-input-nombre"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  placeholder=" "
+                />
+                <label htmlFor="nombre">Nombre completo</label>
+              </div>
             ) : (
               <h3 className="perfil-nombre">{usuario.nombre}</h3>
             )}
@@ -340,12 +344,16 @@ const PerfilSection: React.FC = () => {
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
               </svg>
               {isEditing ? (
-                <input
-                  className="edit-input-email"
-                  value={correoEdit}
-                  onChange={(e) => setCorreoEdit(e.target.value)}
-                  placeholder="Tu correo electrónico"
-                />
+                <div className="form-group-outlined">
+                  <input
+                    id="email"
+                    className="edit-input-email"
+                    value={correoEdit}
+                    onChange={(e) => setCorreoEdit(e.target.value)}
+                    placeholder=" "
+                  />
+                  <label htmlFor="email">Correo electrónico</label>
+                </div>
               ) : (
                 <span>{usuario.correo}</span>
               )}
@@ -362,12 +370,16 @@ const PerfilSection: React.FC = () => {
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
               </svg>
               {isEditing ? (
-                <input
-                  className="edit-input-tel"
-                  value={telefono}
-                  onChange={(e) => setTelefono(e.target.value)}
-                  placeholder="Tu teléfono"
-                />
+                <div className="form-group-outlined">
+                  <input
+                    id="telefono"
+                    className="edit-input-tel"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                    placeholder=" "
+                  />
+                  <label htmlFor="telefono">Teléfono</label>
+                </div>
               ) : (
                 <span>{usuario.telefono || "Sin teléfono"}</span>
               )}
@@ -396,18 +408,22 @@ const PerfilSection: React.FC = () => {
             <h4>Biografía</h4>
             {isEditing ? (
               <div style={{ position: "relative" }}>
-                <textarea
-                  className="edit-textarea-bio"
-                  value={biografia}
-                  onChange={(e) => {
-                    let text = e.target.value;
-                    if (text.length > 0) text = text.charAt(0).toUpperCase() + text.slice(1);
-                    setBiografia(text);
-                  }}
-                  placeholder="Cuéntanos un poco sobre ti..."
-                  maxLength={800}
-                  rows={6}
-                />
+                <div className="form-group-outlined">
+                  <textarea
+                    id="biografia"
+                    className="edit-textarea-bio"
+                    value={biografia}
+                    onChange={(e) => {
+                      let text = e.target.value;
+                      if (text.length > 0) text = text.charAt(0).toUpperCase() + text.slice(1);
+                      setBiografia(text);
+                    }}
+                    placeholder=" "
+                    maxLength={800}
+                    rows={6}
+                  />
+                  <label htmlFor="biografia">Biografía</label>
+                </div>
                 <span style={{ fontSize: "0.78rem", color: "#aaa", display: "block", textAlign: "right", marginTop: "-6px" }}>
                   {(biografia || "").length}/800 caracteres
                 </span>
@@ -672,15 +688,19 @@ const PerfilSection: React.FC = () => {
                 >
                   Por seguridad, confirma tu correo actual antes de cambiarlo.
                 </p>
-                <div className="form-group">
-                  <label>Correo Electrónico Actual</label>
+                <div className="form-group-outlined">
                   <input
+                    id="emailVerify"
                     type="email"
                     value={emailVerify}
                     onChange={(e) => setEmailVerify(e.target.value)}
-                    placeholder="Ingresa tu correo actual"
+                    placeholder=" "
                     required
                   />
+                  <label htmlFor="emailVerify">Correo Electrónico Actual</label>
+                  <fieldset className="border-fieldset" aria-hidden="true">
+                    <legend><span>Correo Electrónico Actual</span></legend>
+                  </fieldset>
                 </div>
                 <div className="modal-footer">
                   <button
@@ -709,16 +729,20 @@ const PerfilSection: React.FC = () => {
                 >
                   ✅ Identidad verificada. Ingresa tu nuevo correo electrónico.
                 </p>
-                <div className="form-group">
-                  <label>Nuevo Correo Electrónico</label>
+                <div className="form-group-outlined">
                   <input
+                    id="newEmail"
                     type="email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
-                    placeholder="nuevo@correo.com"
+                    placeholder=" "
                     required
                     disabled={emailLoading}
                   />
+                  <label htmlFor="newEmail">Nuevo Correo Electrónico</label>
+                  <fieldset className="border-fieldset" aria-hidden="true">
+                    <legend><span>Nuevo Correo Electrónico</span></legend>
+                  </fieldset>
                 </div>
                 <p style={{ color: "#9ca3af", fontSize: "0.8rem" }}>
                   Se enviará un correo de confirmación al nuevo email. Tu

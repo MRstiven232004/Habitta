@@ -10,7 +10,7 @@ body {
   height: 0%;
 }
 
-/* Cuerpo */
+/* Estilos movidos a App.css */
 body {
   font-family: Arial, sans-serif;
   background: #f5f5f5;
@@ -73,12 +73,7 @@ h4 {
   margin: 0 0 4px 0;
 }
 
-/* Entradas de Ancho Completo */
-.card input,
-.card select,
-.card textarea {
-  width: 100%;
-}
+/* Entradas manejadas por App.css */
 
 /* Diseño Interno */
 
@@ -97,16 +92,9 @@ h4 {
   gap: 12px;
 }
 
-/* Entradas y Selectores */
+/* Entradas manejadas por App.css */
 input,
 select {
-  width: 100%;
-  padding: 8px 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fff;
   -moz-appearance: textfield;
   appearance: textfield;
 }
@@ -117,12 +105,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Foco */
-input:focus,
-select:focus {
-  outline: none;
-  border-color: #007bff;
-}
+/* Foco manejado por App.css */
 
 /* Grilla de Amenidades */
 .amenities-grid {
@@ -232,23 +215,7 @@ button:hover {
   font-weight: bold;
 }
 
-/* Textarea */
-textarea {
-  width: 100%;
-  padding: 8px 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fff;
-  font-family: inherit;
-  resize: vertical;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #007bff;
-}
+/* Textareas manejadas por App.css */
 
 /* Texto de carga */
 .loading-text {

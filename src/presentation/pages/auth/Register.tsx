@@ -84,6 +84,9 @@ function Register() {
           disabled={loading}
         />
         <label htmlFor="fullName">Nombre Completo</label>
+        <fieldset className="border-fieldset" aria-hidden="true">
+          <legend><span>Nombre Completo</span></legend>
+        </fieldset>
       </div>
 
       {/* Correo Electrónico */}
@@ -107,6 +110,9 @@ function Register() {
             <span className="email-status error"> ❌ (Ya registrado)</span>
           )}
         </label>
+        <fieldset className="border-fieldset" aria-hidden="true">
+          <legend><span>Correo Electrónico</span></legend>
+        </fieldset>
       </div>
 
       {/* Confirmar Correo Electrónico */}
@@ -121,6 +127,9 @@ function Register() {
           disabled={loading}
         />
         <label htmlFor="confirmationEmail">Confirmar Correo Electrónico</label>
+        <fieldset className="border-fieldset" aria-hidden="true">
+          <legend><span>Confirmar Correo Electrónico</span></legend>
+        </fieldset>
       </div>
 
       {/* Teléfono */}
@@ -135,6 +144,9 @@ function Register() {
           disabled={loading}
         />
         <label htmlFor="phone">Teléfono</label>
+        <fieldset className="border-fieldset" aria-hidden="true">
+          <legend><span>Teléfono</span></legend>
+        </fieldset>
       </div>
 
       {/* Contraseña */}
@@ -158,6 +170,9 @@ function Register() {
           >
             {showPassword ? <EyeOpen /> : <EyeClosed />}
           </button>
+          <fieldset className="border-fieldset" aria-hidden="true">
+            <legend><span>Contraseña</span></legend>
+          </fieldset>
         </div>
         {password.length > 0 && (
           <ul className="password-requirements">
@@ -201,6 +216,9 @@ function Register() {
           >
             {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
           </button>
+          <fieldset className="border-fieldset" aria-hidden="true">
+            <legend><span>Confirmar Contraseña</span></legend>
+          </fieldset>
         </div>
         {confirmPassword.length > 0 && (
           <small className={`password-match-hint ${passwordsMatch ? "valid" : "invalid"}`}>

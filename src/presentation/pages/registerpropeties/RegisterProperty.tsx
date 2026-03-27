@@ -160,91 +160,114 @@ function RegisterPropertyPage() {
           <div className="card">
             <h4>Información Básica</h4>
 
-            <p>
-              Título del anuncio <span className="required">*</span>
-            </p>
-            <input
-              type="text"
-              name="titulo"
-              value={form.titulo}
-              onChange={handleChange}
-              placeholder="Ej: Hermoso apartamento en zona céntrica"
-            />
+            <div className="form-group-outlined">
+              <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                value={form.titulo}
+                onChange={handleChange}
+                placeholder=" "
+                required
+              />
+              <label htmlFor="titulo">Título del anuncio *</label>
+              <fieldset className="border-fieldset" aria-hidden="true">
+                <legend><span>Título del anuncio *</span></legend>
+              </fieldset>
+            </div>
 
-            <p>Descripción</p>
-            <textarea
-              name="descripcion"
-              value={form.descripcion}
-              onChange={handleChange}
-              placeholder="Describe las características principales de la propiedad"
-              rows={4}
-              maxLength={800}
-              style={{ resize: "vertical", maxHeight: "220px" }}
-            />
+            <div className="form-group-outlined">
+              <textarea
+                id="descripcion"
+                name="descripcion"
+                value={form.descripcion}
+                onChange={handleChange}
+                placeholder=" "
+                rows={4}
+                maxLength={800}
+                style={{ resize: "vertical", maxHeight: "220px" }}
+              />
+              <label htmlFor="descripcion">Descripción</label>
+              <fieldset className="border-fieldset" aria-hidden="true">
+                <legend><span>Descripción</span></legend>
+              </fieldset>
+            </div>
             <span style={{ fontSize: "0.78rem", color: "#aaa", display: "block", textAlign: "right", marginTop: "-6px" }}>
               {(form.descripcion || "").length}/800 caracteres
             </span>
 
-            <div>
-              {/* Tipo de Propiedad */}
-              <label htmlFor="tipoPropiedad">Tipo de propiedad</label>
-              <select
-                id="tipoPropiedad"
-                name="tipoPropiedad"
-                value={form.tipoPropiedad}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Selecciona
-                </option>
-                <option value="apartamento">Apartamento</option>
-                <option value="casa">Casa</option>
-                <option value="lote">Lote</option>
-              </select>
+            <div className="two-col" style={{ gap: "7px", marginTop: "14px" }}>
+              <div className="form-group-outlined">
+                <select
+                  id="tipoPropiedad"
+                  name="tipoPropiedad"
+                  value={form.tipoPropiedad}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled selected hidden></option>
+                  <option value="apartamento">Apartamento</option>
+                  <option value="casa">Casa</option>
+                  <option value="lote">Lote</option>
+                </select>
+                <label htmlFor="tipoPropiedad">Tipo de propiedad</label>
+                <fieldset className="border-fieldset" aria-hidden="true">
+                  <legend><span>Tipo de propiedad</span></legend>
+                </fieldset>
+              </div>
 
-              {/* Tipo de Operación */}
-              <label htmlFor="tipoOperacion">
-                Tipo de operación <span className="required">*</span>
-              </label>
-              <select
-                id="tipoOperacion"
-                name="tipoOperacion"
-                value={form.tipoOperacion}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Selecciona
-                </option>
-                <option value="venta">Venta</option>
-                <option value="alquiler">Alquiler</option>
-              </select>
+              <div className="form-group-outlined">
+                <select
+                  id="tipoOperacion"
+                  name="tipoOperacion"
+                  value={form.tipoOperacion}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled selected hidden></option>
+                  <option value="venta">Venta</option>
+                  <option value="alquiler">Alquiler</option>
+                </select>
+                <label htmlFor="tipoOperacion">Tipo de operación *</label>
+                <fieldset className="border-fieldset" aria-hidden="true">
+                  <legend><span>Tipo de operación *</span></legend>
+                </fieldset>
+              </div>
             </div>
 
 
 
             {/* Precio y Área */}
-            <div className="two-col">
-              <div>
-                <p>Precio (COP)</p>
+            <div className="two-col" style={{ gap: "7px" }}>
+              <div className="form-group-outlined">
                 <input
                   type="number"
+                  id="precio"
                   name="precio"
                   value={form.precio}
                   onChange={handleChange}
-                  placeholder="00.00"
+                  placeholder=" "
                   min="0"
                 />
+                <label htmlFor="precio">Precio (COP)</label>
+                <fieldset className="border-fieldset" aria-hidden="true">
+                  <legend><span>Precio (COP)</span></legend>
+                </fieldset>
               </div>
-              <div>
-                <p>Área (m²)</p>
+              <div className="form-group-outlined">
                 <input
                   type="number"
+                  id="area"
                   name="area"
                   value={form.area}
                   onChange={handleChange}
-                  placeholder="0"
+                  placeholder=" "
                   min="0"
                 />
+                <label htmlFor="area">Área (m²)</label>
+                <fieldset className="border-fieldset" aria-hidden="true">
+                  <legend><span>Área (m²)</span></legend>
+                </fieldset>
               </div>
             </div>
           </div>
@@ -255,65 +278,78 @@ function RegisterPropertyPage() {
           <div className="card">
             <h4>Ubicación</h4>
 
-            <p>
-              Dirección <span className="required">*</span>
-            </p>
-            <input
-              type="text"
-              name="direccion"
-              value={form.direccion}
-              onChange={handleChange}
-              placeholder="Calle 00 #00-00"
-            />
+            <div className="form-group-outlined">
+              <input
+                type="text"
+                id="direccion"
+                name="direccion"
+                value={form.direccion}
+                onChange={handleChange}
+                placeholder=" "
+                required
+              />
+              <label htmlFor="direccion">Dirección *</label>
+              <fieldset className="border-fieldset" aria-hidden="true">
+                <legend><span>Dirección *</span></legend>
+              </fieldset>
+            </div>
 
-            <div className="two-col">
-              <div>
-                <p>
-                  Ciudad <span className="required">*</span>
-                </p>
+            <div className="two-col" style={{ gap: "7px" }}>
+              <div className="form-group-outlined">
                 <input
                   type="text"
+                  id="ciudad"
                   name="ciudad"
                   value={form.ciudad}
                   onChange={handleChange}
-                  placeholder="Ej: Tunja"
+                  placeholder=" "
+                  required
                 />
+                <label htmlFor="ciudad">Ciudad *</label>
+                <fieldset className="border-fieldset" aria-hidden="true">
+                  <legend><span>Ciudad *</span></legend>
+                </fieldset>
               </div>
-              <div>
-                <p>
-                  Departamento <span className="required">*</span>
-                </p>
+              <div className="form-group-outlined">
                 <input
                   type="text"
+                  id="departamento"
                   name="departamento"
                   value={form.departamento}
                   onChange={handleChange}
-                  placeholder="Ej: Boyacá"
+                  placeholder=" "
+                  required
                 />
+                <label htmlFor="departamento">Departamento *</label>
+                <fieldset className="border-fieldset" aria-hidden="true">
+                  <legend><span>Departamento *</span></legend>
+                </fieldset>
               </div>
             </div>
 
 
-            <div className="two-col">
-              <div>
-                <p>Barrio</p>
+            <div className="two-col" style={{ gap: "7px" }}>
+              <div className="form-group-outlined">
                 <input
                   type="text"
+                  id="barrio"
                   name="barrio"
                   value={form.barrio}
                   onChange={handleChange}
-                  placeholder="Ej: Centro"
+                  placeholder=" "
                 />
+                <label htmlFor="barrio">Barrio</label>
               </div>
-              <div>
-                <p>Código postal</p>
+              <div className="form-group-outlined">
                 <input
                   type="text"
+                  id="codigopostal"
                   name="codigopostal"
                   value={form.codigopostal}
                   onChange={handleChange}
-                  placeholder="150001"
+                  placeholder=" "
                 />
+                <label htmlFor="codigopostal">Código postal</label>
               </div>
             </div>
 
@@ -344,59 +380,60 @@ function RegisterPropertyPage() {
           <div className="card">
             <h4>Características</h4>
 
-            <div className="two-col">
-              <div>
-                <p>
-                  Habitaciones <span className="required">*</span>
-                </p>
+            <div className="two-col" style={{ gap: "7px" }}>
+              <div className="form-group-outlined">
                 <input
                   type="number"
+                  id="habitaciones"
                   name="habitaciones"
                   value={form.habitaciones}
                   onChange={handleChange}
-                  placeholder="Ej: 3"
+                  placeholder=" "
                   min="0"
+                  required
                 />
+                <label htmlFor="habitaciones">Habitaciones *</label>
               </div>
-              <div>
-                <p>
-                  Baños <span className="required">*</span>
-                </p>
+              <div className="form-group-outlined">
                 <input
                   type="number"
+                  id="banos"
                   name="banos"
                   value={form.banos}
                   onChange={handleChange}
-                  placeholder="Ej: 2"
+                  placeholder=" "
                   min="0"
+                  required
                 />
+                <label htmlFor="banos">Baños *</label>
               </div>
             </div>
 
 
-            <div className="two-col">
-              <div>
-                <p>Antigüedad (años)</p>
+            <div className="two-col" style={{ gap: "7px" }}>
+              <div className="form-group-outlined">
                 <input
                   type="text"
+                  id="antiguedad"
                   name="antiguedad"
                   value={form.antiguedad}
                   onChange={handleChange}
-                  placeholder="Ej: 5 años"
+                  placeholder=" "
                 />
+                <label htmlFor="antiguedad">Antigüedad (años)</label>
               </div>
-              <div>
-                <p>
-                  Estrato <span className="required">*</span>
-                </p>
+              <div className="form-group-outlined">
                 <input
                   type="number"
+                  id="estrato"
                   name="estrato"
                   value={form.estrato}
                   onChange={handleChange}
-                  placeholder="3"
+                  placeholder=" "
                   min="0"
+                  required
                 />
+                <label htmlFor="estrato">Estrato *</label>
               </div>
             </div>
 

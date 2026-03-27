@@ -140,15 +140,19 @@ const ChangePasswordModal: React.FC<Props> = ({ isOpen, onClose }) => {
               Por seguridad, confirma tu correo electrónico antes de cambiar la
               contraseña.
             </p>
-            <div className="form-group">
-              <label>Correo Electrónico</label>
+            <div className="form-group-outlined">
               <input
+                id="emailVerify"
                 type="email"
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="Ingresa tu correo electrónico"
+                placeholder=" "
                 required
               />
+              <label htmlFor="emailVerify">Correo Electrónico</label>
+              <fieldset className="border-fieldset" aria-hidden="true">
+                <legend><span>Correo Electrónico</span></legend>
+              </fieldset>
             </div>
 
             <div className="modal-footer">
@@ -172,16 +176,20 @@ const ChangePasswordModal: React.FC<Props> = ({ isOpen, onClose }) => {
             >
               ✅ Identidad verificada. Ingresa tu nueva contraseña.
             </p>
-            <div className="form-group">
-              <label>Nueva Contraseña</label>
+            <div className="form-group-outlined">
               <input
+                id="newPassword"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Mínimo 8 caracteres"
+                placeholder=" "
                 required
                 disabled={loading}
               />
+              <label htmlFor="newPassword">Nueva Contraseña</label>
+              <fieldset className="border-fieldset" aria-hidden="true">
+                <legend><span>Nueva Contraseña</span></legend>
+              </fieldset>
             </div>
             {newPassword.length > 0 && (
               <ul className="password-requirements" style={{ marginBottom: "16px" }}>
@@ -202,16 +210,20 @@ const ChangePasswordModal: React.FC<Props> = ({ isOpen, onClose }) => {
                 </li>
               </ul>
             )}
-            <div className="form-group">
-              <label>Confirmar Nueva Contraseña</label>
+            <div className="form-group-outlined">
               <input
+                id="confirmPassword"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Repite la contraseña"
+                placeholder=" "
                 required
                 disabled={loading}
               />
+              <label htmlFor="confirmPassword">Confirmar Nueva Contraseña</label>
+              <fieldset className="border-fieldset" aria-hidden="true">
+                <legend><span>Confirmar Nueva Contraseña</span></legend>
+              </fieldset>
             </div>
             {confirmPassword.length > 0 && (
               <small className={`password-match-hint ${passwordsMatch ? "valid" : "invalid"}`} style={{ display: "block", marginBottom: "16px" }}>
