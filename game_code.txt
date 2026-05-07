@@ -1,0 +1,128 @@
+import pygame
+import random
+import sys
+
+# 1. Inicialización de Pygame
+pygame.init()
+
+# Dimensiones de la pantalla
+ANCHO = 600
+ALTO = 600
+pantalla = pygame.display.set_mode((ANCHO, ALTO))
+pygame.display.set_caption("Burger Drop - El Juego del Chef")
+
+# Colores (RGB)
+BLANCO = (255, 255, 255)
+NEGRO = (0, 0, 0)
+VERDE_LECHUGA = (50, 205, 50)
+ROJO_TOMATE = (255, 99, 71)
+CAFE_BOTA = (139, 69, 19)
+AZUL_CHEF = (70, 130, 180)
+
+# Reloj para controlar los FPS
+reloj = pygame.time.Clock()
+FPS = 60
+
+# 2. Variables del Jugador (El Chef)
+chef_ancho = 80
+chef_alto = 20
+chef_x = (ANCHO // 2) - (chef_ancho // 2)
+chef_y = ALTO - 50
+chef_velocidad = 7
+
+# 3. Variables de los Objetos y Juego
+puntuacion = 0
+vidas = 3
+velocidad_caida = 5
+
+# Lista de objetos en pantalla: cada objeto es un diccionario
+objetos = []
+# Tiempo para generar nuevos objetos
+tiempo_generacion = 0
+intervalo_generacion = 40  # Cuanto más bajo, más rápido caen objetos
+
+fuente = pygame.font.SysFont("Arial", 30)
+
+# 4. Bucle Principal del Juego
+jugando = True
+while jugando:
+    pantalla.fill(BLANCO)  # Limpiar pantalla con fondo blanco
+
+    # --- Gestión de Eventos (Teclado y Cerrar ventana) ---
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Controles de movimiento
+    teclas = pygame.key.get_pressed()
+    if teclas[pygame.K_LEFT] and chef_x > 0:
+        chef_x -= chef_velocidad
+    if teclas[pygame.K_RIGHT] and chef_x < ANCHO - chef_ancho:
+        chef_x += chef_velocidad
+
+    # --- Lógica de Generación de Objetos ---
+    tiempo_generacion += 1
+    if tiempo_generacion >= intervalo_generacion:
+        tiempo_generacion = 0
+        tipo = random.choice(["ingrediente", "ingrediente", "bota"]) # Más comida que botas
+        nuevo_objeto = {
+            "x": random.randint(0, ANCHO - 30),
+            "y": -30,
+            "tipo": tipo,
+            "color": ROJO_TOMATE if tipo == "ingrediente" else CAFE_BOTA
+        }
+        objetos.append(nuevo_objeto)
+
+    # --- Lógica de Movimiento y Colisiones ---
+    for obj in objetos[:]:  # Copia de la lista para poder borrar elementos
+        obj["y"] += velocidad_caida
+
+        # Crear rectángulos virtuales para detectar colisiones
+        rect_chef = pygame.Rect(chef_x, chef_y, chef_ancho, chef_alto)
+        rect_obj = pygame.Rect(obj["x"], obj["y"], 30, 30)
+
+        # Colisión con el Chef
+        if rect_chef.colliderect(rect_obj):
+            if obj["tipo"] == "ingrediente":
+                puntuacion += 10
+                # Subir dificultad cada 100 puntos
+                if puntuacion % 100 == 0:
+                    velocidad_caida += 1
+            else:
+                vidas -= 1
+            objetos.remove(obj)
+
+        # Si el objeto toca el suelo
+        elif obj["y"] > ALTO:
+            if obj["tipo"] == "ingrediente":
+                vidas -= 1  # Dejar caer comida cuesta vida
+            objetos.remove(obj)
+
+    # --- Dibujar elementos en pantalla ---
+    # Dibujar Chef
+    pygame.draw.rect(pantalla, AZUL_CHEF, (chef_x, chef_y, chef_ancho, chef_alto))
+    
+    # Dibujar Objetos
+    for obj in objetos:
+        pygame.draw.rect(pantalla, obj["color"], (obj["x"], obj["y"], 30, 30))
+
+    # Dibujar Textos (Puntuación y Vidas)
+    texto_puntos = fuente.render(f"Puntos: {puntuacion}", True, NEGRO)
+    texto_vidas = fuente.render(f"Vidas: {vidas}", True, NEGRO)
+    pantalla.blit(texto_puntos, (10, 10))
+    pantalla.blit(texto_vidas, (ANCHO - 120, 10))
+
+    # --- Condición de Fin de Partida ---
+    if vidas <= 0:
+        pantalla.fill(NEGRO)
+        texto_game_over = fuente.render("GAME OVER", True, ROJO_TOMATE)
+        pantalla.blit(texto_game_over, (ANCHO // 2 - 80, ALTO // 2))
+        pygame.display.flip()
+        pygame.time.wait(3000)
+        jugando = False
+
+    pygame.display.flip()  # Actualizar pantalla
+    reloj.tick(FPS)  # Mantener a 60 FPS
+
+pygame.quit()
